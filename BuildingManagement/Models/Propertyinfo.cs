@@ -20,6 +20,7 @@ namespace BuildingManagement.Models
         public string Township { get; set; } = string.Empty;
         public string Addr { get; set; } = string.Empty;
         public decimal AcreMeasure { get; set; }
+        public int ResitypId { get; set; }  
         public short BlockCount { get; set; }
         public int RoomCount { get; set; }
         public short ParkingCount { get; set; }

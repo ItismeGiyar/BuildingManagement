@@ -54,7 +54,7 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PropId,PropNme,Phone1,Phone2,Email,City,Township,Addr,AcreMeasure,BlockCount,RoomCount,ParkingCount,ParkingSizeDesc,PoolCount,PoolSizeDesc,EstiblishDte,CmpyId,UserId,RevDteTime")] Propertyinfo propertyinfo)
+        public async Task<IActionResult> Create([Bind("PropId,PropNme,Phone1,Phone2,Email,City,Township,Addr,AcreMeasure,ResitypId,BlockCount,RoomCount,ParkingCount,ParkingSizeDesc,PoolCount,PoolSizeDesc,EstiblishDte,CmpyId,UserId,RevDteTime")] Propertyinfo propertyinfo)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PropId,PropNme,Phone1,Phone2,Email,City,Township,Addr,AcreMeasure,BlockCount,RoomCount,ParkingCount,ParkingSizeDesc,PoolCount,PoolSizeDesc,EstiblishDte,CmpyId,UserId,RevDteTime")] Propertyinfo propertyinfo)
+        public async Task<IActionResult> Edit(int id, [Bind("PropId,PropNme,Phone1,Phone2,Email,City,Township,Addr,AcreMeasure,ResitypId,BlockCount,RoomCount,ParkingCount,ParkingSizeDesc,PoolCount,PoolSizeDesc,EstiblishDte,CmpyId,UserId,RevDteTime")] Propertyinfo propertyinfo)
         {
             if (id != propertyinfo.PropId)
             {
