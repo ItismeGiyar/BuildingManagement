@@ -1,0 +1,30 @@
+﻿@model BuildingManagement.Models.Menugp
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Menugp</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MnugrpNme)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MnugrpNme)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RevDteTime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RevDteTime)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.MnugrpId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,284 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SiteOverseer</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SiteOverseer.styles.css" asp-append-version="true" />
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/lib/AdminLTE/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/lib/AdminLTE/dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition sidebar-mini sidebar-collapse">
+    <div class="wrapper">
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item ml-2">
+                    <a href="../../Home/Logout" class="btn btn-default m-1 text-truncate" onclick="return confirm('Are you sure you want to log out?')">LogOut</a>
+                </li>
+            </ul>
+        </nav>
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4 sidebar-closed sidebar-collapsed">
+            <!-- Sidebar -->
+            <div class="sidebar sidebar-collapse">
+                <!-- Sidebar user (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="yy.png" class="elevation-3" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a class="d-block">@ViewData["Username"]</a>
+                    </div>
+                </div>
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+                             with font-awesome or any other icon font library -->
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-money-bill-wave nav-icon"></i>
+                                <p>Billing</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../../Home/Index" class="nav-link">
+                                <i class="fas fa-user nav-icon"></i>
+                                <p>Complaint Log</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../../ComplaintCatgs/Index" class="nav-link">
+                                <i class="fas fa-user-cog nav-icon"></i>
+                                <p>Complaint Category</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-user-edit"></i>
+                                <p>
+                                    Reporting
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="../../Invoicing/index" class="nav-link">
+                                        <i class="fas fa-user-edit"></i>
+                                        <p>Invoicing</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../../DueInvoice/index" class="nav-link">
+                                        <i class="fas fa-user-edit"></i>
+                                        <p>Due Invoice</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../../BillStatement/index" class="nav-link">
+                                        <i class="fas fa-user-edit"></i>
+                                        <p>Bill Statement</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-money-bill-wave-alt nav-icon"></i>
+                                <p>
+                                    Bill Item
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="../../BillItem/index" class="nav-link">
+                                        <i class="fas fa-money-bill nav-icon"></i>
+                                        <p>Bill Item</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../../TenantSubscribe/index" class="nav-link">
+                                        <i class="fas fa-house-user nav-icon"></i>
+                                        <p>Tenant Subscribe</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-home nav-icon"></i>
+                                <p>
+                                    Tenant Setup
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="../../TenantInfo/index" class="nav-link">
+                                        <i class="fas fa-info nav-icon"></i>
+                                        <p>Tenant Info</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../../Tenant Vehicle/index" class="nav-link">
+                                        <i class="fas fa-car nav-icon"></i>
+                                        <p>Tenant Vehicle</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-tree"></i>
+                                <p>
+                                    Property Setup
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="../../ResidentType/index" class="nav-link">
+                                        <i class="fas fa-warehouse nav-icon"></i>
+                                        <p>Resident Type</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../../PropertyInfo/index" class="nav-link">
+                                        <i class="fas fa-info-circle nav-icon"></i>
+                                        <p>Property Info</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../../Location/index" class="nav-link">
+                                        <i class="fas fa-map-marker-alt nav-icon"></i>
+                                        <p>Location</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../../BuildingType/index" class="nav-link">
+                                        <i class="fas fa-building nav-icon"></i>
+                                        <p>Building Type</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../../Room/index" class="nav-link">
+                                        <i class="fab fa-intercom nav-icon"></i>
+                                        <p>Room</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-smile"></i>
+                                <p>
+                                    User Setup
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="../../Users/Index" class="nav-link">
+                                <i class="fas fa-user-circle nav-icon"></i>
+                                <p>User</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../../Menugps/Index" class="nav-link">
+                                <i class="fas fa-bars nav-icon"></i>
+                                <p>Menu Group</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../../MenuAccesses/Index" class="nav-link">
+                                <i class="fas fa-universal-access nav-icon"></i>
+                                <p>Menu Access</p>
+                            </a>
+                        </li>
+                            </ul>
+                        </li>
+                        @if (new[] { "ACCESS_LEVEL" }.Contains(ViewData["Role"]?.ToString()))
+                        {
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-cogs"></i>
+                                    <p>
+                                        Setups
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="../../Companies/index" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Company Setup</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="../../CompanyUsers/index" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Company User Setup</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper" style="min-height: 1302.4px;">
+            <!-- Content Header (Page header) -->
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            @RenderBody()
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+
+
+        <footer class="main-footer">
+            <div class="float-right d-none d-sm-block">
+                <b>Version</b> 1.2.0
+            </div>
+            <strong>© 2024 POS Manager - <a href="https://fortifiedcitymyanmar.com/">Fortified City</a></strong>
+        </footer>
+
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <!-- ./wrapper -->
+    <!-- jQuery -->
+    <script src="~/lib/AdminLTE/plugins/jquery/jquery.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/lib/AdminLTE/dist/js/adminlte.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/lib/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
