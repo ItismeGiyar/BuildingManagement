@@ -28,7 +28,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Tenants}/{action=Index}/{id?}");
+    pattern: "{controller=Propertyinfoes}/{action=Index}/{id?}");
 
 app.Run();
 

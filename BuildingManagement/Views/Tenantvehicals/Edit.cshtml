@@ -1,59 +1,73 @@
 ﻿@model BuildingManagement.Models.Tenantvehical
 
+
+
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Tenant Vehicle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-6">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="col-6">
+                <div class="breadcrumb float-right active">
+                    <a asp-action="Index" class="btn btn-primary">Back to List <i class="fas fa-back"></i></a>
 
-<h1>Edit</h1>
-
-<h4>Tenantvehical</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="VehId" />
-            <div class="form-group">
-                <label asp-for="TenantId" class="control-label"></label>
-                <input asp-for="TenantId" class="form-control" />
-                <span asp-validation-for="TenantId" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="PlateNo" class="control-label"></label>
-                <input asp-for="PlateNo" class="form-control" />
-                <span asp-validation-for="PlateNo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AllocateNo" class="control-label"></label>
-                <input asp-for="AllocateNo" class="form-control" />
-                <span asp-validation-for="AllocateNo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CmpyId" class="control-label"></label>
-                <input asp-for="CmpyId" class="form-control" />
-                <span asp-validation-for="CmpyId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RevDteTime" class="control-label"></label>
-                <input asp-for="RevDteTime" class="form-control" />
-                <span asp-validation-for="RevDteTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-gray">
+            <div class="card-header">
+                <h3 class="card-title">@ViewData["Title"] Edit</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form asp-action="Edit" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="VehId" />
+                           
+                            <div class="form-group">
+                                <label asp-for="PlateNo" class="control-label"></label>
+                                <input asp-for="PlateNo" class="form-control" />
+                                <span asp-validation-for="PlateNo" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="AllocateNo" class="control-label"></label>
+                                <input asp-for="AllocateNo" class="form-control" />
+                                <span asp-validation-for="AllocateNo" class="text-danger"></span>
+                            </div>
+                           
+                            <div class="form-group">
+                                <label asp-for="RevDteTime" class="control-label"></label>
+                                <input asp-for="RevDteTime" class="form-control" />
+                                <span asp-validation-for="RevDteTime" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    
+    </script>
+
 }
