@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace BuildingManagement.Models
 {
@@ -6,8 +7,9 @@ namespace BuildingManagement.Models
     {
         [Key]
         public int CplCatgId { get; set; }
-        [StringLength(50)] 
-        public string CplCatcDe { get; set; } = string.Empty;
+        [StringLength(50)]
+        [DisplayName("Complaint Category Code")]
+        public string CplCatCde { get; set; } = string.Empty;
         public short CmpyId { get; set; }
         public int UserId { get; set; }
         public DateTime RevDteTime { get; set; }
