@@ -20,6 +20,27 @@ namespace BuildingManagement.Controllers
         {
             _context = context;
         }
+        protected short GetUserId()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
+            var userId = (short)_context.ms_user
+                .Where(u => u.UserCde == userCde)
+                .Select(u => u.UserId)
+                .FirstOrDefault();
+
+            return userId;
+        }
+
+        protected short GetCmpyId()
+        {
+            var cmpyId = _context.ms_user
+                .Where(u => u.UserId == GetUserId())
+                .Select(u => u.CmpyId)
+                .FirstOrDefault();
+
+            return cmpyId;
+        }
+
 
         // GET: Tenants
         public async Task<IActionResult> Index()
@@ -35,12 +56,25 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
+           
+
             var tenant = await _context.ms_tenant
                 .FirstOrDefaultAsync(m => m.TenantId == id);
             if (tenant == null)
             {
                 return NotFound();
             }
+            tenant.Company =
+              _context.ms_company
+              .Where(c => c.CmpyId == tenant.CmpyId)
+              .Select(c => c.CmpyNme)
+              .FirstOrDefault() ?? "";
+
+            tenant.User =
+                _context.ms_user
+                .Where(u => u.UserId == tenant.UserId)
+                .Select(u => u.UserNme)
+                .FirstOrDefault() ?? "";
 
             return View(tenant);
         }
@@ -56,8 +90,11 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TenantId,TenantNme,Occupany,IdNo,Gender,Phone1,Phone2,LocalFlg,PermentAddr,CmpyId,UserId,RevDteTime")] Tenant tenant)
+        public async Task<IActionResult> Create([Bind("TenantNme,Occupany,IdNo,Gender,Phone1,Phone2,LocalFlg,PermentAddr")] Tenant tenant)
         {
+            tenant.CmpyId =GetCmpyId() ;
+            tenant.UserId = GetUserId();
+            tenant.RevDteTime = DateTime.Now;
             if (ModelState.IsValid)
             {
                 _context.Add(tenant);
@@ -88,7 +125,7 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TenantId,TenantNme,Occupany,IdNo,Gender,Phone1,Phone2,LocalFlg,PermentAddr,CmpyId,UserId,RevDteTime")] Tenant tenant)
+        public async Task<IActionResult> Edit(int id, [Bind("TenantId,TenantNme,Occupany,IdNo,Gender,Phone1,Phone2,LocalFlg,PermentAddr")] Tenant tenant)
         {
             if (id != tenant.TenantId)
             {
@@ -99,6 +136,9 @@ namespace BuildingManagement.Controllers
             {
                 try
                 {
+                    tenant.CmpyId = GetCmpyId();//default;
+                    tenant.UserId = GetUserId();//default;
+                    tenant.RevDteTime=DateTime.Now;
                     _context.Update(tenant);
                     await _context.SaveChangesAsync();
                 }

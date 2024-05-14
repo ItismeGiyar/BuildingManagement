@@ -28,7 +28,7 @@ namespace BuildingManagement.Controllers
             foreach(var data in list)
             {
                 data.Menugp = _context.ms_menugp.Where(m => m.MnugrpId == data.MnugrpId).Select(m => m.MnugrpNme).FirstOrDefault() ?? "";
-            }
+        }
             return View(list);
         }
 
@@ -134,6 +134,11 @@ namespace BuildingManagement.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(menuaccess);
+        }
+
+        private bool MenuaccessExists(int accessId)
+        {
+            throw new NotImplementedException();
         }
 
         // GET: Menuaccesses/Delete/5

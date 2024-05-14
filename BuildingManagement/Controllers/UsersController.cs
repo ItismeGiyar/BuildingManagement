@@ -126,6 +126,11 @@ namespace BuildingManagement.Controllers
             return View(user);
         }
 
+        private bool UserExists(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

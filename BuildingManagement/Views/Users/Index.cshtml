@@ -97,56 +97,68 @@
                 <div class="row">
                     <div class="col-md-12">
                         <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
-                            <thead>
-                                <tr>
+    <thead>
+        <tr>
 
 
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UserCde)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.UserNme)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Position)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Gender)
-                                    </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserCde)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserNme)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Position)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MnugrpId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pwd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CmpyId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RevDtetime)
+            </th>
+            <th></th>
                                     <th></th>
                                     <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
+        </tr>
+    </thead>
+    <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr>
+        <tr>
 
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.UserCde)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.UserNme)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Position)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Gender)
-                                        </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserCde)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserNme)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Position)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
                                         <td style="text-align: center">
                                             <a asp-action="Details" asp-route-id="@item.UserId"><i class="fas fa-info-circle"></i></a>
-                                        </td>
+            </td>
                                         <td style="text-align: center">
                                             <a asp-action="Edit" asp-route-id="@item.UserId"><i class="fas fa-edit"></i></a>
                                         <td style="text-align: center">
                                             <a asp-action="Delete" asp-route-id="@item.UserId"><i class="fas fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
                     </div>
                 </div>
             </div>

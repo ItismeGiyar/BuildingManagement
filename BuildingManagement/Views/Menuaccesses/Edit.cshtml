@@ -28,36 +28,39 @@
                 <h3 class="card-title">@ViewData["Title"] Edit</h3>
             </div>
             <div class="card-body">
-                <div class="row">
+<div class="row">
                     <div class="col-md-6">
                         <form asp-action="Edit" enctype="multipart/form-data">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <input type="hidden" asp-for="AccessId" />
-                            <div class="form-group">
-                                <label asp-for="MnugrpId" class="control-label"></label>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AccessId" />
+            <div class="form-group">
+                <label asp-for="MnugrpId" class="control-label"></label>
                                 <select asp-for="MnugrpId" class="form-control form-select" asp-items="@ViewBag.MenuGroupList">
                                     <option value=""> - Select One - </option>
                                 </select>
 
-                                <span asp-validation-for="MnugrpId" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="BtnNme" class="control-label"></label>
-                                <input asp-for="BtnNme" class="form-control" />
+                <span asp-validation-for="MnugrpId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BtnNme" class="control-label"></label>
+                <input asp-for="BtnNme" class="form-control" />
                                 </div>
-                                <span asp-validation-for="BtnNme" class="text-danger"></span>
+                <span asp-validation-for="BtnNme" class="text-danger"></span>
                             
-                            <div class="form-group">
-                                <input type="submit" value="Save" class="btn btn-primary" />
-                            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
 
-                        </form>
+        </form>
 
                     </div>
                 </div>
-            </div>
-        </div>
     </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 </section>
 
 @section Scripts {

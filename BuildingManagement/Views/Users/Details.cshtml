@@ -30,51 +30,54 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <dl class="row">
+    <dl class="row">
                             <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.UserCde)
-                            </dt>
+            @Html.DisplayNameFor(model => model.UserCde)
+        </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.UserCde)
-                            </dd>
+            @Html.DisplayFor(model => model.UserCde)
+        </dd>
                             <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.UserNme)
-                            </dt>
+            @Html.DisplayNameFor(model => model.UserNme)
+        </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.UserNme)
-                            </dd>
+            @Html.DisplayFor(model => model.UserNme)
+        </dd>
                             <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.Position)
-                            </dt>
+            @Html.DisplayNameFor(model => model.Position)
+        </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.Position)
-                            </dd>
+            @Html.DisplayFor(model => model.Position)
+        </dd>
                             <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.Gender)
-                            </dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.Gender)
-                            </dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
                             <dt class="col-sm-2">
                                 @Html.DisplayNameFor(model => model.Company)
-                            </dt>
+        </dt>
                             <dd class="col-sm-10">
                                 @Html.DisplayFor(model => model.Company)
-                            </dd>
+        </dd>
                             <dt class="col-sm-2">
                                 @Html.DisplayNameFor(model => model.RevDteTime)
-                            </dt>
+        </dt>
                             <dd class="col-sm-10">
                                 @Html.DisplayFor(model => model.RevDteTime)
-                            </dd>
-                        </dl>
+        </dd>
+    </dl>
 
 
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.UserId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
 </section>
 
 

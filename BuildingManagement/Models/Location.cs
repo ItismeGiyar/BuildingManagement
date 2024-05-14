@@ -13,4 +13,5 @@ namespace BuildingManagement.Models
         public DateTime RevDteTime { get; set; }
 
     }
+    
 }

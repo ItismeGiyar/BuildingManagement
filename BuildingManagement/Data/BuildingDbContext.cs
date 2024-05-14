@@ -13,7 +13,7 @@ namespace BuildingManagement.Data
         public DbSet<Menugp> ms_menugp { get; set;}
         public DbSet<Menuaccess> ms_menuaccess { get; set;}
         public DbSet<User> ms_user { get; set; }
-        public DbSet<Residenttype> ms_residenttype { get; set; }
+        public DbSet<Residenttype> ms_residenttype { get; set; }    
         public DbSet<Location> ms_location { get; set; }
         public DbSet<Buildingtype> ms_buildingtype { get; set;}
         public DbSet<Propertyinfo> ms_propertyinfo { get; set;}

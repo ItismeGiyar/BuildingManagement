@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace BuildingManagement.Models
 {
@@ -7,8 +8,11 @@ namespace BuildingManagement.Models
         
         [Key]
         public short MnugrpId { get; set; }
-        public string MnugrpNme { get; set; } = string.Empty;
+        [DisplayName("Menu Group Name")]
+      
+        public string MnugrpNme { get; set; }=string.Empty;
+
         public DateTime RevDteTime { get; set; }
-        
+
     }
 }
