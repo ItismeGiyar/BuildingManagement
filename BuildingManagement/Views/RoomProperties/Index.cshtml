@@ -1,0 +1,101 @@
+﻿@model IEnumerable<BuildingManagement.Models.RoomProperty>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LocId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BdTypId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SqFullMeasure)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SqRoomeasure)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmenityDesc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FeatureDesc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Addr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenantId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CmpyId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RevDteTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LocId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BdTypId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SqFullMeasure)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SqRoomeasure)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AmenityDesc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FeatureDesc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Addr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenantId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CmpyId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RevDteTime)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.RoomId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.RoomId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.RoomId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

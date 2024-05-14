@@ -97,51 +97,51 @@
                 <div class="row">
                     <div class="col-md-12">
                         <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
-                            <thead>
-                                <tr>
+    <thead>
+        <tr>
                                     
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.CmpyNme)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Address)
-                                    </th>
-                                    <th>
+            <th>
+                @Html.DisplayNameFor(model => model.CmpyNme)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
                                         @Html.DisplayNameFor(model => model.RevDteTime)
-                                    </th>
-                                    <th></th>
+            </th>
+            <th></th>
                                     <th></th>
                                     <th></th>
 
-                                </tr>
-                            </thead>
-                            <tbody>
+        </tr>
+    </thead>
+    <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr>
+        <tr>
                                        
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.CmpyNme)
-                                        </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CmpyNme)
+            </td>
                                         <th>
                                             @Html.DisplayNameFor(model => model.Address)
                                         </th>
-                                        <td>
+            <td>
                                             @Html.DisplayFor(modelItem => item.RevDteTime)
                                         </td>
                                         <td style="text-align: center">
                                             <a asp-action="Details" asp-route-id="@item.CmpyId"><i class="fas fa-info-circle"></i></a>
-                                        </td>
+            </td>
                                         <td style="text-align: center">
                                             <a asp-action="Edit" asp-route-id="@item.CmpyId"><i class="fas fa-edit"></i></a>
-                                        </td>
+            </td>
                                         <td style="text-align: center">
                                             <a asp-action="Delete" asp-route-id="@item.CmpyId"><i class="fas fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
                     </div>
                 </div>
             </div>
