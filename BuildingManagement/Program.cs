@@ -1,4 +1,5 @@
 using BuildingManagement.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<BuildingDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Add authentication dependency injection to authenticate log in user
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/LogIn/Index";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+    });
 
 
 var app = builder.Build();
@@ -24,11 +32,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Propertyinfoes}/{action=Index}/{id?}");
+    pattern: "{controller=LogIn}/{action=Index}/{id?}");
 
 app.Run();
 

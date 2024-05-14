@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildingManagement.Data;
 using BuildingManagement.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BuildingManagement.Controllers
 {
+    [Authorize]
     public class TenantvehicalsController : Controller
     {
         private readonly BuildingDbContext _context;
@@ -22,6 +25,8 @@ namespace BuildingManagement.Controllers
         // GET: Tenantvehicals
         public async Task<IActionResult> Index()
         {
+            
+            
             return View(await _context.ms_tenantvehical.ToListAsync());
         }
 
@@ -39,13 +44,27 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
+            tenantvehical.Company =
+              _context.ms_company
+              .Where(c => c.CmpyId == tenantvehical.CmpyId)
+              .Select(c => c.CmpyNme)
+              .FirstOrDefault() ?? "";
+            
 
+            tenantvehical.User =
+             _context.ms_user
+             .Where(u => u.UserId == tenantvehical.UserId)
+             .Select(u => u.UserNme)
+             .FirstOrDefault() ?? "";
             return View(tenantvehical);
         }
-
+       
         // GET: Tenantvehicals/Create
         public IActionResult Create()
         {
+            var list = _context.ms_tenant.ToList();
+            ViewData["TenantList"] = new SelectList(_context.ms_tenant.ToList(), "TenantId", "TenantNme");
+
             return View();
         }
 
@@ -54,10 +73,14 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VehId,TenantId,PlateNo,AllocateNo,CmpyId,UserId,RevDteTime")] Tenantvehical tenantvehical)
+        public async Task<IActionResult> Create([Bind("TenantId,PlateNo,AllocateNo")] Tenantvehical tenantvehical)
         {
             if (ModelState.IsValid)
             {
+                
+                tenantvehical.CmpyId = 1;//default
+                tenantvehical.UserId = 1;//default
+                tenantvehical.RevDteTime = DateTime.Now;
                 _context.Add(tenantvehical);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -86,7 +109,7 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("VehId,TenantId,PlateNo,AllocateNo,CmpyId,UserId,RevDteTime")] Tenantvehical tenantvehical)
+        public async Task<IActionResult> Edit(int id, [Bind("VehId,TenantId,PlateNo,AllocateNo")] Tenantvehical tenantvehical)
         {
             if (id != tenantvehical.VehId)
             {
@@ -97,6 +120,10 @@ namespace BuildingManagement.Controllers
             {
                 try
                 {
+                    tenantvehical.VehId = 1;//default
+                    tenantvehical.CmpyId = 1;//default
+                    tenantvehical.UserId = 1;//default
+                    tenantvehical.RevDteTime = DateTime.Now;
                     _context.Update(tenantvehical);
                     await _context.SaveChangesAsync();
                 }

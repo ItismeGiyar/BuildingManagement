@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildingManagement.Data;
 using BuildingManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BuildingManagement.Controllers
 {
+    [Authorize]
     public class MenugpsController : Controller
     {
         private readonly BuildingDbContext _context;
@@ -54,7 +56,7 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MnugrpId,MnugrpNme,RevDtemtime")] Menugp menugp)
+        public async Task<IActionResult> Create([Bind("MnugrpId,MnugrpNme,RevDteTime")] Menugp menugp)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +88,7 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(short id, [Bind("MnugrpId,MnugrpNme,RevDtemtime")] Menugp menugp)
+        public async Task<IActionResult> Edit(short id, [Bind("MnugrpId,MnugrpNme,RevDteTime")] Menugp menugp)
         {
             if (id != menugp.MnugrpId)
             {

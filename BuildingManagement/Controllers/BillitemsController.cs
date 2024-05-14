@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildingManagement.Data;
 using BuildingManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BuildingManagement.Controllers
 {
+    [Authorize]
     public class BillitemsController : Controller
     {
         private readonly BuildingDbContext _context;

@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildingManagement.Data;
 using BuildingManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BuildingManagement.Controllers
 {
+    [Authorize]
     public class CompaniesController : Controller
     {
         private readonly BuildingDbContext _context;
@@ -54,10 +56,12 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CmpyId,CmpyNme,Address,RevDteTime")] Company company)
+        public async Task<IActionResult> Create([Bind("CmpyNme,Address")] Company company)
         {
             if (ModelState.IsValid)
             {
+                
+                company.RevDteTime = DateTime.Now;
                 _context.Add(company);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -86,7 +90,7 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(short id, [Bind("CmpyId,CmpyNme,Address,RevDteTime")] Company company)
+        public async Task<IActionResult> Edit(short id, [Bind("CmpyId,CmpyNme,Address")] Company company)
         {
             if (id != company.CmpyId)
             {
@@ -97,6 +101,8 @@ namespace BuildingManagement.Controllers
             {
                 try
                 {
+                    
+                    company.RevDteTime = DateTime.Now;
                     _context.Update(company);
                     await _context.SaveChangesAsync();
                 }

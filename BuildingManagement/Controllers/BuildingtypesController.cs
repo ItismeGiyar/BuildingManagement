@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildingManagement.Data;
 using BuildingManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BuildingManagement.Controllers
 {
+    [Authorize]
     public class BuildingtypesController : Controller
     {
         private readonly BuildingDbContext _context;
@@ -39,6 +41,18 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
+            buildingtype.Company =
+             _context.ms_company
+             .Where(c => c.CmpyId == buildingtype.CmpyId)
+             .Select(c => c.CmpyNme)
+             .FirstOrDefault() ?? "";
+
+
+            buildingtype.User =
+             _context.ms_user
+             .Where(u => u.UserId == buildingtype.UserId)
+             .Select(u => u.UserNme)
+             .FirstOrDefault() ?? "";
 
             return View(buildingtype);
         }
@@ -54,10 +68,14 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BdtypId,BdtypDesc,CmpyId,UserId,RevDteTime")] Buildingtype buildingtype)
+        public async Task<IActionResult> Create([Bind("BdtypDesc")] Buildingtype buildingtype)
         {
             if (ModelState.IsValid)
             {
+               
+                buildingtype.CmpyId = 1; //default
+                buildingtype.UserId = 1; //default
+                buildingtype.RevDteTime = DateTime.Now;
                 _context.Add(buildingtype);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -86,7 +104,7 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BdtypId,BdtypDesc,CmpyId,UserId,RevDteTime")] Buildingtype buildingtype)
+        public async Task<IActionResult> Edit(int id, [Bind("BdtypId,BdtypDesc")] Buildingtype buildingtype)
         {
             if (id != buildingtype.BdtypId)
             {
@@ -97,6 +115,9 @@ namespace BuildingManagement.Controllers
             {
                 try
                 {
+                    buildingtype.CmpyId = 2; //default
+                    buildingtype.UserId = 2; //default
+                    buildingtype.RevDteTime = DateTime.Now;
                     _context.Update(buildingtype);
                     await _context.SaveChangesAsync();
                 }
@@ -104,7 +125,7 @@ namespace BuildingManagement.Controllers
                 {
                     if (!BuildingtypeExists(buildingtype.BdtypId))
                     {
-                        return NotFound();
+                       return NotFound();
                     }
                     else
                     {

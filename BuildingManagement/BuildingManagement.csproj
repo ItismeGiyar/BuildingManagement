@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\NewFolder2\**" />
+    <Content Remove="Views\NewFolder2\**" />
+    <EmbeddedResource Remove="Views\NewFolder2\**" />
+    <None Remove="Views\NewFolder2\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\lib\AdminLTE\.github\codeql\codeql-config.yml" />
     <None Include="wwwroot\lib\AdminLTE\.github\CONTRIBUTING.md" />
     <None Include="wwwroot\lib\AdminLTE\.github\dependabot.yml" />

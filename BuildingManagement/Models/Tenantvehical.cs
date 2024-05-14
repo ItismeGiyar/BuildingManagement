@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BuildingManagement.Models
 {
@@ -10,7 +11,7 @@ namespace BuildingManagement.Models
         public int VehId { get; set; }
 
         
-        [DisplayName("Tenant Id")]
+        [DisplayName("Tenant")]
 
         public int TenantId { get; set; }
         [DisplayName("Plate Number")]
@@ -19,12 +20,19 @@ namespace BuildingManagement.Models
         public required string PlateNo { get; set; }
         [DisplayName("Allocation Number")]
         public int AllocateNo { get; set; }
-        [DisplayName("Company Id")]
+        [DisplayName("Company")]
         public short CmpyId { get; set; }
-        [DisplayName("User Id")]
+        [DisplayName("User")]
         public int UserId { get; set; }
         [DisplayName("Revised Datetime")]
         public DateTime RevDteTime { get; set; }
+        [NotMapped]
+        [DisplayName("Company")]
+        public string Company { get; set; } = string.Empty;
+
+        [NotMapped]
+        [DisplayName("User")]
+        public string User { get; set; } = string.Empty;
 
     }
 }

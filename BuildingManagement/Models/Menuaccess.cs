@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BuildingManagement.Models
 {
@@ -6,9 +8,17 @@ namespace BuildingManagement.Models
     {
         [Key]
         public int AccessId { get; set; }
-        public short MnugrpId { get; set; }
+        [DisplayName("Menu Group ID")]
+        public short  MnugrpId { get; set; }
+        [DisplayName("Menu Group Name")]
         [StringLength(100)]
-        public required string BtnNme { get; set; }
+        public string BtnNme { get; set; } = string.Empty;
+
+        [DisplayName("Revised Datetime")]
         public DateTime RevDteTime { get; set; }
+
+        [NotMapped]
+        [DisplayName("Menu Group")]
+        public string Menugp { get; set; } = string.Empty;
     }
 }

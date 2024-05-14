@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildingManagement.Data;
 using BuildingManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BuildingManagement.Controllers
 {
+    [Authorize]
     public class MenuaccessesController : Controller
     {
         private readonly BuildingDbContext _context;
@@ -22,7 +24,12 @@ namespace BuildingManagement.Controllers
         // GET: Menuaccesses
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ms_menuaccess.ToListAsync());
+            var list = await _context.ms_menuaccess.ToListAsync();
+            foreach(var data in list)
+            {
+                data.Menugp = _context.ms_menugp.Where(m => m.MnugrpId == data.MnugrpId).Select(m => m.MnugrpNme).FirstOrDefault() ?? "";
+            }
+            return View(list);
         }
 
         // GET: Menuaccesses/Details/5
@@ -39,6 +46,11 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
+            menuaccess.Menugp  =
+              _context.ms_menugp
+              .Where(c => c.MnugrpId == menuaccess.MnugrpId)
+              .Select(c => c.MnugrpNme)
+              .FirstOrDefault() ?? "";
 
             return View(menuaccess);
         }
@@ -46,6 +58,9 @@ namespace BuildingManagement.Controllers
         // GET: Menuaccesses/Create
         public IActionResult Create()
         {
+            var list = _context.ms_menuaccess.ToList();
+            ViewData["MenugpList"] = new SelectList(_context.ms_menugp.ToList(), "MnugrpId", "BtnNme");
+
             return View();
         }
 
@@ -54,10 +69,13 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AccessId,MnugrpId,BtnNme,RevDteTime")] Menuaccess menuaccess)
+        public async Task<IActionResult> Create([Bind("MnugrpId,BtnNme")] Menuaccess menuaccess)
         {
             if (ModelState.IsValid)
             {
+                menuaccess.AccessId = 1;//default
+                menuaccess.RevDteTime = DateTime.Now;
+
                 _context.Add(menuaccess);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -86,7 +104,7 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AccessId,MnugrpId,BtnNme,RevDteTime")] Menuaccess menuaccess)
+        public async Task<IActionResult> Edit(int id, [Bind("AccessId,MnugrpId,BtnNme")] Menuaccess menuaccess)
         {
             if (id != menuaccess.AccessId)
             {
@@ -97,6 +115,8 @@ namespace BuildingManagement.Controllers
             {
                 try
                 {
+                    menuaccess.AccessId = 1;//default
+                    menuaccess.RevDteTime = DateTime.Now;
                     _context.Update(menuaccess);
                     await _context.SaveChangesAsync();
                 }

@@ -32,7 +32,15 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-group text-danger">@ViewData["Msg"]</div>
 
-                          
+
+                            <div class="form-group">
+                                <label asp-for="TenantId" class="control-label"></label>
+                                <select asp-for="TenantId" class="form-control form-select" asp-items="@ViewBag.TenantList">
+                                    <option value=""> - Select One - </option>
+                                </select>
+                                <span asp-validation-for="TenantId" class="text-danger"></span>
+                            </div>
+
                             <div class="form-group">
                                 <label asp-for="PlateNo" class="control-label"></label>
                                 <input asp-for="PlateNo" class="form-control" />
@@ -45,11 +53,7 @@
                             </div>
                             
                             
-                            <div class="form-group">
-                                <label asp-for="RevDteTime" class="control-label"></label>
-                                <input asp-for="RevDteTime" class="form-control" />
-                                <span asp-validation-for="RevDteTime" class="text-danger"></span>
-                            </div>
+                           
                             <div class="form-group">
                                 <input type="submit" value="Create" class="btn btn-primary" />
                             </div>

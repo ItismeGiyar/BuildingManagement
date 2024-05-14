@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildingManagement.Data;
 using BuildingManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BuildingManagement.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private readonly BuildingDbContext _context;
@@ -39,7 +41,11 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
-
+            user.Company =
+                _context.ms_company
+                .Where(c => c.CmpyId == user.CmpyId)
+                .Select(c => c.CmpyNme)
+                .FirstOrDefault() ?? "";
             return View(user);
         }
 
@@ -54,10 +60,12 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,UserCde,UserNme,Position,Gender,MnugrpId,Pwd,CmpyId,RevDteTime")] User user)
+        public async Task<IActionResult> Create([Bind("UserCde,UserNme,MnugrpId,Position,Gender,Pwd")] User user)
         {
             if (ModelState.IsValid)
             {
+                user.CmpyId = 1;//default
+                user.RevDteTime = DateTime.Now;
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -86,7 +94,7 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserId,UserCde,UserNme,Position,Gender,MnugrpId,Pwd,CmpyId,RevDteTime")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,UserCde,UserNme,Position,Gender,MnugrpId,Pwd")] User user)
         {
             if (id != user.UserId)
             {
@@ -97,6 +105,8 @@ namespace BuildingManagement.Controllers
             {
                 try
                 {
+                    user.CmpyId = 1;//default
+                    user.RevDteTime = DateTime.Now;
                     _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
