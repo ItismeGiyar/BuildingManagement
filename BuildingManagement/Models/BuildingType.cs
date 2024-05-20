@@ -7,6 +7,7 @@ namespace BuildingManagement.Models
     public class Buildingtype
     {
         [Key]
+        [DisplayName("Building Type ID")]
         public int BdtypId { get; set; }
         [DisplayName("Building Type Description")]
         [StringLength(50)]
