@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BuildingManagement.Data;
 using BuildingManagement.Models;
 using Microsoft.AspNetCore.Authorization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BuildingManagement.Controllers
 {
@@ -24,10 +25,15 @@ namespace BuildingManagement.Controllers
         // GET: PropertyInfoes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ms_propertyinfo.ToListAsync());
+            var list = await _context.ms_propertyinfo.ToListAsync();
+
+            foreach (var data in list)
+            {
+                data.ResidentType = _context.ms_residenttype.Where(rt => rt.ResitypId == data.ResitypId).Select(rt => rt.RestypDesc).FirstOrDefault() ?? "";
+            }
+            return View(list);
         }
 
-        // GET: PropertyInfoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -41,29 +47,33 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
+            propertyInfo.ResidentType = _context.ms_residenttype.Where(rt => rt.ResitypId == propertyInfo.ResitypId).Select(rt => rt.RestypDesc).FirstOrDefault() ?? "";
+            propertyInfo.Company = _context.ms_company.Where(c => c.CmpyId == propertyInfo.CmpyId).Select(c => c.CmpyNme).FirstOrDefault() ?? "";
+            propertyInfo.User = _context.ms_user.Where(u => u.UserId == propertyInfo.UserId).Select(u => u.UserNme).FirstOrDefault() ?? "";
 
             return View(propertyInfo);
         }
 
-        // GET: PropertyInfoes/Create
         public IActionResult Create()
         {
+            ViewData["ResidentTypes"] = new SelectList(_context.ms_residenttype.ToList(), "ResitypId", "RestypDesc");
             return View();
         }
 
-        // POST: PropertyInfoes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PropId,PropNme,Phone1,Phone2,Email,City,Township,Addr,AcreMeasure,ResitypId,BlockCount,RoomCount,ParkingCount,ParkingSizeDesc,PoolCount,PoolSizeDesc,EstiblishDte,CmpyId,UserId,RevDteTime")] PropertyInfo propertyInfo)
+        public async Task<IActionResult> Create([Bind("PropNme,Phone1,Phone2,Email,City,Township,Addr,AcreMeasure,ResitypId,BlockCount,RoomCount,ParkingCount,ParkingSizeDesc,PoolCount,PoolSizeDesc,EstiblishDte")] PropertyInfo propertyInfo)
         {
             if (ModelState.IsValid)
             {
+                propertyInfo.CmpyId = GetCmpyId();
+                propertyInfo.UserId = GetUserId();
+                propertyInfo.RevDteTime = DateTime.Now;
                 _context.Add(propertyInfo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ResidentTypes"] = new SelectList(_context.ms_residenttype.ToList(), "ResitypId", "RestypDesc");
             return View(propertyInfo);
         }
 
@@ -80,15 +90,14 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["ResidentTypes"] = new SelectList(_context.ms_residenttype.ToList(), "ResitypId", "RestypDesc");
             return View(propertyInfo);
         }
 
-        // POST: PropertyInfoes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PropId,PropNme,Phone1,Phone2,Email,City,Township,Addr,AcreMeasure,ResitypId,BlockCount,RoomCount,ParkingCount,ParkingSizeDesc,PoolCount,PoolSizeDesc,EstiblishDte,CmpyId,UserId,RevDteTime")] PropertyInfo propertyInfo)
+        public async Task<IActionResult> Edit(int id, [Bind("PropId,PropNme,Phone1,Phone2,Email,City,Township,Addr,AcreMeasure,ResitypId,BlockCount,RoomCount,ParkingCount,ParkingSizeDesc,PoolCount,PoolSizeDesc,EstiblishDte")] PropertyInfo propertyInfo)
         {
             if (id != propertyInfo.PropId)
             {
@@ -99,6 +108,9 @@ namespace BuildingManagement.Controllers
             {
                 try
                 {
+                    propertyInfo.CmpyId = GetCmpyId();
+                    propertyInfo.UserId = GetUserId();
+                    propertyInfo.RevDteTime = DateTime.Now;
                     _context.Update(propertyInfo);
                     await _context.SaveChangesAsync();
                 }
@@ -115,10 +127,10 @@ namespace BuildingManagement.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ResidentTypes"] = new SelectList(_context.ms_residenttype.ToList(), "ResitypId", "RestypDesc");
             return View(propertyInfo);
         }
 
-        // GET: PropertyInfoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -136,7 +148,6 @@ namespace BuildingManagement.Controllers
             return View(propertyInfo);
         }
 
-        // POST: PropertyInfoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -155,5 +166,31 @@ namespace BuildingManagement.Controllers
         {
             return _context.ms_propertyinfo.Any(e => e.PropId == id);
         }
+
+
+        #region // Global Methods (Important) //
+
+        protected short GetUserId()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
+            var userId = (short)_context.ms_user
+                .Where(u => u.UserCde == userCde)
+                .Select(u => u.UserId)
+                .FirstOrDefault();
+
+            return userId;
+        }
+
+        protected short GetCmpyId()
+        {
+            var cmpyId = _context.ms_user
+                .Where(u => u.UserId == GetUserId())
+                .Select(u => u.CmpyId)
+                .FirstOrDefault();
+
+            return cmpyId;
+        }
+
+        #endregion
     }
 }

@@ -21,7 +21,7 @@ namespace BuildingManagement.Models
         public decimal FixChrgAmt {  get; set; }
         public short CmpyId {  get; set; }
         public int UserId{ get; set;}
-        [DisplayName("Revised Date time")]
+        [DisplayName("Revised Date Time")]
         public DateTime RevDteTime { get; set; }
         [NotMapped]
         [DisplayName("Company")]
