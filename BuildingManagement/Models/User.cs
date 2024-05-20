@@ -27,7 +27,7 @@ namespace BuildingManagement.Models
         public required byte[] Pwd { get; set; } 
         [DisplayName("Company")]
         public short CmpyId { get; set; }
-        [DisplayName("Revised Datetime")]
+        [DisplayName("Revised Date Time")]
         public DateTime RevDteTime { get; set; }
         [NotMapped]
         [DisplayName("Company")]

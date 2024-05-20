@@ -7,14 +7,16 @@ namespace BuildingManagement.Models
     public class Menuaccess
     {
         [Key]
+        [DisplayName("Menu Access ID")]
         public int AccessId { get; set; }
-        [DisplayName("Menu Group ID")]
-        public short  MnugrpId { get; set; }
-        [DisplayName("Menu Group Name")]
+        [DisplayName("Menu Group")]
+        public short MnugrpId { get; set; }
+
         [StringLength(100)]
+        [DisplayName("Button Name")]
         public string BtnNme { get; set; } = string.Empty;
 
-        [DisplayName("Revised Datetime")]
+        [DisplayName("Revised Date Time")]
         public DateTime RevDteTime { get; set; }
 
         [NotMapped]

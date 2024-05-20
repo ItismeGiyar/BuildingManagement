@@ -47,7 +47,7 @@ namespace BuildingManagement.Controllers
 
             var list = await _context.ms_propertyroom.ToListAsync();
 
-            foreach(var data in list)
+            foreach (var data in list)
             {
                 data.Tenant = _context.ms_tenant.Where(t => t.TenantId == data.TenantId).Select(t => t.TenantNme).FirstOrDefault() ?? "";
                 data.PropertyInfo = _context.ms_propertyinfo.Where(t => t.PropId == data.PropId).Select(t => t.PropNme).FirstOrDefault() ?? "";
@@ -143,7 +143,7 @@ namespace BuildingManagement.Controllers
 
             return View(propertyRoom);
         }
-        
+
         // GET: PropertyRooms/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -180,11 +180,11 @@ namespace BuildingManagement.Controllers
             if (ModelState.IsValid)
             {
                 try
-                   
+
                 {
                     propertyRoom.CmpyId = GetCmpyId();//default
                     propertyRoom.UserId = GetUserId();//default;
-                    propertyRoom.RevDteTime=DateTime.Now;
+                    propertyRoom.RevDteTime = DateTime.Now;
 
 
                     _context.Update(propertyRoom);
