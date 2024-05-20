@@ -19,7 +19,7 @@ namespace BuildingManagement.Controllers
         // GET: BuildingTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ms_buildingType.ToListAsync());
+            return View(await _context.ms_buildingtype.ToListAsync());
         }
 
         // GET: BuildingTypes/Details/5
@@ -30,7 +30,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            var buildingType = await _context.ms_buildingType
+            var buildingType = await _context.ms_buildingtype
                 .FirstOrDefaultAsync(m => m.BdtypId == id);
             if (buildingType == null)
             {
@@ -70,7 +70,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            var buildingType = await _context.ms_buildingType.FindAsync(id);
+            var buildingType = await _context.ms_buildingtype.FindAsync(id);
             if (buildingType == null)
             {
                 return NotFound();
@@ -126,7 +126,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            var buildingType = await _context.ms_buildingType
+            var buildingType = await _context.ms_buildingtype
                 .FirstOrDefaultAsync(m => m.BdtypId == id);
             if (buildingType == null)
             {
@@ -141,10 +141,10 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var buildingType = await _context.ms_buildingType.FindAsync(id);
+            var buildingType = await _context.ms_buildingtype.FindAsync(id);
             if (buildingType != null)
             {
-                _context.ms_buildingType.Remove(buildingType);
+                _context.ms_buildingtype.Remove(buildingType);
             }
 
             await _context.SaveChangesAsync();
@@ -153,7 +153,7 @@ namespace BuildingManagement.Controllers
 
         private bool BuildingTypeExists(short id)
         {
-            return _context.ms_buildingType.Any(e => e.BdtypId == id);
+            return _context.ms_buildingtype.Any(e => e.BdtypId == id);
         }
     }
 }

@@ -68,7 +68,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            complaintCatg.Company =
+            complaintCatg.Company = 
                 _context.ms_company
                 .Where(c => c.CmpyId == complaintCatg.CmpyId)
                 .Select(c => c.CmpyNme)
@@ -79,7 +79,7 @@ namespace BuildingManagement.Controllers
                 .Where(u => u.UserId == complaintCatg.UserId)
                 .Select(u => u.UserNme)
                 .FirstOrDefault() ?? "";
-
+            
 
             return View(complaintCatg);
         }
