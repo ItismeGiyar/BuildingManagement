@@ -15,7 +15,7 @@ namespace BuildingManagement.Data
         public DbSet<User> ms_user { get; set; }
         public DbSet<Residenttype> ms_residenttype { get; set; }
         public DbSet<Location> ms_location { get; set; }
-        public DbSet<BuildingType> ms_buildingtype { get; set; }
+        public DbSet<Buildingtype> ms_buildingtype { get; set; }
         public DbSet<PropertyInfo> ms_propertyinfo { get; set; }
         public DbSet<Tenant> ms_tenant { get; set; }
         public DbSet<PropertyRoom> ms_propertyroom { get; set; }

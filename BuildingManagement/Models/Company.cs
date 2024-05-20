@@ -13,7 +13,7 @@ namespace BuildingManagement.Models
         public required string CmpyNme { get; set; } = String.Empty;
         [DisplayName("Address")]
         public string? Address { get; set; }
-        [DisplayName("Revised Datetime")]
+        [DisplayName("Revised Date Time")]
         public DateTime RevDteTime { get; set; }
 
     }
