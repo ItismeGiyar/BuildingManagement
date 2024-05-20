@@ -47,11 +47,11 @@ namespace BuildingManagement.Controllers
 
             var list = await _context.ms_propertyroom.ToListAsync();
 
-            foreach (var data in list)
+            foreach(var data in list)
             {
                 data.Tenant = _context.ms_tenant.Where(t => t.TenantId == data.TenantId).Select(t => t.TenantNme).FirstOrDefault() ?? "";
                 data.PropertyInfo = _context.ms_propertyinfo.Where(t => t.PropId == data.PropId).Select(t => t.PropNme).FirstOrDefault() ?? "";
-                data.BuildingType = _context.ms_buildingtype.Where(t => t.BdtypId == data.BdtypId).Select(t => t.BdtypDesc).FirstOrDefault() ?? "";
+                data.BuildingType = _context.ms_buildingtype.Where(t => t.BdtypId== data.BdtypId).Select(t => t.BdtypDesc).FirstOrDefault() ?? "";
                 data.Location = _context.ms_location.Where(t => t.LocId == data.LocId).Select(t => t.LocDesc).FirstOrDefault() ?? "";
 
 
@@ -114,7 +114,7 @@ namespace BuildingManagement.Controllers
         // GET: PropertyRooms/Create
         public IActionResult Create()
         {
-            var list = _context.ms_propertyroom.ToList();
+            var list = _context.ms_propertyinfo.ToList();
             ViewData["PropertyList"] = new SelectList(list, "PropId", "PropNme");
 
             ViewData["TenantList"] = new SelectList(_context.ms_tenant.ToList(), "TenantId", "TenantNme");
@@ -143,7 +143,7 @@ namespace BuildingManagement.Controllers
 
             return View(propertyRoom);
         }
-
+        
         // GET: PropertyRooms/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -180,11 +180,11 @@ namespace BuildingManagement.Controllers
             if (ModelState.IsValid)
             {
                 try
-
+                   
                 {
                     propertyRoom.CmpyId = GetCmpyId();//default
                     propertyRoom.UserId = GetUserId();//default;
-                    propertyRoom.RevDteTime = DateTime.Now;
+                    propertyRoom.RevDteTime=DateTime.Now;
 
 
                     _context.Update(propertyRoom);

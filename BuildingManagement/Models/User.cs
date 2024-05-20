@@ -9,9 +9,11 @@ namespace BuildingManagement.Models
         [Key]
         
         public int UserId { get; set; }
+        
         [StringLength(24)]
         [DisplayName("User Code")]
         public required string UserCde { get; set; }
+        public string? Usercde { get; internal set; }
         [DisplayName("User Name")]
         [StringLength(100)]
         public required string UserNme { get; set; }
