@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BuildingManagement.Controllers
 {
@@ -16,9 +17,9 @@ namespace BuildingManagement.Controllers
             _logger = logger;
         }
 
-        public  IActionResult Index()
+        public IActionResult Index()
         {
-            
+
             return View();
         }
 

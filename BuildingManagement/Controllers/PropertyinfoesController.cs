@@ -24,7 +24,7 @@ namespace BuildingManagement.Controllers
         // GET: PropertyInfoes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ms_propertyInfo.ToListAsync());
+            return View(await _context.ms_propertyinfo.ToListAsync());
         }
 
         // GET: PropertyInfoes/Details/5
@@ -35,7 +35,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            var propertyInfo = await _context.ms_propertyInfo
+            var propertyInfo = await _context.ms_propertyinfo
                 .FirstOrDefaultAsync(m => m.PropId == id);
             if (propertyInfo == null)
             {
@@ -75,7 +75,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            var propertyInfo = await _context.ms_propertyInfo.FindAsync(id);
+            var propertyInfo = await _context.ms_propertyinfo.FindAsync(id);
             if (propertyInfo == null)
             {
                 return NotFound();
@@ -126,7 +126,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            var propertyInfo = await _context.ms_propertyInfo
+            var propertyInfo = await _context.ms_propertyinfo
                 .FirstOrDefaultAsync(m => m.PropId == id);
             if (propertyInfo == null)
             {
@@ -141,10 +141,10 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var propertyInfo = await _context.ms_propertyInfo.FindAsync(id);
+            var propertyInfo = await _context.ms_propertyinfo.FindAsync(id);
             if (propertyInfo != null)
             {
-                _context.ms_propertyInfo.Remove(propertyInfo);
+                _context.ms_propertyinfo.Remove(propertyInfo);
             }
 
             await _context.SaveChangesAsync();
@@ -153,7 +153,7 @@ namespace BuildingManagement.Controllers
 
         private bool PropertyInfoExists(int id)
         {
-            return _context.ms_propertyInfo.Any(e => e.PropId == id);
+            return _context.ms_propertyinfo.Any(e => e.PropId == id);
         }
     }
 }

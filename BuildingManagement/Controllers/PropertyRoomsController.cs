@@ -45,13 +45,13 @@ namespace BuildingManagement.Controllers
         public async Task<IActionResult> Index()
         {
 
-            var list = await _context.ms_propertyRoom.ToListAsync();
+            var list = await _context.ms_propertyroom.ToListAsync();
 
-            foreach(var data in list)
+            foreach (var data in list)
             {
                 data.Tenant = _context.ms_tenant.Where(t => t.TenantId == data.TenantId).Select(t => t.TenantNme).FirstOrDefault() ?? "";
-                data.PropertyInfo = _context.ms_propertyInfo.Where(t => t.PropId == data.PropId).Select(t => t.PropNme).FirstOrDefault() ?? "";
-                data.BuildingType = _context.ms_buildingType.Where(t => t.BdtypId== data.BdtypId).Select(t => t.BdtypDesc).FirstOrDefault() ?? "";
+                data.PropertyInfo = _context.ms_propertyinfo.Where(t => t.PropId == data.PropId).Select(t => t.PropNme).FirstOrDefault() ?? "";
+                data.BuildingType = _context.ms_buildingtype.Where(t => t.BdtypId == data.BdtypId).Select(t => t.BdtypDesc).FirstOrDefault() ?? "";
                 data.Location = _context.ms_location.Where(t => t.LocId == data.LocId).Select(t => t.LocDesc).FirstOrDefault() ?? "";
 
 
@@ -69,7 +69,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            var propertyRoom = await _context.ms_propertyRoom
+            var propertyRoom = await _context.ms_propertyroom
                 .FirstOrDefaultAsync(m => m.RoomId == id);
             if (propertyRoom == null)
             {
@@ -87,13 +87,13 @@ namespace BuildingManagement.Controllers
                 .Select(u => u.UserNme)
                 .FirstOrDefault() ?? "";
             propertyRoom.PropertyInfo =
-             _context.ms_propertyInfo
+             _context.ms_propertyinfo
              .Where(c => c.PropId == propertyRoom.PropId)
              .Select(c => c.PropNme)
              .FirstOrDefault() ?? "";
 
             propertyRoom.BuildingType =
-                _context.ms_buildingType
+                _context.ms_buildingtype
                 .Where(u => u.BdtypId == propertyRoom.BdtypId)
                 .Select(u => u.BdtypDesc)
                 .FirstOrDefault() ?? "";
@@ -114,11 +114,11 @@ namespace BuildingManagement.Controllers
         // GET: PropertyRooms/Create
         public IActionResult Create()
         {
-            var list = _context.ms_propertyInfo.ToList();
+            var list = _context.ms_propertyroom.ToList();
             ViewData["PropertyList"] = new SelectList(list, "PropId", "PropNme");
 
             ViewData["TenantList"] = new SelectList(_context.ms_tenant.ToList(), "TenantId", "TenantNme");
-            ViewData["BuildingTypeList"] = new SelectList(_context.ms_buildingType.ToList(), "BdtypId", "BdtypDesc");
+            ViewData["BuildingTypeList"] = new SelectList(_context.ms_buildingtype.ToList(), "BdtypId", "BdtypDesc");
             ViewData["LocationList"] = new SelectList(_context.ms_location.ToList(), "LocId", "LocDesc");
 
             return View();
@@ -143,7 +143,7 @@ namespace BuildingManagement.Controllers
 
             return View(propertyRoom);
         }
-        
+
         // GET: PropertyRooms/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -152,15 +152,15 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            var propertyRoom = await _context.ms_propertyRoom.FindAsync(id);
+            var propertyRoom = await _context.ms_propertyroom.FindAsync(id);
             if (propertyRoom == null)
             {
                 return NotFound();
             }
-            var list = _context.ms_propertyInfo.ToList();
+            var list = _context.ms_propertyinfo.ToList();
             ViewData["PropertyList"] = new SelectList(list, "PropId", "PropNme");
             ViewData["TenantList"] = new SelectList(_context.ms_tenant.ToList(), "TenantId", "TenantNme");
-            ViewData["BuildingTypeList"] = new SelectList(_context.ms_buildingType.ToList(), "BdtypId", "BdtypDesc");
+            ViewData["BuildingTypeList"] = new SelectList(_context.ms_buildingtype.ToList(), "BdtypId", "BdtypDesc");
             ViewData["LocationList"] = new SelectList(_context.ms_location.ToList(), "LocId", "LocDesc");
             return View(propertyRoom);
         }
@@ -180,11 +180,11 @@ namespace BuildingManagement.Controllers
             if (ModelState.IsValid)
             {
                 try
-                   
+
                 {
                     propertyRoom.CmpyId = GetCmpyId();//default
                     propertyRoom.UserId = GetUserId();//default;
-                    propertyRoom.RevDteTime=DateTime.Now;
+                    propertyRoom.RevDteTime = DateTime.Now;
 
 
                     _context.Update(propertyRoom);
@@ -214,7 +214,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            var propertyRoom = await _context.ms_propertyRoom
+            var propertyRoom = await _context.ms_propertyroom
                 .FirstOrDefaultAsync(m => m.RoomId == id);
             if (propertyRoom == null)
             {
@@ -229,10 +229,10 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var propertyRoom = await _context.ms_propertyRoom.FindAsync(id);
+            var propertyRoom = await _context.ms_propertyroom.FindAsync(id);
             if (propertyRoom != null)
             {
-                _context.ms_propertyRoom.Remove(propertyRoom);
+                _context.ms_propertyroom.Remove(propertyRoom);
             }
 
             await _context.SaveChangesAsync();
@@ -241,7 +241,7 @@ namespace BuildingManagement.Controllers
 
         private bool PropertyRoomExists(int id)
         {
-            return _context.ms_propertyRoom.Any(e => e.RoomId == id);
+            return _context.ms_propertyroom.Any(e => e.RoomId == id);
         }
     }
 }

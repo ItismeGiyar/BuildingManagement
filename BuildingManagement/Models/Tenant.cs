@@ -9,6 +9,7 @@ namespace BuildingManagement.Models
         
 
         [Key]
+        [DisplayName("Tenant ID")]
         public int TenantId { get; set; }
         [StringLength(50)]
         [DisplayName("Tenant Name")]

@@ -10,11 +10,11 @@ namespace BuildingManagement.Models
         public short CmpyId { get; set; }
         [DisplayName("Company Name")]
         [StringLength(100)]
-        public required string CmpyNme { get; set; } =String.Empty;
+        public required string CmpyNme { get; set; } = String.Empty;
         [DisplayName("Address")]
         public string? Address { get; set; }
         [DisplayName("Revised Datetime")]
         public DateTime RevDteTime { get; set; }
-                
+
     }
 }

@@ -25,10 +25,10 @@ namespace BuildingManagement.Controllers
         public async Task<IActionResult> Index()
         {
             var list = await _context.ms_menuaccess.ToListAsync();
-            foreach(var data in list)
+            foreach (var data in list)
             {
                 data.Menugp = _context.ms_menugp.Where(m => m.MnugrpId == data.MnugrpId).Select(m => m.MnugrpNme).FirstOrDefault() ?? "";
-        }
+            }
             return View(list);
         }
 
@@ -46,7 +46,7 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
-            menuaccess.Menugp  =
+            menuaccess.Menugp =
               _context.ms_menugp
               .Where(c => c.MnugrpId == menuaccess.MnugrpId)
               .Select(c => c.MnugrpNme)
@@ -134,11 +134,6 @@ namespace BuildingManagement.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(menuaccess);
-        }
-
-        private bool MenuaccessExists(int accessId)
-        {
-            throw new NotImplementedException();
         }
 
         // GET: Menuaccesses/Delete/5

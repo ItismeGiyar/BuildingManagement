@@ -151,6 +151,7 @@ namespace BuildingManagement.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public bool MenugpExists(short id)
         {
             return _context.ms_menugp.Any(e => e.MnugrpId == id);
         }

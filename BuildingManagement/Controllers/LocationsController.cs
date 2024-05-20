@@ -118,11 +118,6 @@ namespace BuildingManagement.Controllers
             return View(location);
         }
 
-        private bool LocationExists(int locId)
-        {
-            throw new NotImplementedException();
-        }
-
         // GET: Locations/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

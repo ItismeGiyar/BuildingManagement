@@ -22,9 +22,9 @@ namespace BuildingManagement.Controllers
         // GET: RoomProperties
         public async Task<IActionResult> Index()
         {
-            var list = await _context.MS_PropertyRoom.Select(m => (double)m.SqFullMeasure).ToListAsync();
+            var list = await _context.ms_propertyroom.Select(m => (double)m.SqFullMeasure).ToListAsync();
 
-            return View(await _context.MS_PropertyRoom.ToListAsync());
+            return View(await _context.ms_propertyroom.ToListAsync());
         }
 
         // GET: RoomProperties/Details/5
@@ -35,7 +35,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            var roomProperty = await _context.MS_PropertyRoom
+            var roomProperty = await _context.ms_propertyroom
                 .FirstOrDefaultAsync(m => m.RoomId == id);
             if (roomProperty == null)
             {
@@ -75,7 +75,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            var roomProperty = await _context.MS_PropertyRoom.FindAsync(id);
+            var roomProperty = await _context.ms_propertyroom.FindAsync(id);
             if (roomProperty == null)
             {
                 return NotFound();
@@ -126,7 +126,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            var roomProperty = await _context.MS_PropertyRoom
+            var roomProperty = await _context.ms_propertyroom
                 .FirstOrDefaultAsync(m => m.RoomId == id);
             if (roomProperty == null)
             {
@@ -141,10 +141,10 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var roomProperty = await _context.MS_PropertyRoom.FindAsync(id);
+            var roomProperty = await _context.ms_propertyroom.FindAsync(id);
             if (roomProperty != null)
             {
-                _context.MS_PropertyRoom.Remove(roomProperty);
+                _context.ms_propertyroom.Remove(roomProperty);
             }
 
             await _context.SaveChangesAsync();
@@ -153,7 +153,7 @@ namespace BuildingManagement.Controllers
 
         private bool RoomPropertyExists(int id)
         {
-            return _context.MS_PropertyRoom.Any(e => e.RoomId == id);
+            return _context.ms_propertyroom.Any(e => e.RoomId == id);
         }
     }
 }

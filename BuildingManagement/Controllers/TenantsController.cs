@@ -92,11 +92,12 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TenantNme,Occupany,IdNo,Gender,Phone1,Phone2,LocalFlg,PermentAddr")] Tenant tenant)
         {
-            tenant.CmpyId =GetCmpyId() ;
-            tenant.UserId = GetUserId();
-            tenant.RevDteTime = DateTime.Now;
+            
             if (ModelState.IsValid)
             {
+                tenant.CmpyId = GetCmpyId();
+                tenant.UserId = GetUserId();
+                tenant.RevDteTime = DateTime.Now;
                 _context.Add(tenant);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

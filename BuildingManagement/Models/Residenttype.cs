@@ -7,9 +7,10 @@ namespace BuildingManagement.Models
     public class Residenttype
     {
         [Key]
+        [DisplayName("Resident Type ID")]
         public int ResitypId { get; set; }
         [StringLength(50)]
-        [DisplayName("Resitdent Type Description")]
+        [DisplayName("Resident Type Description")]
         public string RestypDesc { get; set; }=string.Empty;
         [DisplayName("Company ID")]
         public short CmpyId { get; set; }

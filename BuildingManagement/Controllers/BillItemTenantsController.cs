@@ -24,7 +24,7 @@ namespace BuildingManagement.Controllers
         // GET: BillItemTenants
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ms_billItemTenant.ToListAsync());
+            return View(await _context.ms_billitemtenant.ToListAsync());
         }
 
         // GET: BillItemTenants/Details/5
@@ -35,7 +35,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            var billItemTenant = await _context.ms_billItemTenant
+            var billItemTenant = await _context.ms_billitemtenant
                 .FirstOrDefaultAsync(m => m.BtitemId == id);
             if (billItemTenant == null)
             {
@@ -75,7 +75,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            var billItemTenant = await _context.ms_billItemTenant.FindAsync(id);
+            var billItemTenant = await _context.ms_billitemtenant.FindAsync(id);
             if (billItemTenant == null)
             {
                 return NotFound();
@@ -126,7 +126,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            var billItemTenant = await _context.ms_billItemTenant
+            var billItemTenant = await _context.ms_billitemtenant
                 .FirstOrDefaultAsync(m => m.BtitemId == id);
             if (billItemTenant == null)
             {
@@ -141,10 +141,10 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var billItemTenant = await _context.ms_billItemTenant.FindAsync(id);
+            var billItemTenant = await _context.ms_billitemtenant.FindAsync(id);
             if (billItemTenant != null)
             {
-                _context.ms_billItemTenant.Remove(billItemTenant);
+                _context.ms_billitemtenant.Remove(billItemTenant);
             }
 
             await _context.SaveChangesAsync();
@@ -153,7 +153,7 @@ namespace BuildingManagement.Controllers
 
         private bool BillItemTenantExists(int id)
         {
-            return _context.ms_billItemTenant.Any(e => e.BtitemId == id);
+            return _context.ms_billitemtenant.Any(e => e.BtitemId == id);
         }
     }
 }
