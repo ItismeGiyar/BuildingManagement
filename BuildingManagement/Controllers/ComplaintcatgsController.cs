@@ -50,7 +50,7 @@ namespace BuildingManagement.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ms_complaintCatg.ToListAsync());
+            return View(await _context.ms_complaintcatg.ToListAsync());
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -60,7 +60,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            var complaintCatg = await _context.ms_complaintCatg
+            var complaintCatg = await _context.ms_complaintcatg
                 .FirstOrDefaultAsync(m => m.CplCatgId == id);
 
             if (complaintCatg == null)
@@ -113,7 +113,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            var complaintCatg = await _context.ms_complaintCatg.FindAsync(id);
+            var complaintCatg = await _context.ms_complaintcatg.FindAsync(id);
             if (complaintCatg == null)
             {
                 return NotFound();
@@ -164,7 +164,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            var complaintCatg = await _context.ms_complaintCatg
+            var complaintCatg = await _context.ms_complaintcatg
                 .FirstOrDefaultAsync(m => m.CplCatgId == id);
             if (complaintCatg == null)
             {
@@ -179,10 +179,10 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var complaintCatg = await _context.ms_complaintCatg.FindAsync(id);
+            var complaintCatg = await _context.ms_complaintcatg.FindAsync(id);
             if (complaintCatg != null)
             {
-                _context.ms_complaintCatg.Remove(complaintCatg);
+                _context.ms_complaintcatg.Remove(complaintCatg);
             }
 
             await _context.SaveChangesAsync();
@@ -191,7 +191,7 @@ namespace BuildingManagement.Controllers
 
         private bool ComplaintCatgExists(int id)
         {
-            return _context.ms_complaintCatg.Any(e => e.CplCatgId == id);
+            return _context.ms_complaintcatg.Any(e => e.CplCatgId == id);
         }
         #endregion
     }
