@@ -24,7 +24,7 @@ namespace BuildingManagement.Controllers
         // GET: TenantVehicals
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ms_tenantVehical.ToListAsync());
+            return View(await _context.ms_tenantvehical.ToListAsync());
         }
 
         // GET: TenantVehicals/Details/5
@@ -35,7 +35,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            var tenantVehical = await _context.ms_tenantVehical
+            var tenantVehical = await _context.ms_tenantvehical
                 .FirstOrDefaultAsync(m => m.VehId == id);
             if (tenantVehical == null)
             {
@@ -75,7 +75,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            var tenantVehical = await _context.ms_tenantVehical.FindAsync(id);
+            var tenantVehical = await _context.ms_tenantvehical.FindAsync(id);
             if (tenantVehical == null)
             {
                 return NotFound();
@@ -126,7 +126,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            var tenantVehical = await _context.ms_tenantVehical
+            var tenantVehical = await _context.ms_tenantvehical
                 .FirstOrDefaultAsync(m => m.VehId == id);
             if (tenantVehical == null)
             {
@@ -141,10 +141,10 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tenantVehical = await _context.ms_tenantVehical.FindAsync(id);
+            var tenantVehical = await _context.ms_tenantvehical.FindAsync(id);
             if (tenantVehical != null)
             {
-                _context.ms_tenantVehical.Remove(tenantVehical);
+                _context.ms_tenantvehical.Remove(tenantVehical);
             }
 
             await _context.SaveChangesAsync();
@@ -153,7 +153,7 @@ namespace BuildingManagement.Controllers
 
         private bool TenantVehicalExists(int id)
         {
-            return _context.ms_tenantVehical.Any(e => e.VehId == id);
+            return _context.ms_tenantvehical.Any(e => e.VehId == id);
         }
     }
 }

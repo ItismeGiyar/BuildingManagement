@@ -1,73 +1,65 @@
 ﻿@model BuildingManagement.Models.BillItem
 
-
 @{
-    ViewData["Title"] = "Bill Item";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Create";
 }
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-6">
-                <h4>@ViewData["Title"]</h4>
-            </div>
-            <div class="col-6">
-                <div class="breadcrumb float-right active">
-                    <a asp-action="Index" class="btn btn-primary">Back to List <i class="fas fa-back"></i></a>
 
-                </div>
+<h1>Create</h1>
+
+<h4>Billitem</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="BItemDesc" class="control-label"></label>
+                <input asp-for="BItemDesc" class="form-control" />
+                <span asp-validation-for="BItemDesc" class="text-danger"></span>
             </div>
-        </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="MonthPostFlg" /> @Html.DisplayNameFor(model => model.MonthPostFlg)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="FixChrgFlg" /> @Html.DisplayNameFor(model => model.FixChrgFlg)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="FixChrgAmt" class="control-label"></label>
+                <input asp-for="FixChrgAmt" class="form-control" />
+                <span asp-validation-for="FixChrgAmt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CmpyId" class="control-label"></label>
+                <input asp-for="CmpyId" class="form-control" />
+                <span asp-validation-for="CmpyId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RevDteTime" class="control-label"></label>
+                <input asp-for="RevDteTime" class="form-control" />
+                <span asp-validation-for="RevDteTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
-</section>
-<section class="content">
-    <div class="container-fluid">
-        <div class="card card-gray">
-            <div class="card-header">
-                <h3 class="card-title">@ViewData["Title"] Create</h3>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <form asp-action="Create">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <div class="form-group">
-                                <label asp-for="BItemDesc" class="control-label"></label>
-                                <input asp-for="BItemDesc" class="form-control" />
-                                <span asp-validation-for="BItemDesc" class="text-danger"></span>
-                            </div>
-                            <div class="form-group form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" asp-for="MonthPostFlg" /> @Html.DisplayNameFor(model => model.MonthPostFlg)
-                                </label>
-                            </div>
-                            <div class="form-group form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" asp-for="FixChrgFlg" /> @Html.DisplayNameFor(model => model.FixChrgFlg)
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="FixChrgAmt" class="control-label"></label>
-                                <input asp-for="FixChrgAmt" class="form-control" />
-                                <span asp-validation-for="FixChrgAmt" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" value="Create" class="btn btn-primary" />
-                            </div>
-                        </form>
+</div>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-</section>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-
-
 }
-
-

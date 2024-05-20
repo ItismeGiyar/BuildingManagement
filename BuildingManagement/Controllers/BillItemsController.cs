@@ -21,11 +21,13 @@ namespace BuildingManagement.Controllers
             _context = context;
         }
 
+        // GET: BillItems
         public async Task<IActionResult> Index()
         {
             return View(await _context.ms_billitem.ToListAsync());
         }
 
+        // GET: BillItems/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -40,26 +42,24 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
-            billItem.Company = _context.ms_company.Where(c => c.CmpyId == billItem.CmpyId).Select(c => c.CmpyNme).FirstOrDefault() ?? "";
-            billItem.User = _context.ms_user.Where(u => u.UserId == billItem.UserId).Select(u => u.UserNme).FirstOrDefault() ?? "";
-
             return View(billItem);
         }
 
+        // GET: BillItems/Create
         public IActionResult Create()
         {
             return View();
         }
 
+        // POST: BillItems/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BItemDesc,MonthPostFlg,FixChrgFlg,FixChrgAmt")] BillItem billItem)
+        public async Task<IActionResult> Create([Bind("BItemID,BItemDesc,MonthPostFlg,FixChrgFlg,FixChrgAmt,CmpyId,UserId,RevDteTime")] BillItem billItem)
         {
             if (ModelState.IsValid)
             {
-                billItem.CmpyId = GetCmpyId();
-                billItem.UserId = GetUserId();
-                billItem.RevDteTime = DateTime.Now;
                 _context.Add(billItem);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -67,6 +67,7 @@ namespace BuildingManagement.Controllers
             return View(billItem);
         }
 
+        // GET: BillItems/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,9 +83,12 @@ namespace BuildingManagement.Controllers
             return View(billItem);
         }
 
+        // POST: BillItems/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BItemID,BItemDesc,MonthPostFlg,FixChrgFlg,FixChrgAmt")] BillItem billItem)
+        public async Task<IActionResult> Edit(int id, [Bind("BItemID,BItemDesc,MonthPostFlg,FixChrgFlg,FixChrgAmt,CmpyId,UserId,RevDteTime")] BillItem billItem)
         {
             if (id != billItem.BItemID)
             {
@@ -95,9 +99,6 @@ namespace BuildingManagement.Controllers
             {
                 try
                 {
-                    billItem.CmpyId = GetCmpyId();
-                    billItem.UserId = GetUserId();
-                    billItem.RevDteTime = DateTime.Now;
                     _context.Update(billItem);
                     await _context.SaveChangesAsync();
                 }
@@ -153,27 +154,6 @@ namespace BuildingManagement.Controllers
         private bool BillItemExists(int id)
         {
             return _context.ms_billitem.Any(e => e.BItemID == id);
-        }
-
-        protected short GetUserId()
-        {
-            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
-            var userId = (short)_context.ms_user
-                .Where(u => u.UserCde == userCde)
-                .Select(u => u.UserId)
-                .FirstOrDefault();
-
-            return userId;
-        }
-
-        protected short GetCmpyId()
-        {
-            var cmpyId = _context.ms_user
-                .Where(u => u.UserId == GetUserId())
-                .Select(u => u.CmpyId)
-                .FirstOrDefault();
-
-            return cmpyId;
         }
     }
 }

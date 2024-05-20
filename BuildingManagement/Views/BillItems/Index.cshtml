@@ -1,154 +1,71 @@
 ﻿@model IEnumerable<BuildingManagement.Models.BillItem>
 
 @{
-    ViewData["Title"] = "Bill Item";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Index";
 }
 
-@section links {
-    <!-- DataTables -->
-    <link rel="stylesheet" href="~/lib/AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="~/lib/AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="~/lib/AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<h1>Index</h1>
 
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BItemDesc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MonthPostFlg)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FixChrgFlg)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FixChrgAmt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CmpyId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RevDteTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BItemDesc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MonthPostFlg)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FixChrgFlg)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FixChrgAmt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CmpyId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RevDteTime)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BItemID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.BItemID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.BItemID">Delete</a>
+            </td>
+        </tr>
 }
-
-@section scripts
-{
-    <!-- DataTables  & Plugins -->
-    <script src="~/lib/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="~/lib/AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/lib/AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="~/lib/AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-    <script src="~/lib/AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="~/lib/AdminLTE/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-    <script src="~/lib/AdminLTE/plugins/jszip/jszip.min.js"></script>
-    <script src="~/lib/AdminLTE/plugins/pdfmake/pdfmake.min.js"></script>
-    <script src="~/lib/AdminLTE/plugins/pdfmake/vfs_fonts.js"></script>
-    <script src="~/lib/AdminLTE/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-    <script src="~/lib/AdminLTE/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-    <script src="~/lib/AdminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-
-    <script>
-        $(function () {
-            $("#example1").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false, "pageLength": 20,
-                "buttons": [{
-                    extend: 'copy',
-                    text: window.csvButtonTrans,
-                    title: "Bill Item",
-                    exportOptions: {
-                        columns: ':not(:nth-last-child(-n + 3))'
-                    }
-                },
-                {
-                    extend: 'excel',
-                    text: window.csvButtonTrans,
-                    title: "Bill Item",
-                    exportOptions: {
-                        columns: ':not(:nth-last-child(-n + 3))'
-                    }
-                },
-                {
-                    extend: 'pdf',
-                    text: window.csvButtonTrans,
-                    title: "Bill Item",
-                    exportOptions: {
-                        columns: ':not(:nth-last-child(-n + 3))'
-                    }
-                },
-                {
-                    extend: 'print',
-                    text: window.csvButtonTrans,
-                    title: "Bill Item",
-                    exportOptions: {
-                        columns: ':not(:nth-last-child(-n + 3))'
-                    }
-                }],
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        });
-    </script>
-
-}
-
-
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-6">
-                <h4>@ViewData["Title"]</h4>
-            </div>
-            <div class="col-6">
-                <div class="breadcrumb float-right active">
-                    <a asp-action="Create" class="btn btn-primary">Create New  <i class="fas fa-plus"></i></a>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>
-<section class="content">
-    <div class="container-fluid">
-        <div class="card card-gray">
-            <div class="card-header">
-                <h3 class="card-title">@ViewData["Title"] List</h3>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.BItemDesc)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.MonthPostFlg)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.FixChrgFlg)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.FixChrgAmt)
-                                    </th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.BItemDesc)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MonthPostFlg)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.FixChrgFlg)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.FixChrgAmt)
-                                        </td>
-                                        <td style="text-align: center">
-                                            <a asp-action="Details" asp-route-id="@item.BItemID"><i class="fas fa-info-circle"></i></a>
-                                        </td>
-                                        <td style="text-align: center">
-                                            <a asp-action="Edit" asp-route-id="@item.BItemID"><i class="fas fa-edit"></i></a>
-                                        </td>
-                                        <td style="text-align: center">
-                                            <a asp-action="Delete" asp-route-id="@item.BItemID"><i class="fas fa-trash"></i></a>
-
-                                        </td>
-                                    </tr>
-                                }
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
+    </tbody>
+</table>
