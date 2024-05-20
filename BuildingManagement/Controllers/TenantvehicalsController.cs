@@ -20,12 +20,42 @@ namespace BuildingManagement.Controllers
         {
             _context = context;
         }
+        protected short GetUserId()
+        { 
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
+            var userId = (short)_context.ms_user
+                .Where(u => u.UserCde == userCde)
+                .Select(u => u.UserId)
+                .FirstOrDefault();
+
+            return userId;
+        }
+
+        protected short GetCmpyId()
+        {
+            var cmpyId = _context.ms_user
+                .Where(u => u.UserId == GetUserId())
+                .Select(u => u.CmpyId)
+                .FirstOrDefault();
+
+            return cmpyId;
+        }
+
 
         // GET: TenantVehicals
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ms_tenantvehical.ToListAsync());
+
+            var list = await _context.ms_tenantvehical.ToListAsync();
+
+            foreach (var data in list)
+            {
+                data.Tenant = _context.ms_tenant.Where(t => t.TenantId == data.TenantId).Select(t => t.TenantNme).FirstOrDefault() ?? "";
+            }
+
+            return View(list);
         }
+
 
         // GET: TenantVehicals/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -35,20 +65,44 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
+
             var tenantVehical = await _context.ms_tenantvehical
                 .FirstOrDefaultAsync(m => m.VehId == id);
             if (tenantVehical == null)
             {
                 return NotFound();
             }
+            tenantVehical.Tenant =
+               _context.ms_tenant
+               .Where(c => c.TenantId == tenantVehical.TenantId)
+               .Select(c => c.TenantNme)
+               .FirstOrDefault() ?? "";
 
+
+            tenantVehical.Company =
+                _context.ms_company
+                .Where(c => c.CmpyId == tenantVehical.CmpyId)
+                .Select(c => c.CmpyNme)
+                .FirstOrDefault() ?? "";
+
+            tenantVehical.User =
+                _context.ms_user
+                .Where(u => u.UserId == tenantVehical.UserId)
+                .Select(u => u.UserNme)
+                .FirstOrDefault() ?? "";
             return View(tenantVehical);
         }
 
         // GET: TenantVehicals/Create
         public IActionResult Create()
+
         {
+           
+
+            ViewData["TenantList"] = new SelectList(_context.ms_tenant.ToList(), "TenantId", "TenantNme");
             return View();
+
+            
         }
 
         // POST: TenantVehicals/Create
@@ -56,10 +110,14 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VehId,TenantId,PlateNo,AllocateNo,CmpyId,UserId,RevDteTime")] TenantVehical tenantVehical)
+        public async Task<IActionResult> Create([Bind("TenantId,PlateNo,AllocateNo")] TenantVehical tenantVehical)
         {
             if (ModelState.IsValid)
             {
+                tenantVehical.CmpyId = GetCmpyId(); //default
+                tenantVehical.UserId = GetUserId(); //default
+                tenantVehical.RevDteTime = DateTime.Now;
+
                 _context.Add(tenantVehical);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -80,6 +138,8 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
+            ViewData["TenantList"] = new SelectList(_context.ms_tenant.ToList(), "TenantId", "TenantNme");
+
             return View(tenantVehical);
         }
 
@@ -88,7 +148,7 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("VehId,TenantId,PlateNo,AllocateNo,CmpyId,UserId,RevDteTime")] TenantVehical tenantVehical)
+        public async Task<IActionResult> Edit(int id, [Bind("VehId,TenantId,PlateNo,AllocateNo")] TenantVehical tenantVehical)
         {
             if (id != tenantVehical.VehId)
             {
@@ -99,6 +159,11 @@ namespace BuildingManagement.Controllers
             {
                 try
                 {
+                    tenantVehical.CmpyId = GetCmpyId(); //default
+                    tenantVehical.UserId = GetUserId(); //default
+                    tenantVehical.RevDteTime = DateTime.Now;
+
+
                     _context.Update(tenantVehical);
                     await _context.SaveChangesAsync();
                 }
@@ -133,7 +198,17 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
+            tenantVehical.Tenant =
+               _context.ms_tenant
+               .Where(c => c.TenantId == tenantVehical.TenantId)
+               .Select(c => c.TenantNme)
+               .FirstOrDefault() ?? "";
+
+
+           
             return View(tenantVehical);
+
+            
         }
 
         // POST: TenantVehicals/Delete/5
