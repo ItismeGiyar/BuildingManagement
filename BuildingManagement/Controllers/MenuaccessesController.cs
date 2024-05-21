@@ -25,7 +25,7 @@ namespace BuildingManagement.Controllers
         public async Task<IActionResult> Index()
         {
             var list = await _context.ms_menuaccess.ToListAsync();
-            foreach(var data in list)
+            foreach (var data in list)
             {
                 data.Menugp = _context.ms_menugp.Where(m => m.MnugrpId == data.MnugrpId).Select(m => m.MnugrpNme).FirstOrDefault() ?? "";
             }
@@ -46,7 +46,7 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
-            menuaccess.Menugp  =
+            menuaccess.Menugp =
               _context.ms_menugp
               .Where(c => c.MnugrpId == menuaccess.MnugrpId)
               .Select(c => c.MnugrpNme)
@@ -55,35 +55,28 @@ namespace BuildingManagement.Controllers
             return View(menuaccess);
         }
 
-        // GET: Menuaccesses/Create
         public IActionResult Create()
         {
-            var list = _context.ms_menuaccess.ToList();
-            ViewData["MenugpList"] = new SelectList(_context.ms_menugp.ToList(), "MnugrpId", "BtnNme");
-
+            ViewData["MenuGroupList"] = new SelectList(_context.ms_menugp.ToList(), "MnugrpId", "MnugrpNme");
             return View();
         }
 
-        // POST: Menuaccesses/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MnugrpId,BtnNme")] Menuaccess menuaccess)
         {
             if (ModelState.IsValid)
             {
-                menuaccess.AccessId = 1;//default
                 menuaccess.RevDteTime = DateTime.Now;
-
                 _context.Add(menuaccess);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewData["MenuGroupList"] = new SelectList(_context.ms_menugp.ToList(), "MnugrpId", "MnugrpNme");
             return View(menuaccess);
         }
 
-        // GET: Menuaccesses/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -96,12 +89,11 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["MenuGroupList"] = new SelectList(_context.ms_menugp.ToList(), "MnugrpId", "MnugrpNme");
             return View(menuaccess);
         }
 
-        // POST: Menuaccesses/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("AccessId,MnugrpId,BtnNme")] Menuaccess menuaccess)
@@ -115,7 +107,6 @@ namespace BuildingManagement.Controllers
             {
                 try
                 {
-                    menuaccess.AccessId = 1;//default
                     menuaccess.RevDteTime = DateTime.Now;
                     _context.Update(menuaccess);
                     await _context.SaveChangesAsync();
@@ -133,6 +124,7 @@ namespace BuildingManagement.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["MenuGroupList"] = new SelectList(_context.ms_menugp.ToList(), "MnugrpId", "MnugrpNme");
             return View(menuaccess);
         }
 

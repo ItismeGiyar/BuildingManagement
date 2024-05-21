@@ -1,7 +1,7 @@
-﻿@model IEnumerable<BuildingManagement.Models.Company>
+﻿@model IEnumerable<BuildingManagement.Models.BillItem>
 
 @{
-    ViewData["Title"] = "Company";
+    ViewData["Title"] = "Bill Item";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -36,7 +36,7 @@
                 "buttons": [{
                     extend: 'copy',
                     text: window.csvButtonTrans,
-                    title: "Company List",
+                    title: "Bill Item",
                     exportOptions: {
                         columns: ':not(:nth-last-child(-n + 3))'
                     }
@@ -44,7 +44,7 @@
                 {
                     extend: 'excel',
                     text: window.csvButtonTrans,
-                    title: "Company List",
+                    title: "Bill Item",
                     exportOptions: {
                         columns: ':not(:nth-last-child(-n + 3))'
                     }
@@ -52,7 +52,7 @@
                 {
                     extend: 'pdf',
                     text: window.csvButtonTrans,
-                    title: "Company List",
+                    title: "Bill Item",
                     exportOptions: {
                         columns: ':not(:nth-last-child(-n + 3))'
                     }
@@ -60,7 +60,7 @@
                 {
                     extend: 'print',
                     text: window.csvButtonTrans,
-                    title: "Company List",
+                    title: "Bill Item",
                     exportOptions: {
                         columns: ':not(:nth-last-child(-n + 3))'
                     }
@@ -99,48 +99,51 @@
                         <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
                             <thead>
                                 <tr>
-                                    
                                     <th>
-                                        @Html.DisplayNameFor(model => model.CmpyNme)
+                                        @Html.DisplayNameFor(model => model.BItemDesc)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.Address)
+                                        @Html.DisplayNameFor(model => model.MonthPostFlg)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.RevDteTime)
+                                        @Html.DisplayNameFor(model => model.FixChrgFlg)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.FixChrgAmt)
                                     </th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
-
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
                                     <tr>
-                                       
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.CmpyNme)
+                                            @Html.DisplayFor(modelItem => item.BItemDesc)
                                         </td>
-                                        <th>
-                                            @Html.DisplayFor(modelItem => item.Address)
-                                        </th>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.RevDteTime)
+                                            @Html.DisplayFor(modelItem => item.MonthPostFlg)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FixChrgFlg)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FixChrgAmt)
                                         </td>
                                         <td style="text-align: center">
-                                            <a asp-action="Details" asp-route-id="@item.CmpyId"><i class="fas fa-info-circle"></i></a>
+                                            <a asp-action="Details" asp-route-id="@item.BItemID"><i class="fas fa-info-circle"></i></a>
                                         </td>
                                         <td style="text-align: center">
-                                            <a asp-action="Edit" asp-route-id="@item.CmpyId"><i class="fas fa-edit"></i></a>
+                                            <a asp-action="Edit" asp-route-id="@item.BItemID"><i class="fas fa-edit"></i></a>
                                         </td>
                                         <td style="text-align: center">
-                                            <a asp-action="Delete" asp-route-id="@item.CmpyId"><i class="fas fa-trash"></i></a>
+                                            <a asp-action="Delete" asp-route-id="@item.BItemID"><i class="fas fa-trash"></i></a>
+
                                         </td>
                                     </tr>
                                 }
-                            </tbody>
                         </table>
                     </div>
                 </div>

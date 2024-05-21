@@ -20,6 +20,27 @@ namespace BuildingManagement.Controllers
         {
             _context = context;
         }
+        protected short GetUserId()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
+            var userId = (short)_context.ms_user
+                .Where(u => u.UserCde == userCde)
+                .Select(u => u.UserId)
+                .FirstOrDefault();
+
+            return userId;
+        }
+
+        protected short GetCmpyId()
+        {
+            var cmpyId = _context.ms_user
+                .Where(u => u.UserId == GetUserId())
+                .Select(u => u.CmpyId)
+                .FirstOrDefault();
+
+            return cmpyId;
+        }
+
 
         // GET: Locations
         public async Task<IActionResult> Index()
@@ -39,8 +60,21 @@ namespace BuildingManagement.Controllers
                 .FirstOrDefaultAsync(m => m.LocId == id);
             if (location == null)
             {
+
                 return NotFound();
             }
+
+            location.Company =
+                _context.ms_company
+                .Where(c => c.CmpyId == location.CmpyId)
+                .Select(c => c.CmpyNme)
+                .FirstOrDefault() ?? "";
+
+            location.User =
+                _context.ms_user
+                .Where(u => u.UserId == location.UserId)
+                .Select(u => u.UserNme)
+                .FirstOrDefault() ?? "";
 
             return View(location);
         }
@@ -56,10 +90,14 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("LocId,LocDesc,CmpyId,UserId,RevDteTime")] Location location)
+        public async Task<IActionResult> Create([Bind("LocDesc")] Location location)
         {
             if (ModelState.IsValid)
             {
+                location.CmpyId = GetCmpyId(); //default
+                location.UserId = GetUserId(); //default
+                location.RevDteTime = DateTime.Now;
+
                 _context.Add(location);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -88,7 +126,7 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("LocId,LocDesc,CmpyId,UserId,RevDteTime")] Location location)
+        public async Task<IActionResult> Edit(int id, [Bind("LocId,LocDesc")] Location location)
         {
             if (id != location.LocId)
             {
@@ -99,6 +137,9 @@ namespace BuildingManagement.Controllers
             {
                 try
                 {
+                    location.CmpyId = GetCmpyId(); //default
+                    location.UserId = GetUserId(); //default
+                    location.RevDteTime = DateTime.Now;
                     _context.Update(location);
                     await _context.SaveChangesAsync();
                 }

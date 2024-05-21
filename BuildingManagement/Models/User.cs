@@ -7,10 +7,13 @@ namespace BuildingManagement.Models
     public class User
     {
         [Key]
+        
         public int UserId { get; set; }
+        
         [StringLength(24)]
         [DisplayName("User Code")]
         public required string UserCde { get; set; }
+        public string? Usercde { get; internal set; }
         [DisplayName("User Name")]
         [StringLength(100)]
         public required string UserNme { get; set; }
@@ -23,10 +26,10 @@ namespace BuildingManagement.Models
         [DisplayName("Menu Group")]
         public short MnugrpId { get; set; }
         [DisplayName("Password")]
-        public required byte[] Pwd { get; set; }
+        public required byte[] Pwd { get; set; } 
         [DisplayName("Company")]
         public short CmpyId { get; set; }
-        [DisplayName("Revised Datetime")]
+        [DisplayName("Revised Date Time")]
         public DateTime RevDteTime { get; set; }
         [NotMapped]
         [DisplayName("Company")]

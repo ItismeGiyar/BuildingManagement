@@ -1,7 +1,8 @@
-﻿@model BuildingManagement.Models.Company
+﻿@model BuildingManagement.Models.ComplaintCatg
+
 
 @{
-    ViewData["Title"] = "Company";
+    ViewData["Title"] = "Complaint Category";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <section class="content-header">
@@ -11,7 +12,7 @@
                 <h4>@ViewData["Title"]</h4>
             </div>
             <div class="col-6">
-                <div class="breadcrumb float-right active">
+                <div class="breadcrumb float-right">
                     <a asp-action="Index" class="btn btn-primary">Back to List <i class="fas fa-back"></i></a>
 
                 </div>
@@ -23,33 +24,28 @@
     <div class="container-fluid">
         <div class="card card-gray">
             <div class="card-header">
-                <h3 class="card-title">@ViewData["Title"] Create</h3>
+                <h3 class="card-title">@ViewData["Title"] Edit</h3>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <form asp-action="Create" enctype="multipart/form-data">
+                        <form asp-action="Edit">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <div class="form-group text-danger">@ViewData["Msg"]</div>
+                            <input type="hidden" asp-for="CplCatgId" />
                             <div class="form-group">
-                                <label asp-for="CmpyNme" class="control-label"></label>
-                                <input asp-for="CmpyNme" class="form-control" />
-                                <span asp-validation-for="CmpyNme" class="text-danger"></span>
+                                <label asp-for="CplCatCde" class="control-label"></label>
+                                <input asp-for="CplCatCde" class="form-control" />
+                                <span asp-validation-for="CplCatCde" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Address" class="control-label"></label>
-                                <input asp-for="Address" class="form-control" />
-                                <span asp-validation-for="Address" class="text-danger"></span>
+                                <input type="submit" value="Save" class="btn btn-primary" />
                             </div>
-                            
-                            <div class="form-group">
-                                <input type="submit" value="Create" class="btn btn-primary" />
-                            </div>
-
                         </form>
 
                     </div>
                 </div>
+
+
             </div>
         </div>
     </div>
@@ -59,26 +55,29 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-
     <script>
-        function displayImage() {
+        function changeImage() {
             var input = document.getElementById('inputMainImg');
-            var imgFrame = document.getElementById('selectedMainImg');
+            var newImg = document.getElementById('newImg');
+            var oldImg = document.getElementById('oldImg');
             if (input.files && input.files[0]) {
-                imgFrame.style.display = "flex";
-                var file = input.files[0];
 
+                var file = input.files[0];
+                newImg.style.display = "flex";
+                oldImg.style.display = "none";
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    imgFrame.src = e.target.result;
+                    newImg.src = e.target.result;
                 };
+
                 reader.readAsDataURL(file);
             }
             else {
-                imgFrame.style.display = "none";
+                newImg.style.display = "none";
             }
         }
-        function displayImages(input) {
+
+        function changeImages(input) {
             const imageContainer = document.getElementById('image-container');
             imageContainer.innerHTML = '';
 
@@ -98,6 +97,5 @@
             }
         }
     </script>
+
 }
-
-

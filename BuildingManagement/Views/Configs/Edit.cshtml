@@ -1,34 +1,101 @@
 ﻿@model BuildingManagement.Models.Config
 
+
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Config";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1>Edit</h1>
-
-<h4>Config</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="KeyCde" />
-            <div class="form-group">
-                <label asp-for="KeyValue" class="control-label"></label>
-                <input asp-for="KeyValue" class="form-control" />
-                <span asp-validation-for="KeyValue" class="text-danger"></span>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-6">
+                <h4>@ViewData["Title"]</h4>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="col-6">
+                <div class="breadcrumb float-right">
+                    <a asp-action="Index" class="btn btn-primary">Back to List <i class="fas fa-back"></i></a>
+
+                </div>
             </div>
-        </form>
+        </div>
     </div>
-</div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-gray">
+            <div class="card-header">
+                <h3 class="card-title">@ViewData["Title"] Edit</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <form asp-action="Edit">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="KeyCde" />
+                            <div class="form-group">
+                                <label asp-for="KeyValue" class="control-label"></label>
+                                <input asp-for="KeyValue" class="form-control" />
+                                <span asp-validation-for="KeyValue" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+            </div>
+        </div>
+    </div>
+</section>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function changeImage() {
+            var input = document.getElementById('inputMainImg');
+            var newImg = document.getElementById('newImg');
+            var oldImg = document.getElementById('oldImg');
+            if (input.files && input.files[0]) {
+
+                var file = input.files[0];
+                newImg.style.display = "flex";
+                oldImg.style.display = "none";
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    newImg.src = e.target.result;
+                };
+
+                reader.readAsDataURL(file);
+            }
+            else {
+                newImg.style.display = "none";
+            }
+        }
+
+        function changeImages(input) {
+            const imageContainer = document.getElementById('image-container');
+            imageContainer.innerHTML = '';
+
+            const files = input.files;
+            for (let i = 0; i < files.length; i++) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.width = 120;
+                    img.height = 100;
+                    img.style.marginRight = 10 + 'px';
+                    img.style.marginBottom = 10 + 'px';
+                    img.src = e.target.result;
+                    imageContainer.appendChild(img);
+                };
+                reader.readAsDataURL(files[i]);
+            }
+        }
+    </script>
+
 }

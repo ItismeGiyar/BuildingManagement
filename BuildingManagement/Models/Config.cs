@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace BuildingManagement.Models
 {
@@ -6,8 +7,10 @@ namespace BuildingManagement.Models
     {
         [Key]
         [StringLength(50)]
-        public required string KeyCde { get; set; }
+        [DisplayName("Key Code")]
+        public string KeyCde {  get; set; } = string.Empty;
         [StringLength(100)]
+        [DisplayName("Key Value")]
         public string KeyValue { get; set; } = string.Empty;
 
 

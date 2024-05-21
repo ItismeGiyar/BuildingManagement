@@ -14,6 +14,7 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="~/lib/AdminLTE/dist/css/adminlte.min.css">
     @await RenderSectionAsync("Links", required: false)
+
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
     <div class="wrapper">
@@ -46,6 +47,7 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                              with font-awesome or any other icon font library -->
+
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="fas fa-money-bill-wave nav-icon"></i>
@@ -64,6 +66,7 @@
                                 <p>Complaint Category</p>
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="fas fa-user-edit nav-icon"></i>
@@ -71,6 +74,7 @@
                                     Reporting
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
+
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
@@ -93,6 +97,8 @@
                                 </li>
                             </ul>
                         </li>
+
+
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="fas fa-money-bill-wave-alt nav-icon"></i>
@@ -103,10 +109,11 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="../../BillItem/index" class="nav-link">
+                                    <a asp-controller="Billitems" asp-action="Index" class="nav-link">
                                         <i class="fas fa-money-bill nav-icon"></i>
                                         <p>Bill Item</p>
                                     </a>
+
                                 </li>
                                 <li class="nav-item">
                                     <a href="../../TenantSubscribe/index" class="nav-link">
@@ -114,8 +121,10 @@
                                         <p>Tenant Subscribe</p>
                                     </a>
                                 </li>
+
                             </ul>
                         </li>
+
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="fas fa-home nav-icon"></i>
@@ -138,7 +147,9 @@
                                     </a>
                                 </li>
                             </ul>
+
                         </li>
+
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tree nav-icon"></i>
@@ -154,6 +165,7 @@
                                         <p>Resident Type</p>
                                     </a>
                                 </li>
+
                                 <li class="nav-item">
                                     <a href="../../Propertyinfoes/index" class="nav-link">
                                         <i class="fas fa-info-circle nav-icon"></i>
@@ -166,6 +178,8 @@
                                         <p>Location</p>
                                     </a>
                                 </li>
+
+
                                 <li class="nav-item">
                                     <a href="../../Buildingtypes/index" class="nav-link">
                                         <i class="fas fa-building nav-icon"></i>
@@ -178,6 +192,8 @@
                                         <p>Room</p>
                                     </a>
                                 </li>
+
+
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -189,26 +205,28 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../Users/Index" class="nav-link">
-                                <i class="fas fa-user-circle nav-icon"></i>
-                                <p>User</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../../Menugps/Index" class="nav-link">
-                                <i class="fas fa-bars nav-icon"></i>
-                                <p>Menu Group</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../../MenuAccesses/Index" class="nav-link">
-                                <i class="fas fa-universal-access nav-icon"></i>
-                                <p>Menu Access</p>
-                            </a>
-                        </li>
+                                <li class="nav-item">
+                                    <a href="../../Users/Index" class="nav-link">
+                                        <i class="fas fa-user-circle nav-icon"></i>
+                                        <p>User</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../../Menugps/Index" class="nav-link">
+                                        <i class="fas fa-bars nav-icon"></i>
+                                        <p>Menu Group</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../../MenuAccesses/Index" class="nav-link">
+                                        <i class="fas fa-universal-access nav-icon"></i>
+                                        <p>Menu Access</p>
+                                    </a>
+                                </li>
+
                             </ul>
                         </li>
+
                         @if (new[] { "ACCESS_LEVEL" }.Contains(ViewData["Role"]?.ToString()))
                         {
                             <li class="nav-item">

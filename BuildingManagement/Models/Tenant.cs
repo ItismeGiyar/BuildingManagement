@@ -1,26 +1,45 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BuildingManagement.Models
 {
     public class Tenant
     {
+        
+
         [Key]
+        [DisplayName("Tenant ID")]
         public int TenantId { get; set; }
         [StringLength(50)]
-        public required string TenantNme { get; set; }
+        [DisplayName("Tenant Name")]
+        public string TenantNme { get; set; }=string.Empty;
+        [DisplayName("Occupancy")]
         public short Occupany { get; set; }
         [StringLength(50)]
-        public  required string IdNo { get; set;}
+
+        public string IdNo { get; set; }=string.Empty;
         [StringLength(24)]
-        public string? Gender { get; set; }
+        public string Gender { get; set; }=string.Empty;
         [StringLength(50)]
         public string? Phone1 { get; set; }
         [StringLength(50)]
         public string? Phone2 { get; set; }
         public Boolean LocalFlg { get; set; }
-        public String? PermentAddr { get; set; } = string.Empty;
+        [DisplayName("Perment Address")]
+        public string? PermentAddr { get; set; }
+        [DisplayName("Company ID")]
         public short CmpyId { get; set; }
+        [DisplayName("User ID")]
         public int UserId { get; set; }
+        [DisplayName("Revised Date Time")]
         public DateTime RevDteTime { get; set; }
+
+        [NotMapped]
+        [DisplayName("Company")]
+        public string Company { get; set; } = string.Empty;
+        [NotMapped]
+        [DisplayName("User")]
+        public string User { get; set; } = string.Empty;
     }
 }

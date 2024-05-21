@@ -53,72 +53,27 @@
                                     <option value="Female"> Female </option>
                                     <option value="Others"> Others </option>
                                 </select>
-                               
-                                
                                 <span asp-validation-for="Gender" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="MnugrpId" class="control-label"></label>
+                                <input asp-for="MnugrpId" class="form-control" />
+                                <span asp-validation-for="MnugrpId" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Pwd" class="control-label"></label>
                                 <input asp-for="Pwd" class="form-control" />
                                 <span asp-validation-for="Pwd" class="text-danger"></span>
                             </div>
-                            
+
                             <div class="form-group">
                                 <input type="submit" value="Create" class="btn btn-primary" />
                             </div>
-
                         </form>
-
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 </section>
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-
-    <script>
-        function displayImage() {
-            var input = document.getElementById('inputMainImg');
-            var imgFrame = document.getElementById('selectedMainImg');
-            if (input.files && input.files[0]) {
-                imgFrame.style.display = "flex";
-                var file = input.files[0];
-
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    imgFrame.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-            else {
-                imgFrame.style.display = "none";
-            }
-        }
-        function displayImages(input) {
-            const imageContainer = document.getElementById('image-container');
-            imageContainer.innerHTML = '';
-
-            const files = input.files;
-            for (let i = 0; i < files.length; i++) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const img = document.createElement('img');
-                    img.width = 120;
-                    img.height = 100;
-                    img.style.marginRight = 10 + 'px';
-                    img.style.marginBottom = 10 + 'px';
-                    img.src = e.target.result;
-                    imageContainer.appendChild(img);
-                };
-                reader.readAsDataURL(files[i]);
-            }
-        }
-    </script>
-}
 
 

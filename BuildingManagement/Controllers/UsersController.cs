@@ -126,6 +126,7 @@ namespace BuildingManagement.Controllers
             return View(user);
         }
 
+
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

@@ -27,7 +27,6 @@ namespace BuildingManagement.Controllers
             return View(await _context.ms_menugp.ToListAsync());
         }
 
-        // GET: Menugps/Details/5
         public async Task<IActionResult> Details(short? id)
         {
             if (id == null)
@@ -51,15 +50,13 @@ namespace BuildingManagement.Controllers
             return View();
         }
 
-        // POST: Menugps/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MnugrpId,MnugrpNme,RevDteTime")] Menugp menugp)
+        public async Task<IActionResult> Create([Bind("MnugrpNme")] Menugp menugp)
         {
             if (ModelState.IsValid)
             {
+                menugp.RevDteTime = DateTime.Now;
                 _context.Add(menugp);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -83,12 +80,9 @@ namespace BuildingManagement.Controllers
             return View(menugp);
         }
 
-        // POST: Menugps/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(short id, [Bind("MnugrpId,MnugrpNme,RevDteTime")] Menugp menugp)
+        public async Task<IActionResult> Edit(short id, [Bind("MnugrpId,MnugrpNme")] Menugp menugp)
         {
             if (id != menugp.MnugrpId)
             {
@@ -99,6 +93,7 @@ namespace BuildingManagement.Controllers
             {
                 try
                 {
+                    menugp.RevDteTime = DateTime.Now;
                     _context.Update(menugp);
                     await _context.SaveChangesAsync();
                 }
@@ -151,7 +146,7 @@ namespace BuildingManagement.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MenugpExists(short id)
+        public bool MenugpExists(short id)
         {
             return _context.ms_menugp.Any(e => e.MnugrpId == id);
         }

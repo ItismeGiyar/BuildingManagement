@@ -1,38 +1,67 @@
 ﻿@model BuildingManagement.Models.Config
 
+
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Config";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-6">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="col-6">
+                <div class="breadcrumb float-right active">
+                    <a asp-action="Index" class="btn btn-primary">Back to List <i class="fas fa-back"></i></a>
 
-<h1>Create</h1>
-
-<h4>Config</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="KeyCde" class="control-label"></label>
-                <input asp-for="KeyCde" class="form-control" />
-                <span asp-validation-for="KeyCde" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="KeyValue" class="control-label"></label>
-                <input asp-for="KeyValue" class="form-control" />
-                <span asp-validation-for="KeyValue" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-gray">
+            <div class="card-header">
+                <h3 class="card-title">@ViewData["Title"] Create</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form asp-action="Create">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="KeyCde" class="control-label"></label>
+                                <input asp-for="KeyCde" class="form-control" />
+                                <span asp-validation-for="KeyCde" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="KeyValue" class="control-label"></label>
+                                <input asp-for="KeyValue" class="form-control" />
+                                <span asp-validation-for="KeyValue" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
 <div>
     <a asp-action="Index">Back to List</a>
-</div>
+    </div>
+</section>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+
 }
+
+
