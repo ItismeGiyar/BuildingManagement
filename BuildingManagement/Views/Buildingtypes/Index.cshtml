@@ -103,9 +103,6 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.BdtypDesc)
                                     </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.RevDteTime)
-                                    </th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -120,9 +117,7 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.BdtypDesc)
                                         </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.RevDteTime)
-                                        </td>
+                                        
                                         <td style="text-align: center">
                                             <a asp-action="Details" asp-route-id="@item.BdtypId"><i class="fas fa-info-circle"></i></a>
                                         </td>

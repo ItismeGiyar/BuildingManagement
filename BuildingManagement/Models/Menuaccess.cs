@@ -8,9 +8,9 @@ namespace BuildingManagement.Models
     {
         [Key]
         public int AccessId { get; set; }
-        [DisplayName("Menu Group ID")]
-        public short  MnugrpId { get; set; }
         [DisplayName("Menu Group Name")]
+        public short  MnugrpId { get; set; }
+        [DisplayName("Menu Name")]
         [StringLength(100)]
         public string BtnNme { get; set; } = string.Empty;
 
