@@ -7,9 +7,9 @@ namespace BuildingManagement.Models
     public class User
     {
         [Key]
-        
+
         public int UserId { get; set; }
-        
+
         [StringLength(24)]
         [DisplayName("User Code")]
         public required string UserCde { get; set; }
@@ -22,11 +22,11 @@ namespace BuildingManagement.Models
         public string Position { get; set; } = string.Empty;
         [DisplayName("Gender")]
         [StringLength(24)]
-        public string Gender { get; set;} = string.Empty;
+        public string Gender { get; set; } = string.Empty;
         [DisplayName("Menu Group")]
         public short MnugrpId { get; set; }
         [DisplayName("Password")]
-        public required byte[] Pwd { get; set; } 
+        public byte[]? Pwd { get; set; }
         [DisplayName("Company")]
         public short CmpyId { get; set; }
         [DisplayName("Revised Date Time")]
