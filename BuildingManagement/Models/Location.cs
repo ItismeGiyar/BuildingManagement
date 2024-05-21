@@ -17,7 +17,7 @@ namespace BuildingManagement.Models
         public short CmpyId { get; set; }
         [DisplayName("User ID")]
         public int UserId { get; set; }
-        [DisplayName("Revised Datetime")]
+        [DisplayName("Revised Date Time")]
         public DateTime RevDteTime { get; set; }
         [NotMapped]
         [DisplayName("Company")]
