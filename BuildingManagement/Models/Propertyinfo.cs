@@ -30,18 +30,28 @@ namespace BuildingManagement.Models
         [DisplayName("Address")]
         public string Addr { get; set; } = string.Empty;
         [DisplayName("Acre Measure")]
+        [Required(ErrorMessage = "Please enter a number.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative number.")]
         public decimal? AcreMeasure { get; set; }
         [DisplayName("Resident Type")]
         public int ResitypId { get; set; }
         [DisplayName("Block Count")]
+        [Required(ErrorMessage = "Please enter a number.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative number.")]
         public short? BlockCount { get; set; }
         [DisplayName("Room Count")]
+        [Required(ErrorMessage = "Please enter a number.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative number.")]
         public int? RoomCount { get; set; }
         [DisplayName("Parking Count")]
+        [Required(ErrorMessage = "Please enter a number.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative number.")]
         public short? ParkingCount { get; set; }
         [DisplayName("Parking Size Description")]
         public string? ParkingSizeDesc { get; set; } = string.Empty;
         [DisplayName("Pool Count")]
+        [Required(ErrorMessage = "Please enter a number.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative number.")]
         public short? PoolCount { get; set; }
         [DisplayName("Pool Size Desc")]
         public string? PoolSizeDesc { get; set; } = string.Empty;
