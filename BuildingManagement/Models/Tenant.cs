@@ -15,7 +15,7 @@ namespace BuildingManagement.Models
         [DisplayName("Tenant Name")]
         public string TenantNme { get; set; }=string.Empty;
         [Required(ErrorMessage = "Please enter a number.")]
-        [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative integer.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative number.")]
         [DisplayName("Occupancy")]
         public short Occupany { get; set; }
         [StringLength(50)]
