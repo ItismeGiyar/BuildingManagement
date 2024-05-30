@@ -7,6 +7,7 @@ namespace BuildingManagement.Models
     public class Buildingtype
     {
         [Key]
+        [DisplayName("Building Type ID")]
         public int BdtypId { get; set; }
         [DisplayName("Building Type Description")]
         [StringLength(50)]
@@ -15,7 +16,7 @@ namespace BuildingManagement.Models
         public short CmpyId { get; set; }
         [DisplayName("User")]
         public int UserId { get; set; }
-        [DisplayName("Revised Datetime")]
+        [DisplayName("Revised Date Time")]
         public DateTime RevDteTime { get; set; }
         [NotMapped]
         [DisplayName("Company")]
