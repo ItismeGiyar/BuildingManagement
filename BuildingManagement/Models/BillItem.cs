@@ -16,8 +16,11 @@ namespace BuildingManagement.Models
         public bool MonthPostFlg {  get; set; }
         [DisplayName("Fix Charge Flag")]
         public bool FixChrgFlg { get; set;}
+       
+        public int Quantity { get; set; }
+        [Required(ErrorMessage = "Please enter a number.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative integer.")]
         [DisplayName("Fix Charge Amount")]
-
         public decimal FixChrgAmt {  get; set; }
         public short CmpyId {  get; set; }
         public int UserId{ get; set;}
