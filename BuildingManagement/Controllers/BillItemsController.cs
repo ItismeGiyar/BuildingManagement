@@ -21,10 +21,14 @@ namespace BuildingManagement.Controllers
             _context = context;
         }
 
+
         public async Task<IActionResult> Index()
         {
             return View(await _context.ms_billitem.ToListAsync());
+            
+
         }
+
 
         public async Task<IActionResult> Details(int? id)
         {
@@ -177,3 +181,7 @@ namespace BuildingManagement.Controllers
         }
     }
 }
+
+
+       
+

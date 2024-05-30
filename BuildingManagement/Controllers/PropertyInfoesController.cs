@@ -10,6 +10,7 @@ using BuildingManagement.Models;
 using Microsoft.AspNetCore.Authorization;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
+
 namespace BuildingManagement.Controllers
 {
     [Authorize]
@@ -22,6 +23,13 @@ namespace BuildingManagement.Controllers
             _context = context;
         }
 
+        [HttpGet]
+        public ActionResult MyAction()
+        {
+            return View();
+        }
+
+       
         // GET: PropertyInfoes
         public async Task<IActionResult> Index()
         {
