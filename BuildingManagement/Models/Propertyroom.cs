@@ -19,9 +19,13 @@ namespace BuildingManagement.Models
         [DisplayName("Building Type")]
         public int BdtypId { get; set; }
         [DisplayName("Square Full Measure")]
+        [Required(ErrorMessage = "Please enter a number.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative number.")]
 
         public decimal? SqFullMeasure { get; set; }
         [DisplayName("Square Room Measure")]
+        [Required(ErrorMessage = "Please enter a number.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative number.")]
         public decimal? SqRooMeasure { get; set; }
 
         [DisplayName("Amenity Description ")]
