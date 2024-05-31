@@ -12,11 +12,11 @@ namespace BuildingManagement.Models
 
         [StringLength(24)]
         [DisplayName("User Code")]
-        public required string UserCde { get; set; }
-        public string? Usercde { get; internal set; }
+        public  string UserCde { get; set; } = string.Empty;
+
         [DisplayName("User Name")]
         [StringLength(100)]
-        public required string UserNme { get; set; }
+        public string UserNme { get; set; } = string.Empty;
         [DisplayName("Position")]
         [StringLength(100)]
         public string Position { get; set; } = string.Empty;
@@ -25,14 +25,28 @@ namespace BuildingManagement.Models
         public string Gender { get; set; } = string.Empty;
         [DisplayName("Menu Group")]
         public short MnugrpId { get; set; }
+        
         [DisplayName("Password")]
-        public byte[]? Pwd { get; set; }
+        public  byte[]? Pwd { get; set; }
+        
         [DisplayName("Company")]
         public short CmpyId { get; set; }
         [DisplayName("Revised Date Time")]
         public DateTime RevDteTime { get; set; }
+       
         [NotMapped]
         [DisplayName("Company")]
         public string Company { get; set; } = string.Empty;
+
+        [NotMapped]
+        public string Password { get; set; } = string.Empty;
+        [NotMapped]
+        [DisplayName("Confirm Password")]
+        public string ConfirmPassword { get; set; } = string.Empty;
+        [NotMapped]
+        [DisplayName("Menu Group Name")]
+        public string MnuGrpNme { get; set; } = string.Empty;
+        
+
     }
 }

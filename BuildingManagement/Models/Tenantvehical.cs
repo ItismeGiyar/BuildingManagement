@@ -16,7 +16,7 @@ namespace BuildingManagement.Models
         public string PlateNo {  get; set; }=string.Empty;
         [DisplayName("Allocate No")]
         [Required(ErrorMessage = "Please enter a number.")]
-        [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative integer.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative number.")]
         public int AllocateNo {  get; set; }
         [DisplayName("Company")]
         public short CmpyId {  get; set; }
