@@ -33,6 +33,7 @@
                         <form asp-action="Edit" enctype="multipart/form-data">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" asp-for="UserId" />
+                            <input type="hidden" asp-for="Pwd" />
 
                             <div class="form-group">
                                 <label asp-for="UserCde" class="control-label"></label>
@@ -45,13 +46,11 @@
                                 <span asp-validation-for="UserNme" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Position" class="control-label"></label>
-                                <select asp-for="UserId" class="form-control form-select" asp-items="@ViewBag.UserList">
+                                <label asp-for="Position" class="control-label">Position</label>
+                                <select asp-for="MnugrpId" class="form-control form-select" asp-items="@ViewBag.Positions">
                                     <option value=""> - Select One - </option>
                                 </select>
-
-
-                                <span asp-validation-for="Position" class="text-danger"></span>
+                                <span asp-validation-for="MnugrpId" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Gender" class="control-label"></label>
@@ -63,6 +62,14 @@
                                 <span asp-validation-for="Gender" class="text-danger"></span>
                             </div>
                             <div class="form-group">
+                                <label asp-for="CmpyId" class="control-label">Company</label>
+                                <select asp-for="CmpyId" class="form-control form-select" asp-items="@ViewBag.Companies">
+                                    <option value=""> - Select One - </option>
+                                </select>
+                                <span asp-validation-for="CmpyId" class="text-danger"></span>
+                            </div>
+                            
+                            <div class="form-group">
                                 <input type="submit" value="Save" class="btn btn-primary" />
                             </div>
 
@@ -72,17 +79,11 @@
                 </div>
             </div>
         </div>
-
-        <div>
-            <a asp-action="Index">Back to List</a>
-        </div>
 </section>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-
-            </script>
 
 }

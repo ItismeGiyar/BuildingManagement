@@ -10,7 +10,7 @@ using BuildingManagement.Models;
 using Microsoft.AspNetCore.Authorization;
 
 namespace BuildingManagement.Controllers
-{
+{ 
     [Authorize]
     public class BillItemsController : Controller
     {

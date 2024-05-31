@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using BuildingManagement.Data;
 using BuildingManagement.Models;
 using Microsoft.AspNetCore.Authorization;
+using BuildingManagement.Common;
+using System.Text;
 
 namespace BuildingManagement.Controllers
 {
@@ -15,10 +17,32 @@ namespace BuildingManagement.Controllers
     public class UsersController : Controller
     {
         private readonly BuildingDbContext _context;
+        private readonly Encrypt encrypt;
+
 
         public UsersController(BuildingDbContext context)
         {
             _context = context;
+            encrypt = new Encrypt();
+        }
+        protected short GetUserId()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
+            var userId = (short)_context.ms_user
+                .Where(u => u.UserCde == userCde)
+                .Select(u => u.UserId)
+                .FirstOrDefault();
+
+            return userId;
+        }
+        protected short GetCmpyId()
+        {
+            var cmpyId = _context.ms_user
+                .Where(u => u.UserId == GetUserId())
+                .Select(u => u.CmpyId)
+                .FirstOrDefault();
+
+            return cmpyId;
         }
 
         // GET: Users
@@ -46,12 +70,17 @@ namespace BuildingManagement.Controllers
                 .Where(c => c.CmpyId == user.CmpyId)
                 .Select(c => c.CmpyNme)
                 .FirstOrDefault() ?? "";
+            user.MnuGrpNme = _context.ms_menugp.Where(m => m.MnugrpId == user.MnugrpId).Select(m => m.MnugrpNme).FirstOrDefault() ?? "";
+            user.Position = _context.ms_menugp.Where(mg => mg.MnugrpId == user.MnugrpId).Select(mg => mg.MnugrpNme).FirstOrDefault() ?? "";
+
             return View(user);
         }
 
         // GET: Users/Create
         public IActionResult Create()
         {
+            ViewData["Companies"] = new SelectList(_context.ms_company.ToList(), "CmpyId", "CmpyNme");
+            ViewData["Positions"] = new SelectList(_context.ms_menugp.ToList(), "MnugrpId", "MnugrpNme");
             return View();
         }
 
@@ -60,16 +89,23 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserCde,UserNme,MnugrpId,Position,Gender,Pwd")] User user)
+
+        public async Task<IActionResult> Create([Bind("UserCde,UserNme,CmpyId,MnugrpId,Gender,Password,ConfirmPassword")] User user)
         {
             if (ModelState.IsValid)
             {
-                user.CmpyId = 1;//default
+                // Merge by Ko Kg
+                byte[] encryptedBytes = Encoding.UTF8.GetBytes(encrypt.EncryptString(user.ConfirmPassword));
+                user.Pwd = encryptedBytes;
+                user.Position = _context.ms_menugp.Where(mg => mg.MnugrpId == user.MnugrpId).Select(mg => mg.MnugrpNme).FirstOrDefault() ?? "";
                 user.RevDteTime = DateTime.Now;
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Companies"] = new SelectList(_context.ms_company.ToList(), "CmpyId", "CmpyNme");
+            ViewData["Positions"] = new SelectList(_context.ms_menugp.ToList(), "MnugrpId", "MnugrpNme");
+
             return View(user);
         }
 
@@ -86,6 +122,9 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
+            ViewData["Companies"] = new SelectList(_context.ms_company.ToList(), "CmpyId", "CmpyNme");
+            ViewData["Positions"] = new SelectList(_context.ms_menugp.ToList(), "MnugrpId", "MnugrpNme");
+
             return View(user);
         }
 
@@ -94,7 +133,7 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserId,UserCde,UserNme,Position,Gender,MnugrpId,Pwd")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,UserCde,UserNme,Position,CmpyId,Gender,MnugrpId,Pwd")] User user)
         {
             if (id != user.UserId)
             {
@@ -105,7 +144,57 @@ namespace BuildingManagement.Controllers
             {
                 try
                 {
-                    user.CmpyId = 1;//default
+                    user.Position = _context.ms_menugp.Where(mg => mg.MnugrpId == user.MnugrpId).Select(mg => mg.MnugrpNme).FirstOrDefault() ?? "";
+                    user.RevDteTime = DateTime.Now;
+                    _context.Update(user);
+                    await _context.SaveChangesAsync();
+
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UserExists(user.UserId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["Companies"] = new SelectList(_context.ms_company.ToList(), "CmpyId", "CmpyNme");
+            ViewData["Positions"] = new SelectList(_context.ms_menugp.ToList(), "MnugrpId", "MnugrpNme");
+
+            return View(user);
+        }
+        public async Task<IActionResult> ChangePassword(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.ms_user.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangePassword(int id, [Bind("UserCde,UserNme,Password,ConfirmPassword")] User user)
+        {
+            if (id != user.UserId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
                     user.RevDteTime = DateTime.Now;
                     _context.Update(user);
                     await _context.SaveChangesAsync();
@@ -141,9 +230,12 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
+            user.MnuGrpNme = _context.ms_menugp.Where(m => m.MnugrpId == user.MnugrpId).Select(m => m.MnugrpNme).FirstOrDefault() ?? "";
+            user.Position = _context.ms_menugp.Where(mg => mg.MnugrpId == user.MnugrpId).Select(mg => mg.MnugrpNme).FirstOrDefault() ?? "";
 
             return View(user);
         }
+
 
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]

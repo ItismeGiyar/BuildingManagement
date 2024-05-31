@@ -15,7 +15,7 @@ namespace BuildingManagement.Models
         [StringLength(20)]
         public string? LastReadingUnit {  get; set; }
         [Required(ErrorMessage = "Please enter a number.")]
-        [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative integer.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative number.")]
         public decimal Amount {  get; set; }
         public short CmpyId {  get; set; }
         public int UserId {  get; set; }

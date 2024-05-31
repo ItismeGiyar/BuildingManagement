@@ -42,9 +42,11 @@
                                 <span asp-validation-for="UserNme" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Position" class="control-label"></label>
-                                <input asp-for="Position" class="form-control" />
-                                <span asp-validation-for="Position" class="text-danger"></span>
+                                <label asp-for="Position" class="control-label">Position</label>
+                                <select asp-for="MnugrpId" class="form-control form-select" asp-items="@ViewBag.Positions">
+                                    <option value=""> - Select One - </option>
+                                </select>
+                                <span asp-validation-for="MnugrpId" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Gender" class="control-label"></label>
@@ -56,14 +58,21 @@
                                 <span asp-validation-for="Gender" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="MnugrpId" class="control-label"></label>
-                                <input asp-for="MnugrpId" class="form-control" />
-                                <span asp-validation-for="MnugrpId" class="text-danger"></span>
+                                <label asp-for="CmpyId" class="control-label">Company</label>
+                                <select asp-for="CmpyId" class="form-control form-select" asp-items="@ViewBag.Companies">
+                                    <option value=""> - Select One - </option>
+                                </select>
+                                <span asp-validation-for="CmpyId" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Pwd" class="control-label"></label>
                                 <input asp-for="Pwd" class="form-control" />
                                 <span asp-validation-for="Pwd" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ConfirmPassword" class="control-label"></label>
+                                <input asp-for="ConfirmPassword" class="form-control" />
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                             </div>
 
                             <div class="form-group">

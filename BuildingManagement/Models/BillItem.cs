@@ -17,7 +17,7 @@ namespace BuildingManagement.Models
         [DisplayName("Fix Charge Flag")]
         public bool FixChrgFlg { get; set;}
         [Required(ErrorMessage = "Please enter a number.")]
-        [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative integer.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative number.")]
         [DisplayName("Fix Charge Amount")]
         public decimal FixChrgAmt {  get; set; }
         public short CmpyId {  get; set; }
