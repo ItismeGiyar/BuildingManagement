@@ -7,7 +7,7 @@ namespace BuildingManagement.Models
     public class BillItemTenant
     {
         [Key]
-        [DisplayName("Tenant Subscribe Id")]
+        [DisplayName("Tenant Subscribe ID")]
         public int BtitemId {  get; set; }
         [DisplayName("Subscribe Plan")]
         public int BItemId { get; set;}
