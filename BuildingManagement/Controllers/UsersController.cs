@@ -49,6 +49,7 @@ namespace BuildingManagement.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
+
             return View(await _context.ms_user.ToListAsync());
         }
 
@@ -318,5 +319,6 @@ namespace BuildingManagement.Controllers
         {
             return _context.ms_user.Any(e => e.UserId == id);
         }
+        
     }
 }

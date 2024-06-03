@@ -99,8 +99,10 @@
                         <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
                             <thead>
                                 <tr>
+                                    <th>No</th>
+
                                     <th>
-                                        @Html.DisplayNameFor(model => model.TenantId)
+                                        @Html.DisplayNameFor(model => model.Tenant)
                                     </th>
                                     <th>
                                         @Html.DisplayNameFor(model => model.PlateNo)
@@ -115,11 +117,17 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @{
+                                    var counter = 1;
+                                }
+
                                 @foreach (var item in Model)
                                 {
                                     <tr>
+                                        <td>@counter</td>
+
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.TenantId)
+                                            @Html.DisplayFor(modelItem => item.Tenant)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.PlateNo)
@@ -145,6 +153,8 @@
 
                                         </td>
                                     </tr>
+                                    counter++;
+
                                 }
                             </tbody>
                         </table>

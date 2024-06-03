@@ -63,13 +63,13 @@ namespace BuildingManagement.Models
         public DateTime RevDteTime { get; set; }
         [NotMapped]
         [DisplayName("Resident Type")]
-        public string ResidentType { get; set; } = string.Empty;
+        public string Billitem { get; set; } = string.Empty;
         [NotMapped]
         [DisplayName("Company")]
         public string Company { get; set; } = string.Empty;
         [NotMapped]
         [DisplayName("User")]
         public string User { get; set; } = string.Empty;
-
+        public string? Tenant { get; internal set; }
     }
 }
