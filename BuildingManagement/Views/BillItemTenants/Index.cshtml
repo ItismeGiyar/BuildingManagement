@@ -1,16 +1,9 @@
 ﻿@model IEnumerable<BuildingManagement.Models.BillItemTenant>
 
-
-
-
-
-
 @{
     ViewData["Title"] = "Tenant Subscribe";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
 
 @section links {
     <!-- DataTables -->
@@ -92,93 +85,86 @@
             </div>
         </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>No</th>
-            <th>
-                @Html.DisplayNameFor(model => model.BItemId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TenantId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SubPlan)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SubDte)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ActiveFlg)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastReadingUnit)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CmpyId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RevDteTime)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @{
-            var counter = 1;
-        }
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-gray">
+            <div class="card-header">
+                <h3 class="card-title">@ViewData["Title"] List</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Billitem)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Tenant)
+                                    </th>
+                                    
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.SubDte)
+                                    </th>
+                                   
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Amount)
+                                    </th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    var counter = 1;
+                                }
 
-@foreach (var item in Model) {
-        <tr>
-                <td>@counter</td>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@counter</td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.BItemId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenantId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubPlan)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubDte)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ActiveFlg)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastReadingUnit)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CmpyId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RevDteTime)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.BtitemId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.BtitemId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.BtitemId">Delete</a>
-            </td>
-            </tr>
-            counter++;
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Billitem)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Tenant)
+                                        </td>
+                                        
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.SubDte)
+                                        </td>
+                                       
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Amount)
+                                        </td>
+                                       
+                                       
 
-        }
-    </tbody>
-</table>
+                                        <td style="text-align: center">
+                                            <a asp-action="Details" asp-route-id="@item.BtitemId"><i class="fas fa-info-circle"></i></a>
+                                        </td>
+                                        <td style="text-align: center">
+                                            <a asp-action="Edit" asp-route-id="@item.BtitemId"><i class="fas fa-edit"></i></a>
+                                        </td>
+                                        <td style="text-align: center">
+                                            <a asp-action="Delete" asp-route-id="@item.BtitemId"><i class="fas fa-trash"></i></a>
+
+                                        </td>
+                                    </tr>
+                                    counter++;
+
+                                }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
