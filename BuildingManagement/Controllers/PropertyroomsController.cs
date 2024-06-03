@@ -182,6 +182,8 @@ namespace BuildingManagement.Controllers
                 try
 
                 {
+
+
                     propertyRoom.CmpyId = GetCmpyId();//default
                     propertyRoom.UserId = GetUserId();//default;
                     propertyRoom.RevDteTime = DateTime.Now;

@@ -107,6 +107,7 @@
                             <thead>
                                 <tr>
 
+                                    <th>No</th>
 
                                     <th>
                                         @Html.DisplayNameFor(model => model.UserCde)
@@ -120,15 +121,22 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.Gender)
                                     </th>
+                                    
+                                    <th></th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @{
+                                    var counter = 1;
+                                }
+
                                 @foreach (var item in Model)
                                 {
                                     <tr>
+                                        <td>@counter</td>
 
                                         <td>
                                             @Html.DisplayFor(modelItem => item.UserCde)
@@ -142,8 +150,9 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Gender)
                                         </td>
+                                       
                                         <td style="text-align: center">
-                                            <a asp-action="Details" asp-route-id="@item.UserId"><i class="fas fa-info-circle"></i></a>
+                                            <a asp-action="ChangePwd" asp-route-id="@item.UserId"><i class="fas fa-unlock-alt"></i></a>
                                         </td>
                                         <td style="text-align: center">
                                             <a asp-action="Details" asp-route-id="@item.UserId"><i class="fas fa-info-circle"></i></a>
@@ -154,6 +163,8 @@
                                             <a asp-action="Delete" asp-route-id="@item.UserId"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>
+                                    counter++;
+
                                 }
                             </tbody>
                         </table>
