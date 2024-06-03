@@ -70,6 +70,6 @@ namespace BuildingManagement.Models
         [NotMapped]
         [DisplayName("User")]
         public string User { get; set; } = string.Empty;
-        public string? Tenant { get; internal set; }
+        //public string? Tenant { get; internal set; }
     }
 }
