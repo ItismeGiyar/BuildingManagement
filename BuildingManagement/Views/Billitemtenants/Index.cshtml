@@ -12,6 +12,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>No</th>
             <th>
                 @Html.DisplayNameFor(model => model.BItemId)
             </th>
@@ -46,8 +47,14 @@
         </tr>
     </thead>
     <tbody>
+        @{
+            var counter = 1;
+        }
+
 @foreach (var item in Model) {
         <tr>
+                <td>@counter</td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.BItemId)
             </td>
@@ -83,7 +90,9 @@
                 <a asp-action="Details" asp-route-id="@item.BtitemId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.BtitemId">Delete</a>
             </td>
-        </tr>
-}
+            </tr>
+            counter++;
+
+        }
     </tbody>
 </table>
