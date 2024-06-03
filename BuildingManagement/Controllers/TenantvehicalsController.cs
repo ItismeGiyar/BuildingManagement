@@ -110,7 +110,7 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TenantId,PlateNo,AllocateNo")] TenantVehical tenantVehical)
+        public async Task<IActionResult> Create([Bind("TenantId,TenantNme,PlateNo,AllocateNo")] TenantVehical tenantVehical)
         {
             if (ModelState.IsValid)
             {
@@ -148,7 +148,7 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("VehId,TenantId,PlateNo,AllocateNo")] TenantVehical tenantVehical)
+        public async Task<IActionResult> Edit(int id, [Bind("VehId,TenantId,TenantNme,PlateNo,AllocateNo")] TenantVehical tenantVehical)
         {
             if (id != tenantVehical.VehId)
             {

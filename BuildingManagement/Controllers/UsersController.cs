@@ -48,8 +48,10 @@ namespace BuildingManagement.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
+
             return View(await _context.ms_user.ToListAsync());
         }
+
 
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -256,5 +258,6 @@ namespace BuildingManagement.Controllers
         {
             return _context.ms_user.Any(e => e.UserId == id);
         }
+        
     }
 }

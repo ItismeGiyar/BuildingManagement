@@ -121,8 +121,12 @@
                                         @Html.DisplayNameFor(model => model.AcreMeasure)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.EstiblishDte)
+                                        @Html.DisplayNameFor(model => model.Billitem)
                                     </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.EstiblishDte)
+                                    </th
+                                    <th></th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -149,6 +153,9 @@
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.AcreMeasure)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Billitem)
                                         </td>
                                         <td>
                                             @Convert.ToDateTime(item.EstiblishDte).ToString("dd-MM-yyyy")
