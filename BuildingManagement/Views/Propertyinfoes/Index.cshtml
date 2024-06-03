@@ -106,6 +106,8 @@
                         <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
                             <thead>
                                 <tr>
+                                    <th>No</th>
+
                                     <th>
                                         @Html.DisplayNameFor(model => model.PropNme)
                                     </th>
@@ -131,9 +133,15 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @{
+                                    var counter = 1;
+                                }
+
                                 @foreach (var item in Model)
                                 {
                                     <tr>
+                                        <td>@counter</td>
+
                                         <td>
                                             @Html.DisplayFor(modelItem => item.PropNme)
                                         </td>
@@ -163,6 +171,8 @@
 
                                         </td>
                                     </tr>
+                                    counter++;
+
                                 }
                             </tbody>
                         </table>
