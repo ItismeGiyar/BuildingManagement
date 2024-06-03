@@ -3,7 +3,7 @@ using System.Text;
 
 namespace BuildingManagement.Common
 { 
-    public class Encrypt
+    public class EncryptDecryptService
 
     {
         public string EncryptString(string plainInput)

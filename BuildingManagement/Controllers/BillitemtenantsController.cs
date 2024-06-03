@@ -20,11 +20,39 @@ namespace BuildingManagement.Controllers
         {
             _context = context;
         }
+        protected short GetUserId()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
+            var userId = (short)_context.ms_user
+                .Where(u => u.UserCde == userCde)
+                .Select(u => u.UserId)
+                .FirstOrDefault();
+
+            return userId;
+        }
+
+        protected short GetCmpyId()
+        {
+            var cmpyId = _context.ms_user
+                .Where(u => u.UserId == GetUserId())
+                .Select(u => u.CmpyId)
+                .FirstOrDefault();
+
+            return cmpyId;
+        }
+
 
         // GET: BillItemTenants
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ms_billitemtenant.ToListAsync());
+            var list = await _context.ms_billitemtenant.ToListAsync();
+
+            foreach (var data in list)
+            {
+                data.Billitem = _context.ms_billitem.Where(rt => rt.BItemID == data.BItemID).Select(rt => rt.BItemDesc).FirstOrDefault() ?? "";
+                data.Tenant = _context.ms_tenant.Where(t => t.TenantId == data.TenantId).Select(t => t.TenantNme).FirstOrDefault() ?? "";
+            }
+            return View(list);
         }
 
         // GET: BillItemTenants/Details/5
@@ -42,12 +70,38 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
 
+            billItemTenant.Billitem =
+               _context.ms_billitem
+               .Where(c => c.BItemID == billItemTenant.BItemId)
+               .Select(c => c.BItemDesc)
+               .FirstOrDefault() ?? "";
+
+            billItemTenant.Tenant=
+                _context.ms_tenant
+                .Where(u => u.TenantId == billItemTenant.TenantId)
+                .Select(u => u.TenantNme)
+                .FirstOrDefault() ?? "";
+            billItemTenant.Company =
+                _context.ms_company
+                .Where(c => c.CmpyId == billItemTenant.CmpyId)
+                .Select(c => c.CmpyNme)
+                .FirstOrDefault() ?? "";
+
+            billItemTenant.User =
+                _context.ms_user
+                .Where(u => u.UserId == billItemTenant.UserId)
+                .Select(u => u.UserNme)
+                .FirstOrDefault() ?? "";
+
+
             return View(billItemTenant);
         }
 
         // GET: BillItemTenants/Create
         public IActionResult Create()
         {
+            ViewData["TenantList"] = new SelectList(_context.ms_tenant.ToList(), "TenantId", "TenantNme");
+            ViewData["BillitemList"] = new SelectList(_context.ms_billitem.ToList(), "BItemId", "BItemDesc");
             return View();
         }
 
@@ -56,10 +110,13 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BtitemId,BItemId,TenantId,SubPlan,SubDte,ActiveFlg,LastReadingUnit,Amount,CmpyId,UserId,RevDteTime")] BillItemTenant billItemTenant)
+        public async Task<IActionResult> Create([Bind("BItemId,TenantId,SubPlan,SubDte,ActiveFlg,LastReadingUnit,Amount")] BillItemTenant billItemTenant)
         {
             if (ModelState.IsValid)
             {
+                billItemTenant.CmpyId = GetCmpyId(); //default
+                billItemTenant.UserId = GetUserId(); //default
+                billItemTenant.RevDteTime = DateTime.Now;
                 _context.Add(billItemTenant);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -80,6 +137,8 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
+            ViewData["TenantList"] = new SelectList(_context.ms_tenant.ToList(), "TenantId", "TenantNme");
+            ViewData["BillitemList"] = new SelectList(_context.ms_billitem.ToList(), "BItemId", "BItemDesc");
             return View(billItemTenant);
         }
 
@@ -88,17 +147,20 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BtitemId,BItemId,TenantId,SubPlan,SubDte,ActiveFlg,LastReadingUnit,Amount,CmpyId,UserId,RevDteTime")] BillItemTenant billItemTenant)
+        public async Task<IActionResult> Edit(int id, [Bind("BtitemId,BItemId,TenantId,SubPlan,SubDte,ActiveFlg,LastReadingUnit,Amount")] BillItemTenant billItemTenant)
         {
             if (id != billItemTenant.BtitemId)
             {
                 return NotFound();
             }
-
+            
             if (ModelState.IsValid)
             {
                 try
                 {
+                    billItemTenant.CmpyId = GetCmpyId(); //default
+                    billItemTenant.UserId = GetUserId(); //default
+                    billItemTenant.RevDteTime = DateTime.Now;
                     _context.Update(billItemTenant);
                     await _context.SaveChangesAsync();
                 }
@@ -132,6 +194,29 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
+            billItemTenant.Billitem =
+              _context.ms_billitem
+              .Where(c => c.BItemID == billItemTenant.BItemId)
+              .Select(c => c.BItemDesc)
+              .FirstOrDefault() ?? "";
+
+            billItemTenant.Tenant =
+                _context.ms_tenant
+                .Where(u => u.TenantId == billItemTenant.TenantId)
+                .Select(u => u.TenantNme)
+                .FirstOrDefault() ?? "";
+            billItemTenant.Company =
+                _context.ms_company
+                .Where(c => c.CmpyId == billItemTenant.CmpyId)
+                .Select(c => c.CmpyNme)
+                .FirstOrDefault() ?? "";
+
+            billItemTenant.User =
+                _context.ms_user
+                .Where(u => u.UserId == billItemTenant.UserId)
+                .Select(u => u.UserNme)
+                .FirstOrDefault() ?? "";
+
 
             return View(billItemTenant);
         }

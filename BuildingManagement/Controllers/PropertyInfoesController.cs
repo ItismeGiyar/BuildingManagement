@@ -37,7 +37,7 @@ namespace BuildingManagement.Controllers
 
             foreach (var data in list)
             {
-                data.ResidentType = _context.ms_residenttype.Where(rt => rt.ResitypId == data.ResitypId).Select(rt => rt.RestypDesc).FirstOrDefault() ?? "";
+                data.Billitem = _context.ms_residenttype.Where(rt => rt.ResitypId == data.ResitypId).Select(rt => rt.RestypDesc).FirstOrDefault() ?? "";
             }
             return View(list);
         }
@@ -55,7 +55,7 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
-            propertyInfo.ResidentType = _context.ms_residenttype.Where(rt => rt.ResitypId == propertyInfo.ResitypId).Select(rt => rt.RestypDesc).FirstOrDefault() ?? "";
+            propertyInfo.Billitem = _context.ms_residenttype.Where(rt => rt.ResitypId == propertyInfo.ResitypId).Select(rt => rt.RestypDesc).FirstOrDefault() ?? "";
             propertyInfo.Company = _context.ms_company.Where(c => c.CmpyId == propertyInfo.CmpyId).Select(c => c.CmpyNme).FirstOrDefault() ?? "";
             propertyInfo.User = _context.ms_user.Where(u => u.UserId == propertyInfo.UserId).Select(u => u.UserNme).FirstOrDefault() ?? "";
 

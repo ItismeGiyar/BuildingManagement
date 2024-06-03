@@ -40,13 +40,16 @@ namespace BuildingManagement.Models
 
         [NotMapped]
         public string Password { get; set; } = string.Empty;
+        
         [NotMapped]
         [DisplayName("Confirm Password")]
-        public string ConfirmPassword { get; set; } = string.Empty;
+        public string ConfirmPwd { get; set; } = string.Empty;
         [NotMapped]
+        
         [DisplayName("Menu Group Name")]
         public string MnuGrpNme { get; set; } = string.Empty;
         
+
 
     }
 }

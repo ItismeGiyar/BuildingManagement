@@ -10,6 +10,7 @@ using BuildingManagement.Models;
 using Microsoft.AspNetCore.Authorization;
 using BuildingManagement.Common;
 using System.Text;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace BuildingManagement.Controllers
 {
@@ -17,13 +18,13 @@ namespace BuildingManagement.Controllers
     public class UsersController : Controller
     {
         private readonly BuildingDbContext _context;
-        private readonly Encrypt encrypt;
-
+        private readonly EncryptDecryptService encryptDecryptService;
 
         public UsersController(BuildingDbContext context)
         {
             _context = context;
-            encrypt = new Encrypt();
+            encryptDecryptService = new EncryptDecryptService();
+
         }
         protected short GetUserId()
         {
@@ -48,8 +49,10 @@ namespace BuildingManagement.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
+
             return View(await _context.ms_user.ToListAsync());
         }
+
 
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -90,12 +93,13 @@ namespace BuildingManagement.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> Create([Bind("UserCde,UserNme,CmpyId,MnugrpId,Gender,Password,ConfirmPassword")] User user)
+        public async Task<IActionResult> Create([Bind("UserCde,UserNme,CmpyId,MnugrpId,Gender,Password,ConfirmPwd")] User user)
         {
             if (ModelState.IsValid)
             {
                 // Merge by Ko Kg
-                byte[] encryptedBytes = Encoding.UTF8.GetBytes(encrypt.EncryptString(user.ConfirmPassword));
+                byte[] encryptedBytes = Encoding.UTF8.GetBytes(encryptDecryptService.EncryptString(user.Password));
+
                 user.Pwd = encryptedBytes;
                 user.Position = _context.ms_menugp.Where(mg => mg.MnugrpId == user.MnugrpId).Select(mg => mg.MnugrpNme).FirstOrDefault() ?? "";
                 user.RevDteTime = DateTime.Now;
@@ -168,7 +172,33 @@ namespace BuildingManagement.Controllers
 
             return View(user);
         }
-        public async Task<IActionResult> ChangePassword(int? id)
+        public async Task<IActionResult> ResetPwd(int? id)
+        {
+            try
+            {
+                var user = await _context.ms_user.FindAsync(id);
+                if (user != null)
+                {
+                    string defaultPassword = "User@123";
+                    byte[] encryptedBytes = Encoding.UTF8.GetBytes(encryptDecryptService.EncryptString(defaultPassword));
+                    user.Pwd = encryptedBytes;
+                    user.RevDteTime = DateTime.Now;
+                    _context.Update(user);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                StatusCode(500, ex.Message);
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> ChangePwd(int? id)
         {
             if (id == null)
             {
@@ -180,13 +210,19 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
-            return View(user);
+            var changePwd = new ChangePwd() // change model datatype from User to ChangePassword
+            {
+                UserId = user.UserId,
+                UserCde = user.UserCde,
+                UserNme = user.UserNme
+            };
+            return View(changePwd);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangePassword(int id, [Bind("UserCde,UserNme,Password,ConfirmPassword")] User user)
+        public async Task<IActionResult> ChangePwd(int id, [Bind("UserId,UserCde,UserNme,OldPwd,NewPwd,ConfirmPwd")] ChangePwd changePwd)
         {
-            if (id != user.UserId)
+            if (id != changePwd.UserId)
             {
                 return NotFound();
             }
@@ -195,13 +231,40 @@ namespace BuildingManagement.Controllers
             {
                 try
                 {
-                    user.RevDteTime = DateTime.Now;
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
+                    var user = await _context.ms_user.FindAsync(changePwd.UserId);
+                    string encryptedString = Encoding.UTF8.GetString(user.Pwd);
+                    string decryptedPassword = encryptDecryptService.DecryptString(encryptedString);
+                    if (decryptedPassword == changePwd.OldPwd) 
+                    {
+                        if (changePwd.NewPwd == null) 
+                            {
+                            changePwd.NewPwd = "User@123"; //default
+                            changePwd.ConfirmPwd = "User@123"; //default
+                        }
+                        if (changePwd.NewPwd == changePwd.ConfirmPwd)
+                        {
+                            byte[] encryptedBytes = Encoding.UTF8.GetBytes(encryptDecryptService.EncryptString(changePwd.NewPwd));
+                            user.Pwd = encryptedBytes;
+                            user.RevDteTime = DateTime.Now;
+                            _context.Update(user);
+                            await _context.SaveChangesAsync();
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("ConfirmPassword", "New password and confirm password do not match.");
+                            return View(changePwd);
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Password", "Incorrect current password.");
+                        return View(changePwd);
+                    }
                 }
+
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.UserId))
+                    if (!UserExists(changePwd.UserId))
                     {
                         return NotFound();
                     }
@@ -212,7 +275,7 @@ namespace BuildingManagement.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(changePwd);
         }
 
 
@@ -256,5 +319,6 @@ namespace BuildingManagement.Controllers
         {
             return _context.ms_user.Any(e => e.UserId == id);
         }
+        
     }
 }
