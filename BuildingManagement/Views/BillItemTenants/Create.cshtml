@@ -1,14 +1,19 @@
 ﻿@model BuildingManagement.Models.BillItemTenant
 
 
+<!-- #region name -->
 
+
+
+<!-- #endregion -->
 @{
     ViewData["Title"] = "Tenant Subscribe";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <section class="content-header">
     <div class="container-fluid">
-        <div class="row mb-2">
+        <div class="row mb-2"> 
+
             <div class="col-6">
                 <h4>@ViewData["Title"]</h4>
             </div>
@@ -16,7 +21,7 @@
                 <div class="breadcrumb float-right active">
                     <a asp-action="Index" class="btn btn-primary">Back to List <i class="fas fa-back"></i></a>
 
-                </div>
+                </div> 
             </div>
         </div>
     </div>
@@ -47,6 +52,7 @@
                                 <span asp-validation-for="TenantId" class="text-danger"></span>
                             </div>
                             
+                            
                             <div class="form-group">
                                 <label asp-for="SubDte" class="control-label"></label>
                                 <input asp-for="SubDte" class="form-control" />
@@ -70,7 +76,7 @@
                            
                             <div class="form-group">
                                 <input type="submit" value="Create" class="btn btn-primary" />
-                            </div>
+                            </div> 
                         </form>
 
                     </div>
@@ -86,5 +92,7 @@
 
 
 }
+
+
 
 

@@ -240,5 +240,6 @@ namespace BuildingManagement.Controllers
         {
             return _context.ms_billitemtenant.Any(e => e.BtitemId == id);
         }
+        //update
     }
 }
