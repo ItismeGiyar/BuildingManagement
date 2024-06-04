@@ -72,7 +72,7 @@ namespace BuildingManagement.Controllers
 
             billItemTenant.Billitem =
                _context.ms_billitem
-               .Where(c => c.BItemID == billItemTenant.BItemId)
+               .Where(c => c.BItemID == billItemTenant.BItemID)
                .Select(c => c.BItemDesc)
                .FirstOrDefault() ?? "";
 
@@ -101,7 +101,7 @@ namespace BuildingManagement.Controllers
         public IActionResult Create()
         {
             ViewData["TenantList"] = new SelectList(_context.ms_tenant.ToList(), "TenantId", "TenantNme");
-            ViewData["BillitemList"] = new SelectList(_context.ms_billitem.ToList(), "BItemId", "BItemDesc");
+            ViewData["BillitemList"] = new SelectList(_context.ms_billitem.ToList(), "BItemID", "BItemDesc");
             return View();
         }
 
@@ -110,7 +110,7 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BItemId,TenantId,SubPlan,SubDte,ActiveFlg,LastReadingUnit,Amount")] BillItemTenant billItemTenant)
+        public async Task<IActionResult> Create([Bind("BItemID,TenantId,SubPlan,SubDte,ActiveFlg,LastReadingUnit,Amount")] BillItemTenant billItemTenant)
         {
             if (ModelState.IsValid)
             {
@@ -138,7 +138,7 @@ namespace BuildingManagement.Controllers
                 return NotFound();
             }
             ViewData["TenantList"] = new SelectList(_context.ms_tenant.ToList(), "TenantId", "TenantNme");
-            ViewData["BillitemList"] = new SelectList(_context.ms_billitem.ToList(), "BItemId", "BItemDesc");
+            ViewData["BillitemList"] = new SelectList(_context.ms_billitem.ToList(), "BItemID", "BItemDesc");
             return View(billItemTenant);
         }
 
@@ -147,7 +147,7 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BtitemId,BItemId,TenantId,SubPlan,SubDte,ActiveFlg,LastReadingUnit,Amount")] BillItemTenant billItemTenant)
+        public async Task<IActionResult> Edit(int id, [Bind("BtitemId,BItemID,TenantId,SubPlan,SubDte,ActiveFlg,LastReadingUnit,Amount")] BillItemTenant billItemTenant)
         {
             if (id != billItemTenant.BtitemId)
             {
@@ -196,7 +196,7 @@ namespace BuildingManagement.Controllers
             }
             billItemTenant.Billitem =
               _context.ms_billitem
-              .Where(c => c.BItemID == billItemTenant.BItemId)
+              .Where(c => c.BItemID == billItemTenant.BItemID)
               .Select(c => c.BItemDesc)
               .FirstOrDefault() ?? "";
 
