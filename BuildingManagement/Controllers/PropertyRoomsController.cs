@@ -108,7 +108,7 @@ namespace BuildingManagement.Controllers
                 .Where(u => u.TenantId == propertyRoom.TenantId)
                 .Select(u => u.TenantNme)
                 .FirstOrDefault() ?? "";
-            return View(propertyRoom);//update
+            return View(propertyRoom);
         }
 
         // GET: PropertyRooms/Create
