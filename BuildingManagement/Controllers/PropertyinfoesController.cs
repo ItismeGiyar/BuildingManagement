@@ -21,7 +21,7 @@ namespace BuildingManagement.Controllers
         public PropertyInfoesController(BuildingDbContext context)
         {
             _context = context;
-        }
+        }//update
 
         [HttpGet]
         public ActionResult MyAction()
