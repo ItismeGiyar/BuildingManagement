@@ -49,7 +49,7 @@ namespace BuildingManagement.Controllers
 
             foreach (var data in list)
             {
-                data.Billitem = _context.ms_billitem.Where(rt => rt.BItemID == data.BItemID).Select(rt => rt.BItemDesc).FirstOrDefault() ?? "";
+                data.Billitem = _context.ms_billitem.Where(rt => rt.BItemID == data.BItemId).Select(rt => rt.BItemDesc).FirstOrDefault() ?? "";
                 data.Tenant = _context.ms_tenant.Where(t => t.TenantId == data.TenantId).Select(t => t.TenantNme).FirstOrDefault() ?? "";
             }
             return View(list);
@@ -72,7 +72,7 @@ namespace BuildingManagement.Controllers
 
             billItemTenant.Billitem =
                _context.ms_billitem
-               .Where(c => c.BItemID == billItemTenant.BItemID)
+               .Where(c => c.BItemID == billItemTenant.BItemId)
                .Select(c => c.BItemDesc)
                .FirstOrDefault() ?? "";
 
@@ -110,7 +110,7 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BItemID,TenantId,SubPlan,SubDte,ActiveFlg,LastReadingUnit,Amount")] BillItemTenant billItemTenant)
+        public async Task<IActionResult> Create([Bind("BItemId,TenantId,SubPlan,SubDte,ActiveFlg,LastReadingUnit,Amount")] BillItemTenant billItemTenant)
         {
             if (ModelState.IsValid)
             {
@@ -147,7 +147,7 @@ namespace BuildingManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BtitemId,BItemID,TenantId,SubPlan,SubDte,ActiveFlg,LastReadingUnit,Amount")] BillItemTenant billItemTenant)
+        public async Task<IActionResult> Edit(int id, [Bind("BtitemId,BItemId,TenantId,SubPlan,SubDte,ActiveFlg,LastReadingUnit,Amount")] BillItemTenant billItemTenant)
         {
             if (id != billItemTenant.BtitemId)
             {
@@ -196,7 +196,7 @@ namespace BuildingManagement.Controllers
             }
             billItemTenant.Billitem =
               _context.ms_billitem
-              .Where(c => c.BItemID == billItemTenant.BItemID)
+              .Where(c => c.BItemID == billItemTenant.BItemId)
               .Select(c => c.BItemDesc)
               .FirstOrDefault() ?? "";
 
@@ -240,6 +240,6 @@ namespace BuildingManagement.Controllers
         {
             return _context.ms_billitemtenant.Any(e => e.BtitemId == id);
         }
-        //update
+        
     }
 }
