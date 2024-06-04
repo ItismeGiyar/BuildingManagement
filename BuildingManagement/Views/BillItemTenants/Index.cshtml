@@ -133,12 +133,13 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Billitem)
                                         </td>
+
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Tenant)
                                         </td>
-                                       
+
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.SubDte)
+                                            @Convert.ToDateTime(item.SubDte).ToString("dd-MM-yyyy")
                                         </td>
                                         
                                         <td>

@@ -1,5 +1,4 @@
 ﻿@model BuildingManagement.Models.BillItem
-
 @{
     ViewData["Title"] = "Bill Item";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,7 +10,7 @@
                 <h4>@ViewData["Title"]</h4>
             </div>
             <div class="col-6">
-                <div class="breadcrumb float-right">
+                <div class="breadcrumb float-right active">
                     <a asp-action="Index" class="btn btn-primary">Back to List <i class="fas fa-back"></i></a>
 
                 </div>
@@ -27,8 +26,8 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-4">
-                        <form asp-action="Edit">
+                    <div class="col-md-6">
+                        <form asp-action="Edit" enctype="multipart/form-data">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" asp-for="BItemID" />
                             <div class="form-group">
@@ -55,12 +54,19 @@
                                 <input type="submit" value="Save" class="btn btn-primary" />
                             </div>
                         </form>
+
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
 </section>
 
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+                    </script>
+
+}
