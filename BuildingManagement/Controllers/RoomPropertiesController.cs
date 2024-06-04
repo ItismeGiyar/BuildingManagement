@@ -19,17 +19,20 @@ namespace BuildingManagement.Controllers
             _context = context;
         }
 
-        // GET: RoomProperties
+
+        #region // Main Methods //
         public async Task<IActionResult> Index()
         {
+            SetLayoutData();
             var list = await _context.ms_propertyroom.Select(m => (double)m.SqFullMeasure).ToListAsync();
 
             return View(await _context.ms_propertyroom.ToListAsync());
         }
 
-        // GET: RoomProperties/Details/5
+       
         public async Task<IActionResult> Details(int? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -45,19 +48,19 @@ namespace BuildingManagement.Controllers
             return View(roomProperty);
         }
 
-        // GET: RoomProperties/Create
+        
         public IActionResult Create()
         {
+            SetLayoutData();
             return View();
         }
 
-        // POST: RoomProperties/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RoomId,RoomNo,LocId,BdTypId,SqFullMeasure,SqRoomeasure,AmenityDesc,FeatureDesc,Addr,TenantId,CmpyId,UserId,RevDteTime")] RoomProperty roomProperty)
         {
+            SetLayoutData();
             if (ModelState.IsValid)
             {
                 _context.Add(roomProperty);
@@ -67,9 +70,10 @@ namespace BuildingManagement.Controllers
             return View(roomProperty);
         }
 
-        // GET: RoomProperties/Edit/5
+        
         public async Task<IActionResult> Edit(int? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -83,13 +87,11 @@ namespace BuildingManagement.Controllers
             return View(roomProperty);
         }
 
-        // POST: RoomProperties/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("RoomId,RoomNo,LocId,BdTypId,SqFullMeasure,SqRoomeasure,AmenityDesc,FeatureDesc,Addr,TenantId,CmpyId,UserId,RevDteTime")] RoomProperty roomProperty)
         {
+            SetLayoutData();
             if (id != roomProperty.RoomId)
             {
                 return NotFound();
@@ -118,9 +120,10 @@ namespace BuildingManagement.Controllers
             return View(roomProperty);
         }
 
-        // GET: RoomProperties/Delete/5
+        
         public async Task<IActionResult> Delete(int? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -136,11 +139,12 @@ namespace BuildingManagement.Controllers
             return View(roomProperty);
         }
 
-        // POST: RoomProperties/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            SetLayoutData();
             var roomProperty = await _context.ms_propertyroom.FindAsync(id);
             if (roomProperty != null)
             {
@@ -155,5 +159,17 @@ namespace BuildingManagement.Controllers
         {
             return _context.ms_propertyroom.Any(e => e.RoomId == id);
         }
+        #endregion
+
+        #region // Common Methods //
+        protected void SetLayoutData()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value; // format for to claim usercde
+
+            var userName = _context.ms_user.Where(u => u.UserCde == userCde).Select(u => u.UserNme).FirstOrDefault();
+
+            ViewBag.UserName = userName;
+        }
+        #endregion
     }
 }

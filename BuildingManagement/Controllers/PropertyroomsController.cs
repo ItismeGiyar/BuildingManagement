@@ -20,30 +20,12 @@ namespace BuildingManagement.Controllers
         {
             _context = context;
         }
-        protected short GetUserId()
-        {
-            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
-            var userId = (short)_context.ms_user
-                .Where(u => u.UserCde == userCde)
-                .Select(u => u.UserId)
-                .FirstOrDefault();
+        #region // Main Methods //
+       
 
-            return userId;
-        }
-
-        protected short GetCmpyId()
-        {
-            var cmpyId = _context.ms_user
-                .Where(u => u.UserId == GetUserId())
-                .Select(u => u.CmpyId)
-                .FirstOrDefault();
-
-            return cmpyId;
-        }
-
-        // GET: PropertyRooms
         public async Task<IActionResult> Index()
         {
+            SetLayoutData();
 
             var list = await _context.ms_propertyroom.ToListAsync();
 
@@ -61,9 +43,10 @@ namespace BuildingManagement.Controllers
             return View(list);
         }
 
-        // GET: PropertyRooms/Details/5
+       
         public async Task<IActionResult> Details(int? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -111,9 +94,10 @@ namespace BuildingManagement.Controllers
             return View(propertyRoom);
         }
 
-        // GET: PropertyRooms/Create
+        
         public IActionResult Create()
         {
+            SetLayoutData();
             var list = _context.ms_propertyinfo.ToList();
             ViewData["PropertyList"] = new SelectList(list, "PropId", "PropNme");
 
@@ -124,17 +108,16 @@ namespace BuildingManagement.Controllers
             return View();
         }
 
-        // POST: PropertyRooms/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PropId,RoomNo,LocId,BdtypId,SqFullMeasure,SqRooMeasure,AmenityDesc,FeatureDesc,Addr,TenantId")] PropertyRoom propertyRoom)
         {
+            SetLayoutData();
             if (ModelState.IsValid)
             {
-                propertyRoom.CmpyId = GetCmpyId();//default
-                propertyRoom.UserId = GetUserId();//default
+                propertyRoom.CmpyId = GetCmpyId();
+                propertyRoom.UserId = GetUserId();
                 propertyRoom.RevDteTime = DateTime.Now;
                 _context.Add(propertyRoom);
                 await _context.SaveChangesAsync();
@@ -144,9 +127,10 @@ namespace BuildingManagement.Controllers
             return View(propertyRoom);
         }
 
-        // GET: PropertyRooms/Edit/5
+       
         public async Task<IActionResult> Edit(int? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -165,13 +149,12 @@ namespace BuildingManagement.Controllers
             return View(propertyRoom);
         }
 
-        // POST: PropertyRooms/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("RoomId,PropId,RoomNo,LocId,BdtypId,SqFullMeasure,SqRooMeasure,AmenityDesc,FeatureDesc,Addr,TenantId")] PropertyRoom propertyRoom)
         {
+            SetLayoutData();
             if (id != propertyRoom.RoomId)
             {
                 return NotFound();
@@ -182,8 +165,8 @@ namespace BuildingManagement.Controllers
                 try
 
                 {
-                    propertyRoom.CmpyId = GetCmpyId();//default
-                    propertyRoom.UserId = GetUserId();//default;
+                    propertyRoom.CmpyId = GetCmpyId();
+                    propertyRoom.UserId = GetUserId();
                     propertyRoom.RevDteTime = DateTime.Now;
 
 
@@ -206,9 +189,10 @@ namespace BuildingManagement.Controllers
             return View(propertyRoom);
         }
 
-        // GET: PropertyRooms/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -224,11 +208,12 @@ namespace BuildingManagement.Controllers
             return View(propertyRoom);
         }
 
-        // POST: PropertyRooms/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            SetLayoutData();
             var propertyRoom = await _context.ms_propertyroom.FindAsync(id);
             if (propertyRoom != null)
             {
@@ -243,5 +228,36 @@ namespace BuildingManagement.Controllers
         {
             return _context.ms_propertyroom.Any(e => e.RoomId == id);
         }
+        #endregion
+        #region // Common Methods //
+        protected short GetUserId()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
+            var userId = (short)_context.ms_user
+                .Where(u => u.UserCde == userCde)
+                .Select(u => u.UserId)
+                .FirstOrDefault();
+
+            return userId;
+        }
+
+        protected short GetCmpyId()
+        {
+            var cmpyId = _context.ms_user
+                .Where(u => u.UserId == GetUserId())
+                .Select(u => u.CmpyId)
+                .FirstOrDefault();
+
+            return cmpyId;
+        }
+        protected void SetLayoutData()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value; // format for to claim usercde
+
+            var userName = _context.ms_user.Where(u => u.UserCde == userCde).Select(u => u.UserNme).FirstOrDefault();
+
+            ViewBag.UserName = userName;
+        }
+        #endregion
     }
 }
