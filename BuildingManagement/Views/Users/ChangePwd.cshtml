@@ -1,9 +1,4 @@
 ﻿@model BuildingManagement.Models.ChangePwd
-<!-- #region name -->
-
-
-
-<!-- #endregion -->
 
 
 @{
@@ -35,7 +30,7 @@
                 <div class="row">
                     <p>Please take note that the user will be created with default password 'User@123' if there is no password was provided.</p>
                     <div class="col-md-6">
-                        <form asp-action="ChangePwd" enctype="multipart/form-data">
+                        <form asp-action="ChangePwd">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" asp-for="UserId" />
                             <div class="form-group">
@@ -50,17 +45,17 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="OldPwd" class="control-label">Current Password</label>
-                                <input asp-for="OldPwd" class="form-control" />
+                                <input type="password" asp-for="OldPwd" class="form-control" />
                                 <span asp-validation-for="OldPwd" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="NewPwd" class="control-label"></label>
-                                <input asp-for="NewPwd" class="form-control" />
+                                <input type="password" asp-for="NewPwd" class="form-control" />
                                 <span asp-validation-for="NewPwd" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="ConfirmPwd" class="control-label"></label>
-                                <input asp-for="ConfirmPwd" class="form-control" />
+                                <input type="password" asp-for="ConfirmPwd" class="form-control" />
                                 <span asp-validation-for="ConfirmPwd" class="text-danger"></span>
                             </div>
                             <div class="form-group">
@@ -69,6 +64,7 @@
                         </form>
                           <form asp-controller="Users" asp-action="ResetPwd" method="post">
                             <input type="hidden" name="id" value="@Model.UserId" />
+
                             <button type="submit" value="Reset Password" onclick="confirmReset()" class="btn btn-primary" style="background-color :red; color :white">Reset Password to default</button>
                           </form>
 
@@ -83,11 +79,11 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <script>
+    @* <script>
         function confirmReset() {
             if (confirm("Are you sure you want to reset the pasword to default?")) {
                 document.getElementById("resetPasswordForm").submit();
             }
         }
-    </script>
+    </script> *@
 }
