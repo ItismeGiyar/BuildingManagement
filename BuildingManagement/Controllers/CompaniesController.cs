@@ -20,16 +20,18 @@ namespace BuildingManagement.Controllers
         {
             _context = context;
         }
-
-        // GET: Companies
+        #region // Main methods //
+      
         public async Task<IActionResult> Index()
         {
+            SetLayOutData();
             return View(await _context.ms_company.ToListAsync());
         }
 
-        // GET: Companies/Details/5
+      
         public async Task<IActionResult> Details(short? id)
         {
+            SetLayOutData();
             if (id == null)
             {
                 return NotFound();
@@ -48,16 +50,16 @@ namespace BuildingManagement.Controllers
         // GET: Companies/Create
         public IActionResult Create()
         {
+            SetLayOutData();
             return View();
         }
 
-        // POST: Companies/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CmpyNme,Address")] Company company)
         {
+            SetLayOutData();
             if (ModelState.IsValid)
             {
                 
@@ -69,9 +71,10 @@ namespace BuildingManagement.Controllers
             return View(company);
         }
 
-        // GET: Companies/Edit/5
+      
         public async Task<IActionResult> Edit(short? id)
         {
+            SetLayOutData();
             if (id == null)
             {
                 return NotFound();
@@ -85,13 +88,12 @@ namespace BuildingManagement.Controllers
             return View(company);
         }
 
-        // POST: Companies/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(short id, [Bind("CmpyId,CmpyNme,Address")] Company company)
         {
+            SetLayOutData();
             if (id != company.CmpyId)
             {
                 return NotFound();
@@ -122,9 +124,10 @@ namespace BuildingManagement.Controllers
             return View(company);
         }
 
-        // GET: Companies/Delete/5
+     
         public async Task<IActionResult> Delete(short? id)
         {
+            SetLayOutData();
             if (id == null)
             {
                 return NotFound();
@@ -140,11 +143,12 @@ namespace BuildingManagement.Controllers
             return View(company);
         }
 
-        // POST: Companies/Delete/5
+       
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(short id)
         {
+            SetLayOutData();
             var company = await _context.ms_company.FindAsync(id);
             if (company != null)
             {
@@ -159,5 +163,18 @@ namespace BuildingManagement.Controllers
         {
             return _context.ms_company.Any(e => e.CmpyId == id);
         }
+        #endregion
+
+        #region //common methods//
+        protected void SetLayOutData()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value; // format for to claim usercde
+
+            var userName = _context.ms_user.Where(u => u.UserCde == userCde).Select(u => u.UserNme).FirstOrDefault();
+
+            ViewBag.UserName = userName;
+
+        }
+        #endregion
     }
 }

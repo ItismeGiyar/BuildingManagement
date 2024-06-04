@@ -20,6 +20,7 @@ namespace BuildingManagement.Controllers
         {
             _context = context;
         }
+        #region // Main methods //
         protected short GetUserId()
         {
             var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
@@ -42,9 +43,10 @@ namespace BuildingManagement.Controllers
         }
 
 
-        // GET: BillItemTenants
+       
         public async Task<IActionResult> Index()
         {
+            SetLayOutData();
             var list = await _context.ms_billitemtenant.ToListAsync();
 
             foreach (var data in list)
@@ -55,9 +57,10 @@ namespace BuildingManagement.Controllers
             return View(list);
         }
 
-        // GET: BillItemTenants/Details/5
+       
         public async Task<IActionResult> Details(int? id)
         {
+            SetLayOutData();
             if (id == null)
             {
                 return NotFound();
@@ -97,25 +100,26 @@ namespace BuildingManagement.Controllers
             return View(billItemTenant);
         }
 
-        // GET: BillItemTenants/Create
+        
         public IActionResult Create()
         {
+            SetLayOutData();
+
             ViewData["TenantList"] = new SelectList(_context.ms_tenant.ToList(), "TenantId", "TenantNme");
             ViewData["BillitemList"] = new SelectList(_context.ms_billitem.ToList(), "BItemID", "BItemDesc");
             return View();
         }
 
-        // POST: BillItemTenants/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("BItemId,TenantId,SubPlan,SubDte,ActiveFlg,LastReadingUnit,Amount")] BillItemTenant billItemTenant)
         {
+            SetLayOutData();
             if (ModelState.IsValid)
             {
-                billItemTenant.CmpyId = GetCmpyId(); //default
-                billItemTenant.UserId = GetUserId(); //default
+                billItemTenant.CmpyId = GetCmpyId(); 
+                billItemTenant.UserId = GetUserId(); 
                 billItemTenant.RevDteTime = DateTime.Now;
                 _context.Add(billItemTenant);
                 await _context.SaveChangesAsync();
@@ -124,9 +128,10 @@ namespace BuildingManagement.Controllers
             return View(billItemTenant);
         }
 
-        // GET: BillItemTenants/Edit/5
+     
         public async Task<IActionResult> Edit(int? id)
         {
+            SetLayOutData();
             if (id == null)
             {
                 return NotFound();
@@ -142,13 +147,12 @@ namespace BuildingManagement.Controllers
             return View(billItemTenant);
         }
 
-        // POST: BillItemTenants/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("BtitemId,BItemId,TenantId,SubPlan,SubDte,ActiveFlg,LastReadingUnit,Amount")] BillItemTenant billItemTenant)
         {
+            SetLayOutData();
             if (id != billItemTenant.BtitemId)
             {
                 return NotFound();
@@ -158,8 +162,8 @@ namespace BuildingManagement.Controllers
             {
                 try
                 {
-                    billItemTenant.CmpyId = GetCmpyId(); //default
-                    billItemTenant.UserId = GetUserId(); //default
+                    billItemTenant.CmpyId = GetCmpyId(); 
+                    billItemTenant.UserId = GetUserId(); 
                     billItemTenant.RevDteTime = DateTime.Now;
                     _context.Update(billItemTenant);
                     await _context.SaveChangesAsync();
@@ -180,9 +184,10 @@ namespace BuildingManagement.Controllers
             return View(billItemTenant);
         }
 
-        // GET: BillItemTenants/Delete/5
+     
         public async Task<IActionResult> Delete(int? id)
         {
+            SetLayOutData();
             if (id == null)
             {
                 return NotFound();
@@ -221,11 +226,11 @@ namespace BuildingManagement.Controllers
             return View(billItemTenant);
         }
 
-        // POST: BillItemTenants/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            SetLayOutData();
             var billItemTenant = await _context.ms_billitemtenant.FindAsync(id);
             if (billItemTenant != null)
             {
@@ -240,6 +245,19 @@ namespace BuildingManagement.Controllers
         {
             return _context.ms_billitemtenant.Any(e => e.BtitemId == id);
         }
-        
+        #endregion
+
+
+        #region // Common methods //
+        protected void SetLayOutData()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value; // format for to claim usercde
+
+            var userName = _context.ms_user.Where(u => u.UserCde == userCde).Select(u => u.UserNme).FirstOrDefault();
+
+            ViewBag.UserName = userName;
+
+        }
+        #endregion
     }
 }

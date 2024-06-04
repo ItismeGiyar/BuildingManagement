@@ -20,6 +20,9 @@ namespace BuildingManagement.Controllers
         {
             _context = context;
         }
+
+
+        #region // Main methods //
         protected short GetUserId()
         {
             var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
@@ -42,15 +45,16 @@ namespace BuildingManagement.Controllers
         }
 
 
-        // GET: Locations
         public async Task<IActionResult> Index()
         {
+            SetLayOutData();
             return View(await _context.ms_location.ToListAsync());
         }
 
-        // GET: Locations/Details/5
+    
         public async Task<IActionResult> Details(int? id)
         {
+            SetLayOutData();
             if (id == null)
             {
                 return NotFound();
@@ -79,19 +83,19 @@ namespace BuildingManagement.Controllers
             return View(location);
         }
 
-        // GET: Locations/Create
+     
         public IActionResult Create()
         {
+            SetLayOutData();
             return View();
         }
 
-        // POST: Locations/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+     
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("LocDesc")] Location location)
         {
+            SetLayOutData();
             if (ModelState.IsValid)
             {
                 location.CmpyId = GetCmpyId(); //default
@@ -105,9 +109,10 @@ namespace BuildingManagement.Controllers
             return View(location);
         }
 
-        // GET: Locations/Edit/5
+     
         public async Task<IActionResult> Edit(int? id)
         {
+            SetLayOutData();
             if (id == null)
             {
                 return NotFound();
@@ -121,13 +126,12 @@ namespace BuildingManagement.Controllers
             return View(location);
         }
 
-        // POST: Locations/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("LocId,LocDesc")] Location location)
         {
+            SetLayOutData();
             if (id != location.LocId)
             {
                 return NotFound();
@@ -159,9 +163,10 @@ namespace BuildingManagement.Controllers
             return View(location);
         }
 
-        // GET: Locations/Delete/5
+      
         public async Task<IActionResult> Delete(int? id)
         {
+            SetLayOutData();
             if (id == null)
             {
                 return NotFound();
@@ -177,11 +182,12 @@ namespace BuildingManagement.Controllers
             return View(location);
         }
 
-        // POST: Locations/Delete/5
+       
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            SetLayOutData();
             var location = await _context.ms_location.FindAsync(id);
             if (location != null)
             {
@@ -196,5 +202,18 @@ namespace BuildingManagement.Controllers
         {
             return _context.ms_location.Any(e => e.LocId == id);
         }
+        #endregion
+
+        #region // Common methods //
+        protected void SetLayOutData()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value; // format for to claim usercde
+
+            var userName = _context.ms_user.Where(u => u.UserCde == userCde).Select(u => u.UserNme).FirstOrDefault();
+
+            ViewBag.UserName = userName;
+
+        }
+        #endregion
     }
 }
