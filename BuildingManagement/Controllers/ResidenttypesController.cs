@@ -20,36 +20,20 @@ namespace BuildingManagement.Controllers
         {
             _context = context;
         }
-        protected short GetUserId()
-        {
-            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
-            var userId = (short)_context.ms_user
-                .Where(u => u.UserCde == userCde)
-                .Select(u => u.UserId)
-                .FirstOrDefault();
+        #region // Main Methods //
+       
 
-            return userId;
-        }
-
-        protected short GetCmpyId()
-        {
-            var cmpyId = _context.ms_user
-                .Where(u => u.UserId == GetUserId())
-                .Select(u => u.CmpyId)
-                .FirstOrDefault();
-
-            return cmpyId;
-        }
-
-        // GET: Residenttypes
+       
         public async Task<IActionResult> Index()
         {
+            SetLayoutData();
             return View(await _context.ms_residenttype.ToListAsync());
         }
 
-        // GET: Residenttypes/Details/5
+       
         public async Task<IActionResult> Details(int? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -79,23 +63,22 @@ namespace BuildingManagement.Controllers
             return View(residenttype);
         }
 
-        // GET: Residenttypes/Create
+
         public IActionResult Create()
         {
+            SetLayoutData();
             return View();
         }
 
-        // POST: Residenttypes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RestypDesc")] Residenttype residenttype)
         {
+            SetLayoutData();
             if (ModelState.IsValid)
             {
-                residenttype.CmpyId = GetCmpyId(); //default
-                residenttype.UserId = GetUserId(); //default
+                residenttype.CmpyId = GetCmpyId(); 
+                residenttype.UserId = GetUserId(); 
                 residenttype.RevdteTime = DateTime.Now;
                 _context.Add(residenttype);
                 await _context.SaveChangesAsync();
@@ -104,9 +87,10 @@ namespace BuildingManagement.Controllers
             return View(residenttype);
         }
 
-        // GET: Residenttypes/Edit/5
+        
         public async Task<IActionResult> Edit(int? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -120,13 +104,12 @@ namespace BuildingManagement.Controllers
             return View(residenttype);
         }
 
-        // POST: Residenttypes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ResitypId,RestypDesc")] Residenttype residenttype)
         {
+            SetLayoutData();
             if (id != residenttype.ResitypId)
             {
                 return NotFound();
@@ -136,8 +119,8 @@ namespace BuildingManagement.Controllers
             {
                 try
                 {
-                    residenttype.CmpyId = GetCmpyId();//default
-                    residenttype.UserId = GetUserId();//default
+                    residenttype.CmpyId = GetCmpyId();
+                    residenttype.UserId = GetUserId();
                    
                     residenttype.RevdteTime = DateTime.Now;
                     _context.Update(residenttype);
@@ -164,9 +147,10 @@ namespace BuildingManagement.Controllers
             throw new NotImplementedException();
         }
 
-        // GET: Residenttypes/Delete/5
+       
         public async Task<IActionResult> Delete(int? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -182,11 +166,12 @@ namespace BuildingManagement.Controllers
             return View(residenttype);
         }
 
-        // POST: Residenttypes/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            SetLayoutData();
             var residenttype = await _context.ms_residenttype.FindAsync(id);
             if (residenttype != null)
             {
@@ -201,5 +186,36 @@ namespace BuildingManagement.Controllers
         {
             return _context.ms_residenttype.Any(e => e.ResitypId == id);
         }
+        #endregion
+        #region // Common Methods //
+        protected short GetUserId()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
+            var userId = (short)_context.ms_user
+                .Where(u => u.UserCde == userCde)
+                .Select(u => u.UserId)
+                .FirstOrDefault();
+
+            return userId;
+        }
+
+        protected short GetCmpyId()
+        {
+            var cmpyId = _context.ms_user
+                .Where(u => u.UserId == GetUserId())
+                .Select(u => u.CmpyId)
+                .FirstOrDefault();
+
+            return cmpyId;
+        }
+        protected void SetLayoutData()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value; // format for to claim usercde
+
+            var userName = _context.ms_user.Where(u => u.UserCde == userCde).Select(u => u.UserNme).FirstOrDefault();
+
+            ViewBag.UserName = userName;
+        }
+        #endregion
     }
 }

@@ -22,6 +22,7 @@ namespace BuildingManagement.Controllers
         {
             _context = context;
         }
+        #region // Main Methods //
 
         [HttpGet]
         public ActionResult MyAction()
@@ -30,9 +31,11 @@ namespace BuildingManagement.Controllers
         }
 
        
-        // GET: PropertyInfoes
+       
         public async Task<IActionResult> Index()
         {
+            SetLayoutData();
+
             var list = await _context.ms_propertyinfo.ToListAsync();
 
             foreach (var data in list)
@@ -44,6 +47,7 @@ namespace BuildingManagement.Controllers
 
         public async Task<IActionResult> Details(int? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -64,6 +68,7 @@ namespace BuildingManagement.Controllers
 
         public IActionResult Create()
         {
+            SetLayoutData();
             ViewData["ResidentTypes"] = new SelectList(_context.ms_residenttype.ToList(), "ResitypId", "RestypDesc");
             return View();
         }
@@ -72,6 +77,7 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PropNme,Phone1,Phone2,Email,City,Township,Addr,AcreMeasure,ResitypId,BlockCount,RoomCount,ParkingCount,ParkingSizeDesc,PoolCount,PoolSizeDesc,EstiblishDte")] PropertyInfo propertyInfo)
         {
+            SetLayoutData();
             if (ModelState.IsValid)
             {
                 propertyInfo.CmpyId = GetCmpyId();
@@ -85,9 +91,10 @@ namespace BuildingManagement.Controllers
             return View(propertyInfo);
         }
 
-        // GET: PropertyInfoes/Edit/5
+        
         public async Task<IActionResult> Edit(int? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -107,6 +114,7 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("PropId,PropNme,Phone1,Phone2,Email,City,Township,Addr,AcreMeasure,ResitypId,BlockCount,RoomCount,ParkingCount,ParkingSizeDesc,PoolCount,PoolSizeDesc,EstiblishDte")] PropertyInfo propertyInfo)
         {
+            SetLayoutData();
             if (id != propertyInfo.PropId)
             {
                 return NotFound();
@@ -141,6 +149,7 @@ namespace BuildingManagement.Controllers
 
         public async Task<IActionResult> Delete(int? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -160,6 +169,7 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            SetLayoutData();
             var propertyInfo = await _context.ms_propertyinfo.FindAsync(id);
             if (propertyInfo != null)
             {
@@ -174,6 +184,7 @@ namespace BuildingManagement.Controllers
         {
             return _context.ms_propertyinfo.Any(e => e.PropId == id);
         }
+        #endregion
 
 
         #region // Global Methods (Important) //
@@ -199,6 +210,15 @@ namespace BuildingManagement.Controllers
             return cmpyId;
         }
 
+        
+        protected void SetLayoutData()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value; // format for to claim usercde
+
+            var userName = _context.ms_user.Where(u => u.UserCde == userCde).Select(u => u.UserNme).FirstOrDefault();
+
+            ViewBag.UserName = userName;
+        }
         #endregion
     }
 }
