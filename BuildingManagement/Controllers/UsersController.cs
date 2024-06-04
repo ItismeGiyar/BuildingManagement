@@ -318,7 +318,7 @@ namespace BuildingManagement.Controllers
         private bool UserExists(int id)
         {
             return _context.ms_user.Any(e => e.UserId == id);
-        }
+        } // update
         
     }
 }
