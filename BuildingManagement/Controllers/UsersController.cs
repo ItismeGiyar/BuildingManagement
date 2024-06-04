@@ -85,7 +85,7 @@ namespace BuildingManagement.Controllers
             ViewData["Companies"] = new SelectList(_context.ms_company.ToList(), "CmpyId", "CmpyNme");
             ViewData["Positions"] = new SelectList(_context.ms_menugp.ToList(), "MnugrpId", "MnugrpNme");
             return View();
-        }
+        }//update
 
         // POST: Users/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
