@@ -108,7 +108,7 @@ namespace BuildingManagement.Controllers
                 .Where(u => u.TenantId == propertyRoom.TenantId)
                 .Select(u => u.TenantNme)
                 .FirstOrDefault() ?? "";
-            return View(propertyRoom);
+            return View(propertyRoom);//update
         }
 
         // GET: PropertyRooms/Create
@@ -182,6 +182,8 @@ namespace BuildingManagement.Controllers
                 try
 
                 {
+
+
                     propertyRoom.CmpyId = GetCmpyId();//default
                     propertyRoom.UserId = GetUserId();//default;
                     propertyRoom.RevDteTime = DateTime.Now;
