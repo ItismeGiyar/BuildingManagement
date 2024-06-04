@@ -11,7 +11,7 @@ namespace BuildingManagement.Models
         public int BtitemId {  get; set; }
         [DisplayName("Subscribe Plan")]
         public int BItemId { get; set;}
-        public int BItemID { get; internal set; }
+        //public int BItemID { get; set; }
         [DisplayName("Tenant")]
 
         public int TenantId {  get; set;}
