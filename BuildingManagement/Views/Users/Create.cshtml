@@ -1,8 +1,5 @@
 ﻿@model BuildingManagement.Models.User
 <!-- #region name -->
-
-
-
 <!-- #endregion -->
 @{
     ViewData["Title"] = "User";
@@ -70,12 +67,12 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="Password" class="control-label"></label>
-                                <input asp-for="Password" class="form-control" />
+                                <input type="password" asp-for="Password" class="form-control" />
                                 <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="ConfirmPwd" class="control-label"></label>
-                                <input asp-for="ConfirmPwd" class="form-control" />
+                                <input type="password" asp-for="ConfirmPwd" class="form-control" />
                                 <span asp-validation-for="ConfirmPwd" class="text-danger"></span>
                             </div>
 
@@ -86,6 +83,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 </section>
 
 

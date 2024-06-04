@@ -88,7 +88,7 @@ namespace BuildingManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BItemId,BItemDesc,MonthPostFlg,FixChrgFlg,FixChrgAmt")] BillItem billItem)
+        public async Task<IActionResult> Edit(int id, [Bind("BItemID,BItemDesc,MonthPostFlg,FixChrgFlg,FixChrgAmt")] BillItem billItem)
         {
             if (id != billItem.BItemID)
             {
