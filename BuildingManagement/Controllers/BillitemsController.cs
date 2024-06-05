@@ -189,7 +189,6 @@ namespace BuildingManagement.Controllers
 
             return cmpyId;
         }
-
         protected void SetLayOutData()
         {
             var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value; // format for to claim usercde
@@ -199,7 +198,6 @@ namespace BuildingManagement.Controllers
             ViewBag.UserName = userName;
 
         }
-
         #endregion
     }
 }
