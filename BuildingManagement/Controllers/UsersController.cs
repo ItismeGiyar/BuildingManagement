@@ -117,6 +117,7 @@ namespace BuildingManagement.Controllers
        
         public async Task<IActionResult> Edit(int? id)
         {
+            SetLayOutData();
             if (id == null)
             {
                 return NotFound();
@@ -174,6 +175,7 @@ namespace BuildingManagement.Controllers
         }
         public async Task<IActionResult> ResetPwd(int? id)
         {
+            SetLayOutData();
             try
             {
                 var user = await _context.ms_user.FindAsync(id);
@@ -200,6 +202,7 @@ namespace BuildingManagement.Controllers
         }
         public async Task<IActionResult> ChangePwd(int? id)
         {
+            SetLayOutData();
             if (id == null)
             {
                 return NotFound();
@@ -210,7 +213,7 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
-            var changePwd = new ChangePwd() // change model datatype from User to ChangePassword
+            var changePwd = new ChangePwd() 
             {
                 UserId = user.UserId,
                 UserCde = user.UserCde,
@@ -237,8 +240,8 @@ namespace BuildingManagement.Controllers
                     string decryptedPassword = encryptDecryptService.DecryptString(encryptedString);
                     if (changePwd.NewPwd == null)
                     {
-                        changePwd.NewPwd = "User@123"; //default
-                        changePwd.ConfirmPwd = "User@123"; //default
+                        changePwd.NewPwd = "User@123"; 
+                        changePwd.ConfirmPwd = "User@123";
                     }
                     if (decryptedPassword == changePwd.OldPwd) 
                     {                        
