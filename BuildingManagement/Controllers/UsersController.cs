@@ -26,6 +26,7 @@ namespace BuildingManagement.Controllers
             encryptDecryptService = new EncryptDecryptService();
 
         }
+        #region // Main methods //
         protected short GetUserId()
         {
             var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
@@ -46,17 +47,18 @@ namespace BuildingManagement.Controllers
             return cmpyId;
         }
 
-        // GET: Users
+       
         public async Task<IActionResult> Index()
         {
-
+            SetLayOutData();
             return View(await _context.ms_user.ToListAsync());
         }
 
 
-        // GET: Users/Details/5
+       
         public async Task<IActionResult> Details(int? id)
         {
+            SetLayOutData();
             if (id == null)
             {
                 return NotFound();
@@ -79,17 +81,16 @@ namespace BuildingManagement.Controllers
             return View(user);
         }
 
-        // GET: Users/Create
+  
         public IActionResult Create()
         {
+            SetLayOutData();
             ViewData["Companies"] = new SelectList(_context.ms_company.ToList(), "CmpyId", "CmpyNme");
             ViewData["Positions"] = new SelectList(_context.ms_menugp.ToList(), "MnugrpId", "MnugrpNme");
             return View();
         }
 
-        // POST: Users/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
 
@@ -113,7 +114,7 @@ namespace BuildingManagement.Controllers
             return View(user);
         }
 
-        // GET: Users/Edit/5
+       
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -132,13 +133,12 @@ namespace BuildingManagement.Controllers
             return View(user);
         }
 
-        // POST: Users/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("UserId,UserCde,UserNme,Position,CmpyId,Gender,MnugrpId,Pwd")] User user)
         {
+            SetLayOutData();
             if (id != user.UserId)
             {
                 return NotFound();
@@ -222,6 +222,7 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangePwd(int id, [Bind("UserId,UserCde,UserNme,OldPwd,NewPwd,ConfirmPwd")] ChangePwd changePwd)
         {
+            SetLayOutData();
             if (id != changePwd.UserId)
             {
                 return NotFound();
@@ -279,9 +280,10 @@ namespace BuildingManagement.Controllers
         }
 
 
-        // GET: Users/Delete/5
+      
         public async Task<IActionResult> Delete(int? id)
         {
+            SetLayOutData();
             if (id == null)
             {
                 return NotFound();
@@ -300,11 +302,12 @@ namespace BuildingManagement.Controllers
         }
 
 
-        // POST: Users/Delete/5
+    
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            SetLayOutData();
             var user = await _context.ms_user.FindAsync(id);
             if (user != null)
             {
@@ -318,7 +321,20 @@ namespace BuildingManagement.Controllers
         private bool UserExists(int id)
         {
             return _context.ms_user.Any(e => e.UserId == id);
-        } // update
-        
+        }
+        #endregion
+
+        #region // Common methods //
+
+        protected void SetLayOutData()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value; // format for to claim usercde
+
+            var userName = _context.ms_user.Where(u => u.UserCde == userCde).Select(u => u.UserNme).FirstOrDefault();
+
+            ViewBag.UserName = userName;
+
+        }
+        #endregion
     }
 }
