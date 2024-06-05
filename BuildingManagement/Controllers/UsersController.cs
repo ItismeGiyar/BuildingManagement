@@ -27,6 +27,7 @@ namespace BuildingManagement.Controllers
 
         }
         #region // Main methods //
+
         protected short GetUserId()
         {
             var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
@@ -94,10 +95,17 @@ namespace BuildingManagement.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> Create([Bind("UserCde,UserNme,CmpyId,MnugrpId,Gender,Password,ConfirmPwd")] User user)
+        public async Task<IActionResult> Create([Bind("UserCde,UserNme,CmpyId,MnugrpId,Gender,Pwd,ConfirmPwd")] User user)
         {
+            SetLayOutData();
             if (ModelState.IsValid)
             {
+                if (user.Password == null)
+                {
+                    user.Password = "User@123"; //default
+                    user.ConfirmPwd = "User@123"; //default
+                }
+
                 // Merge by Ko Kg
                 byte[] encryptedBytes = Encoding.UTF8.GetBytes(encryptDecryptService.EncryptString(user.Password));
 
