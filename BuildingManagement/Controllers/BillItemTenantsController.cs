@@ -85,7 +85,7 @@ namespace BuildingManagement.Controllers
                 .Select(u => u.TenantNme)
                 .FirstOrDefault() ?? "";
             billItemTenant.Company =
-                _context.ms_company
+                _context.ms_company 
                 .Where(c => c.CmpyId == billItemTenant.CmpyId)
                 .Select(c => c.CmpyNme)
                 .FirstOrDefault() ?? "";
