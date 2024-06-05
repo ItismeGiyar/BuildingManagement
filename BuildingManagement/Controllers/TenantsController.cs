@@ -20,37 +20,20 @@ namespace BuildingManagement.Controllers
         {
             _context = context;
         }
-        protected short GetUserId()
-        {
-            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
-            var userId = (short)_context.ms_user
-                .Where(u => u.UserCde == userCde)
-                .Select(u => u.UserId)
-                .FirstOrDefault();
-
-            return userId;
-        }
-
-        protected short GetCmpyId()
-        {
-            var cmpyId = _context.ms_user
-                .Where(u => u.UserId == GetUserId())
-                .Select(u => u.CmpyId)
-                .FirstOrDefault();
-
-            return cmpyId;
-        }
 
 
-        // GET: Tenants
+
+        #region // Main Methods //
         public async Task<IActionResult> Index()
         {
+            SetLayoutData();
             return View(await _context.ms_tenant.ToListAsync());
         }
 
-        // GET: Tenants/Details/5
+        
         public async Task<IActionResult> Details(int? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -79,20 +62,21 @@ namespace BuildingManagement.Controllers
             return View(tenant);
         }
 
-        // GET: Tenants/Create
+        
         public IActionResult Create()
         {
+            SetLayoutData();
             return View();
         }
 
-        // POST: Tenants/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TenantNme,Occupany,IdNo,Gender,Phone1,Phone2,LocalFlg,PermentAddr")] Tenant tenant)
         {
-            
+            SetLayoutData();
+
+
             if (ModelState.IsValid)
             {
                 tenant.CmpyId = GetCmpyId();
@@ -105,9 +89,10 @@ namespace BuildingManagement.Controllers
             return View(tenant);
         }
 
-        // GET: Tenants/Edit/5
+        
         public async Task<IActionResult> Edit(int? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -121,13 +106,13 @@ namespace BuildingManagement.Controllers
             return View(tenant);
         }
 
-        // POST: Tenants/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("TenantId,TenantNme,Occupany,IdNo,Gender,Phone1,Phone2,LocalFlg,PermentAddr")] Tenant tenant)
         {
+
+            SetLayoutData();
             if (id != tenant.TenantId)
             {
                 return NotFound();
@@ -137,8 +122,8 @@ namespace BuildingManagement.Controllers
             {
                 try
                 {
-                    tenant.CmpyId = GetCmpyId();//default;
-                    tenant.UserId = GetUserId();//default;
+                    tenant.CmpyId = GetCmpyId();
+                    tenant.UserId = GetUserId();
                     tenant.RevDteTime=DateTime.Now;
                     _context.Update(tenant);
                     await _context.SaveChangesAsync();
@@ -159,9 +144,10 @@ namespace BuildingManagement.Controllers
             return View(tenant);
         }
 
-        // GET: Tenants/Delete/5
+        
         public async Task<IActionResult> Delete(int? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -177,11 +163,12 @@ namespace BuildingManagement.Controllers
             return View(tenant);
         }
 
-        // POST: Tenants/Delete/5
+       
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            SetLayoutData();
             var tenant = await _context.ms_tenant.FindAsync(id);
             if (tenant != null)
             {
@@ -196,5 +183,38 @@ namespace BuildingManagement.Controllers
         {
             return _context.ms_tenant.Any(e => e.TenantId == id);
         }
+        #endregion
+
+        #region //Common Methods //
+        protected short GetUserId()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
+            var userId = (short)_context.ms_user
+                .Where(u => u.UserCde == userCde)
+                .Select(u => u.UserId)
+                .FirstOrDefault();
+
+            return userId;
+        }
+
+        protected short GetCmpyId()
+        {
+            var cmpyId = _context.ms_user
+                .Where(u => u.UserId == GetUserId())
+                .Select(u => u.CmpyId)
+                .FirstOrDefault();
+
+            return cmpyId;
+        }
+
+        protected void SetLayoutData()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value; // format for to claim usercde
+
+            var userName = _context.ms_user.Where(u => u.UserCde == userCde).Select(u => u.UserNme).FirstOrDefault();
+
+            ViewBag.UserName = userName;
+        }
+        #endregion
     }
 }

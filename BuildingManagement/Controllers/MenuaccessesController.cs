@@ -21,9 +21,10 @@ namespace BuildingManagement.Controllers
             _context = context;
         }
 
-        // GET: Menuaccesses
+        #region // Main Methods //
         public async Task<IActionResult> Index()
         {
+            SetLayoutData();
             var list = await _context.ms_menuaccess.ToListAsync();
             foreach (var data in list)
             {
@@ -32,9 +33,10 @@ namespace BuildingManagement.Controllers
             return View(list);
         }
 
-        // GET: Menuaccesses/Details/5
+        
         public async Task<IActionResult> Details(int? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -57,6 +59,7 @@ namespace BuildingManagement.Controllers
 
         public IActionResult Create()
         {
+            SetLayoutData();
             ViewData["MenuGroupList"] = new SelectList(_context.ms_menugp.ToList(), "MnugrpId", "MnugrpNme");
             return View();
         }
@@ -65,6 +68,7 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MnugrpId,BtnNme")] Menuaccess menuaccess)
         {
+            SetLayoutData();
             if (ModelState.IsValid)
             {
                 menuaccess.RevDteTime = DateTime.Now;
@@ -79,6 +83,7 @@ namespace BuildingManagement.Controllers
 
         public async Task<IActionResult> Edit(int? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -98,6 +103,7 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("AccessId,MnugrpId,BtnNme")] Menuaccess menuaccess)
         {
+            SetLayoutData();
             if (id != menuaccess.AccessId)
             {
                 return NotFound();
@@ -128,9 +134,10 @@ namespace BuildingManagement.Controllers
             return View(menuaccess);
         }
 
-        // GET: Menuaccesses/Delete/5
+       
         public async Task<IActionResult> Delete(int? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -146,11 +153,11 @@ namespace BuildingManagement.Controllers
             return View(menuaccess);
         }
 
-        // POST: Menuaccesses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            SetLayoutData();
             var menuaccess = await _context.ms_menuaccess.FindAsync(id);
             if (menuaccess != null)
             {
@@ -165,5 +172,18 @@ namespace BuildingManagement.Controllers
         {
             return _context.ms_menuaccess.Any(e => e.AccessId == id);
         }
+        #endregion
+
+        #region // Common Methods //
+        protected void SetLayoutData()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value; // format for to claim usercde
+
+            var userName = _context.ms_user.Where(u => u.UserCde == userCde).Select(u => u.UserNme).FirstOrDefault();
+
+            ViewBag.UserName = userName;
+        }
+        #endregion
+
     }
 }

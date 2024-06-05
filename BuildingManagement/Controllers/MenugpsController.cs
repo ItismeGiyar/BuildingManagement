@@ -20,15 +20,17 @@ namespace BuildingManagement.Controllers
         {
             _context = context;
         }
+        #region // Main Methods //
 
-        // GET: Menugps
         public async Task<IActionResult> Index()
         {
+            SetLayoutData();
             return View(await _context.ms_menugp.ToListAsync());
         }
 
         public async Task<IActionResult> Details(short? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -44,9 +46,10 @@ namespace BuildingManagement.Controllers
             return View(menugp);
         }
 
-        // GET: Menugps/Create
+        
         public IActionResult Create()
         {
+            SetLayoutData();
             return View();
         }
 
@@ -54,6 +57,7 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MnugrpNme")] Menugp menugp)
         {
+            SetLayoutData();
             if (ModelState.IsValid)
             {
                 menugp.RevDteTime = DateTime.Now;
@@ -64,9 +68,10 @@ namespace BuildingManagement.Controllers
             return View(menugp);
         }
 
-        // GET: Menugps/Edit/5
+        
         public async Task<IActionResult> Edit(short? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -84,6 +89,7 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(short id, [Bind("MnugrpId,MnugrpNme")] Menugp menugp)
         {
+            SetLayoutData();
             if (id != menugp.MnugrpId)
             {
                 return NotFound();
@@ -113,9 +119,10 @@ namespace BuildingManagement.Controllers
             return View(menugp);
         }
 
-        // GET: Menugps/Delete/5
+       
         public async Task<IActionResult> Delete(short? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -131,11 +138,12 @@ namespace BuildingManagement.Controllers
             return View(menugp);
         }
 
-        // POST: Menugps/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(short id)
         {
+            SetLayoutData();
             var menugp = await _context.ms_menugp.FindAsync(id);
             if (menugp != null)
             {
@@ -150,5 +158,16 @@ namespace BuildingManagement.Controllers
         {
             return _context.ms_menugp.Any(e => e.MnugrpId == id);
         }
+        #endregion
+        #region // Common Methods //
+        protected void SetLayoutData()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value; // format for to claim usercde
+
+            var userName = _context.ms_user.Where(u => u.UserCde == userCde).Select(u => u.UserNme).FirstOrDefault();
+
+            ViewBag.UserName = userName;
+        }
+        #endregion
     }
 }

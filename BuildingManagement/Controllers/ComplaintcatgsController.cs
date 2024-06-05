@@ -20,8 +20,8 @@ namespace BuildingManagement.Controllers
         {
             _context = context;
         }
+        #region // Main methods //
 
-        #region // Global Methods (Important) //
         protected short GetUserId()
         {
             var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
@@ -43,18 +43,15 @@ namespace BuildingManagement.Controllers
             return cmpyId;
         }
 
-        #endregion
-
-
-        #region // Main Methods //
-
         public async Task<IActionResult> Index()
         {
+            SetLayOutData();
             return View(await _context.ms_complaintcatg.ToListAsync());
         }
 
         public async Task<IActionResult> Details(int? id)
         {
+            SetLayOutData();
             if (id == null)
             {
                 return NotFound();
@@ -86,6 +83,7 @@ namespace BuildingManagement.Controllers
 
         public IActionResult Create()
         {
+            SetLayOutData();
             return View();
         }
 
@@ -93,6 +91,7 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CplCatCde")] ComplaintCatg complaintCatg)
         {
+            SetLayOutData();
             if (ModelState.IsValid)
             {
                 complaintCatg.CmpyId = GetCmpyId(); //default
@@ -105,9 +104,10 @@ namespace BuildingManagement.Controllers
             return View(complaintCatg);
         }
 
-        // GET: ComplaintCatgs/Edit/5
+    
         public async Task<IActionResult> Edit(int? id)
         {
+            SetLayOutData();
             if (id == null)
             {
                 return NotFound();
@@ -125,6 +125,7 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CplCatgId,CplCatCde")] ComplaintCatg complaintCatg)
         {
+            SetLayOutData();
             if (id != complaintCatg.CplCatgId)
             {
                 return NotFound();
@@ -156,7 +157,7 @@ namespace BuildingManagement.Controllers
             return View(complaintCatg);
         }
 
-        // GET: ComplaintCatgs/Delete/5
+    
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -174,7 +175,7 @@ namespace BuildingManagement.Controllers
             return View(complaintCatg);
         }
 
-        // POST: ComplaintCatgs/Delete/5
+      
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -193,6 +194,19 @@ namespace BuildingManagement.Controllers
         {
             return _context.ms_complaintcatg.Any(e => e.CplCatgId == id);
         }
+        #endregion
+
+        #region // Common methods //
+        protected void SetLayOutData()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value; // format for to claim usercde
+
+            var userName = _context.ms_user.Where(u => u.UserCde == userCde).Select(u => u.UserNme).FirstOrDefault();
+
+            ViewBag.UserName = userName;
+
+        }
+
         #endregion
     }
 }

@@ -34,9 +34,5 @@ namespace BuildingManagement.Models
         [DisplayName("Reset Password")]
         public string ResetPwd { get; set; } = string.Empty;
 
-
-
-
-
     }
 }

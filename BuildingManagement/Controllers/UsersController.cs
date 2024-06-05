@@ -234,13 +234,13 @@ namespace BuildingManagement.Controllers
                     var user = await _context.ms_user.FindAsync(changePwd.UserId);
                     string encryptedString = Encoding.UTF8.GetString(user.Pwd);
                     string decryptedPassword = encryptDecryptService.DecryptString(encryptedString);
-                    if (decryptedPassword == changePwd.OldPwd) 
+                    if (changePwd.NewPwd == null)
                     {
-                        if (changePwd.NewPwd == null) 
-                            {
-                            changePwd.NewPwd = "User@123"; //default
-                            changePwd.ConfirmPwd = "User@123"; //default
-                        }
+                        changePwd.NewPwd = "User@123"; //default
+                        changePwd.ConfirmPwd = "User@123"; //default
+                    }
+                    if (decryptedPassword == changePwd.OldPwd) 
+                    {                        
                         if (changePwd.NewPwd == changePwd.ConfirmPwd)
                         {
                             byte[] encryptedBytes = Encoding.UTF8.GetBytes(encryptDecryptService.EncryptString(changePwd.NewPwd));
@@ -251,13 +251,13 @@ namespace BuildingManagement.Controllers
                         }
                         else
                         {
-                            ModelState.AddModelError("ConfirmPassword", "New password and confirm password do not match.");
+                            ModelState.AddModelError("ConfirmPwd", "New password and confirm password do not match.");
                             return View(changePwd);
                         }
                     }
                     else
                     {
-                        ModelState.AddModelError("Password", "Incorrect current password.");
+                        ModelState.AddModelError("OldPwd", "Incorrect current password.");
                         return View(changePwd);
                     }
                 }

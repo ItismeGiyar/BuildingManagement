@@ -20,6 +20,7 @@ namespace BuildingManagement.Controllers
         {
             _context = context;
         }
+        #region // Main methods //
         protected short GetUserId()
         {
             var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
@@ -40,17 +41,19 @@ namespace BuildingManagement.Controllers
 
             return cmpyId;
         }
-        // GET: Buildingtypes
+        
         public async Task<IActionResult> Index()
         {
+            SetLayOutData();
             return View(await _context.ms_buildingtype.ToListAsync());
         }
 
 
-        // GET: Buildingtypes/Details/5
+       
         public async Task<IActionResult> Details(int? id)
             {
-                if (id == null)
+            SetLayOutData();
+            if (id == null)
                 {
                     return NotFound();
                 }
@@ -77,20 +80,20 @@ namespace BuildingManagement.Controllers
                 return View(buildingtype);
             }
 
-            // GET: Buildingtypes/Create
+          
             public IActionResult Create()
             {
-                return View();
+            SetLayOutData();
+            return View();
             }
 
-            // POST: Buildingtypes/Create
-            // To protect from overposting attacks, enable the specific properties you want to bind to.
-            // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+           
             [HttpPost]
             [ValidateAntiForgeryToken]
             public async Task<IActionResult> Create([Bind("BdtypDesc")] Buildingtype buildingtype)
             {
-                if (ModelState.IsValid)
+            SetLayOutData();
+            if (ModelState.IsValid)
                 {
 
                     buildingtype.CmpyId = GetCmpyId(); //default
@@ -102,9 +105,10 @@ namespace BuildingManagement.Controllers
                 }
                 return View(buildingtype);
             }
-        // GET: Buildingtypes/Edit/5
+        
         public async Task<IActionResult> Edit(int? id)
         {
+            SetLayOutData();
             if (id == null)
             {
                 return NotFound();
@@ -119,14 +123,13 @@ namespace BuildingManagement.Controllers
         }
 
 
-        // POST: Buildingtypes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
             [ValidateAntiForgeryToken]
             public async Task<IActionResult> Edit(int id, [Bind("BdtypId,BdtypDesc")] Buildingtype buildingtype)
             {
-                if (id != buildingtype.BdtypId)
+            SetLayOutData();
+            if (id != buildingtype.BdtypId)
                 {
                     return NotFound();
                 }
@@ -157,10 +160,10 @@ namespace BuildingManagement.Controllers
                 return View(buildingtype);
             }
 
-            // GET: Buildingtypes/Delete/5
             public async Task<IActionResult> Delete(int? id)
             {
-                if (id == null)
+            SetLayOutData();
+            if (id == null)
                 {
                     return NotFound();
                 }
@@ -175,11 +178,12 @@ namespace BuildingManagement.Controllers
                 return View(buildingtype);
             }
 
-            // POST: Buildingtypes/Delete/5
+            
             [HttpPost, ActionName("Delete")]
             [ValidateAntiForgeryToken]
             public async Task<IActionResult> DeleteConfirmed(int id)
             {
+            SetLayOutData();
                 var buildingtype = await _context.ms_buildingtype.FindAsync(id);
                 if (buildingtype != null)
                 {
@@ -193,8 +197,23 @@ namespace BuildingManagement.Controllers
             private bool BuildingtypeExists(int id)
             {
                 return _context.ms_buildingtype.Any(e => e.BdtypId == id);
-            }
-        }
 
-        
+
+            }
+        #endregion
+
+        #region // Common methods //
+        protected void SetLayOutData()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value; // format for to claim usercde
+
+            var userName = _context.ms_user.Where(u => u.UserCde == userCde).Select(u => u.UserNme).FirstOrDefault();
+
+            ViewBag.UserName = userName;
+
+        }
+        #endregion
     }
+
+
+}

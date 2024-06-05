@@ -20,31 +20,12 @@ namespace BuildingManagement.Controllers
         {
             _context = context;
         }
-        protected short GetUserId()
-        { 
-            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
-            var userId = (short)_context.ms_user
-                .Where(u => u.UserCde == userCde)
-                .Select(u => u.UserId)
-                .FirstOrDefault();
-
-            return userId;
-        }
-
-        protected short GetCmpyId()
-        {
-            var cmpyId = _context.ms_user
-                .Where(u => u.UserId == GetUserId())
-                .Select(u => u.CmpyId)
-                .FirstOrDefault();
-
-            return cmpyId;
-        }
 
 
-        // GET: TenantVehicals
+        #region // Main Methods  //
         public async Task<IActionResult> Index()
         {
+            SetLayoutData();
 
             var list = await _context.ms_tenantvehical.ToListAsync();
 
@@ -57,9 +38,10 @@ namespace BuildingManagement.Controllers
         }
 
 
-        // GET: TenantVehicals/Details/5
+       
         public async Task<IActionResult> Details(int? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -93,11 +75,13 @@ namespace BuildingManagement.Controllers
             return View(tenantVehical);
         }
 
-        // GET: TenantVehicals/Create
+        
         public IActionResult Create()
 
         {
-           
+            SetLayoutData();
+
+
 
             ViewData["TenantList"] = new SelectList(_context.ms_tenant.ToList(), "TenantId", "TenantNme");
             return View();
@@ -105,17 +89,16 @@ namespace BuildingManagement.Controllers
             
         }
 
-        // POST: TenantVehicals/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TenantId,TenantNme,PlateNo,AllocateNo")] TenantVehical tenantVehical)
         {
+            SetLayoutData();
             if (ModelState.IsValid)
             {
-                tenantVehical.CmpyId = GetCmpyId(); //default
-                tenantVehical.UserId = GetUserId(); //default
+                tenantVehical.CmpyId = GetCmpyId(); 
+                tenantVehical.UserId = GetUserId(); 
                 tenantVehical.RevDteTime = DateTime.Now;
 
                 _context.Add(tenantVehical);
@@ -125,9 +108,10 @@ namespace BuildingManagement.Controllers
             return View(tenantVehical);
         }
 
-        // GET: TenantVehicals/Edit/5
+        
         public async Task<IActionResult> Edit(int? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -143,13 +127,12 @@ namespace BuildingManagement.Controllers
             return View(tenantVehical);
         }
 
-        // POST: TenantVehicals/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("VehId,TenantId,TenantNme,PlateNo,AllocateNo")] TenantVehical tenantVehical)
         {
+            SetLayoutData();
             if (id != tenantVehical.VehId)
             {
                 return NotFound();
@@ -159,8 +142,8 @@ namespace BuildingManagement.Controllers
             {
                 try
                 {
-                    tenantVehical.CmpyId = GetCmpyId(); //default
-                    tenantVehical.UserId = GetUserId(); //default
+                    tenantVehical.CmpyId = GetCmpyId(); 
+                    tenantVehical.UserId = GetUserId(); 
                     tenantVehical.RevDteTime = DateTime.Now;
 
 
@@ -183,9 +166,10 @@ namespace BuildingManagement.Controllers
             return View(tenantVehical);
         }
 
-        // GET: TenantVehicals/Delete/5
+        
         public async Task<IActionResult> Delete(int? id)
         {
+            SetLayoutData();
             if (id == null)
             {
                 return NotFound();
@@ -211,11 +195,12 @@ namespace BuildingManagement.Controllers
             
         }
 
-        // POST: TenantVehicals/Delete/5
+       
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            SetLayoutData();
             var tenantVehical = await _context.ms_tenantvehical.FindAsync(id);
             if (tenantVehical != null)
             {
@@ -230,5 +215,36 @@ namespace BuildingManagement.Controllers
         {
             return _context.ms_tenantvehical.Any(e => e.VehId == id);
         }
+        #endregion
+        #region // Common Methods //
+        protected short GetUserId()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
+            var userId = (short)_context.ms_user
+                .Where(u => u.UserCde == userCde)
+                .Select(u => u.UserId)
+                .FirstOrDefault();
+
+            return userId;
+        }
+
+        protected short GetCmpyId()
+        {
+            var cmpyId = _context.ms_user
+                .Where(u => u.UserId == GetUserId())
+                .Select(u => u.CmpyId)
+                .FirstOrDefault();
+
+            return cmpyId;
+        }
+        protected void SetLayoutData()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value; // format for to claim usercde
+
+            var userName = _context.ms_user.Where(u => u.UserCde == userCde).Select(u => u.UserNme).FirstOrDefault();
+
+            ViewBag.UserName = userName;
+        }
+        #endregion
     }
 }
