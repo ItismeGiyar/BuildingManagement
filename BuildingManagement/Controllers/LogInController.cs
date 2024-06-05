@@ -5,16 +5,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BuildingManagement.Models;
 using BuildingManagement.Data;
+using System.Text;
+using BuildingManagement.Common;
 
 namespace BuildingManagement.Controllers
 {
     public class LogInController : Controller
     {
         private readonly BuildingDbContext _dbContext;
-
+        private readonly EncryptDecryptService encryptDecryptService;
         public LogInController(BuildingDbContext dbContext)
         {
             _dbContext = dbContext;
+            encryptDecryptService = new EncryptDecryptService();
+
         }
 
         // GET: User
@@ -25,10 +29,10 @@ namespace BuildingManagement.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            //if (TempData["alert message"] != null)
-            //{
-            //    ViewBag.AlertMessage = TempData["alert message"];
-            //}
+            if (TempData["alert message"] != null)
+            {
+                ViewBag.AlertMessage = TempData["alert message"];
+            }
            
             return View();
         }
@@ -45,30 +49,35 @@ namespace BuildingManagement.Controllers
                 {
                     var dbUser = userList.FirstOrDefault(u => u.UserCde.ToLower() == user.UserCde.ToLower());
 
-                    if (dbUser != null)
+                    if (dbUser != null && dbUser.Pwd != null)
                     {
-                        var claims = new List<Claim>() {
+                        string encryptedString = Encoding.UTF8.GetString(dbUser.Pwd);
+                        string decryptedPassword = encryptDecryptService.DecryptString(encryptedString);
+                        if (decryptedPassword != null && decryptedPassword == user.Pwd)
+                        {
+                            var claims = new List<Claim>() {
                             new Claim(ClaimTypes.NameIdentifier, user.UserCde)
                         };
 
-                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                        var properties = new AuthenticationProperties()
+                            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                            var properties = new AuthenticationProperties()
+                            {
+                                AllowRefresh = true
+                            };
+
+                            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), properties);
+
+                            return RedirectToAction("Index", "Home");
+                        }
+                        else
                         {
-                            AllowRefresh = true
-                        };
-
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), properties);
-
-                        return RedirectToAction("Index", "Home");
+                            ViewBag.AlertMessage = "Authentication failed. Please check your credentials.";
+                        }
                     }
                     else
                     {
-                        ViewBag.AlertMessage = "Authentication failed. Please check your credentials.";
+                        ViewBag.AlertMessage = "All fields must be filled!";
                     }
-                }
-                else
-                {
-                    ViewBag.AlertMessage = "All fields must be filled!";
                 }
             }
             catch (Exception ex)
