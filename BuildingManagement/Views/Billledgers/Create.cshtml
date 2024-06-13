@@ -1,0 +1,106 @@
+﻿@model BuildingManagement.Models.Billledger
+
+
+
+
+@{
+    ViewData["Title"] = "Bill";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+
+            <div class="col-6">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="col-6">
+                <div class="breadcrumb float-right active">
+                    <a asp-action="Index" class="btn btn-primary">Back to List <i class="fas fa-back"></i></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-gray">
+            <div class="card-header">
+                <h3 class="card-title">@ViewData["Title"] Create</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <form asp-action="Create">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="BillNo" class="control-label"></label>
+                                <input asp-for="BillNo" class="form-control" />
+                                <span asp-validation-for="BillNo" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="TranDte" class="control-label"></label>
+                                <input type="date" asp-for="TranDte" class="form-control" />
+                                <span asp-validation-for="TranDte" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="TenantId" class="control-label"></label>
+                                <select asp-for="TenantId" class="form-control form-select" asp-items="@ViewBag.TenantList">
+                                    <option value=""> - Select One - </option>
+                                </select>
+                                <span asp-validation-for="TenantId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="BItemID" class="control-label"></label>
+                                <select asp-for="BItemID" class="form-control form-select" asp-items="@ViewBag.BillitemList">
+                                    <option value=""> - Select One - </option>
+                                </select>
+                                <span asp-validation-for="BItemID" class="text-danger"></span>
+                            </div>
+                           
+                            <div class="form-group">
+                                <label asp-for="BillAmt" class="control-label"></label>
+                                <input asp-for="BillAmt" class="form-control" />
+                                <span asp-validation-for="BillAmt" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="PaidAmt" class="control-label"></label>
+                                <input asp-for="PaidAmt" class="form-control" />
+                                <span asp-validation-for="PaidAmt" class="text-danger"></span>
+                            </div>
+                           
+                            <div class="form-group">
+                                <label asp-for="Remark" class="control-label"></label>
+                                <input asp-for="Remark" class="form-control" />
+                                <span asp-validation-for="Remark" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="DueDate" class="control-label"></label>
+                                <input type="date" asp-for="DueDate" class="form-control" />
+                                <span asp-validation-for="DueDate" class="text-danger"></span>
+                            </div>
+                           
+
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+
+}
+
+
+
+
