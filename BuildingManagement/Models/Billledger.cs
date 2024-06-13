@@ -21,8 +21,12 @@ namespace BuildingManagement.Models
         [StringLength(50)]
         [DisplayName("Bill Item Description")]
         public string BItemDesc { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Please enter a number.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative number.")]
         [DisplayName("Bill Amount")]
         public decimal BillAmt { get; set; }
+        [Required(ErrorMessage = "Please enter a number.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative number.")]
         [DisplayName("Paid Amount")]
         public decimal? PaidAmt { get; set; }
         [DisplayName("Pay Date")]
