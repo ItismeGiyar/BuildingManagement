@@ -41,12 +41,11 @@ namespace BuildingManagement.Controllers
 
             return cmpyId;
         }
-
-
-       
+  
         public async Task<IActionResult> Index()
         {
             SetLayOutData();
+            
             var list = await _context.ms_billitemtenant.ToListAsync();
 
             foreach (var data in list)

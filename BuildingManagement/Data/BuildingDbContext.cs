@@ -6,7 +6,9 @@ namespace BuildingManagement.Data
 {
     public class BuildingDbContext : DbContext
     {
-        public BuildingDbContext(DbContextOptions<BuildingDbContext> options) : base(options) { }
+      
+
+        public BuildingDbContext(DbContextOptions <BuildingDbContext> options) : base(options) { }
 
         public DbSet<Company> ms_company { get; set; }
         public DbSet<Config> ms_config { get; set; }
@@ -23,6 +25,8 @@ namespace BuildingManagement.Data
         public DbSet<TenantVehical> ms_tenantvehical { get; set; }
         public DbSet<ComplaintCatg> ms_complaintcatg { get; set; }
         public DbSet<BillItemTenant> ms_billitemtenant { get; set; }
+        public DbSet<BillPayment> pms_billpayment { get; set; }
+        
 
     }
 }
