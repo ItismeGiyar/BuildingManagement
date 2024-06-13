@@ -34,7 +34,7 @@ namespace BuildingManagement.Models
         [DisplayName("Generated Date")]
         public DateTime GeneratedDte { get; set; }
         [DisplayName("Remark")]
-        public string Remark { get; set; } = string.Empty;
+        public string? Remark { get; set; } 
         [DisplayName("Due Date")]
         public DateTime? DueDate { get; set; }
         [DisplayName("Company")]
