@@ -103,18 +103,17 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.RoomNo)
                                     </th>
-
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.PropId)
-                                    </th>
                                     <th>
                                         @Html.DisplayNameFor(model => model.PropertyInfo)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.BdtypId)
+                                        @Html.DisplayNameFor(model => model.Tenant)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.LocId)
+                                        @Html.DisplayNameFor(model => model.BuildingType)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Location)
                                     </th>
 
 
@@ -139,16 +138,16 @@
                                             @Html.DisplayFor(modelItem => item.RoomNo)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.PropId)
-                                        </td>
-                                        <td>
                                             @Html.DisplayFor(modelItem => item.PropertyInfo)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.BdtypId)
+                                            @Html.DisplayFor(modelItem => item.Tenant)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.LocId)
+                                            @Html.DisplayFor(modelItem => item.BuildingType)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Location)
                                         </td>
                                         <td style="text-align: center">
                                             <a asp-action="Details" asp-route-id="@item.RoomId"><i class="fas fa-info-circle"></i></a>

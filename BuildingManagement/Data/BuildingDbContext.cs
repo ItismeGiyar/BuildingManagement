@@ -26,8 +26,8 @@ namespace BuildingManagement.Data
         public DbSet<ComplaintCatg> ms_complaintcatg { get; set; }
         public DbSet<BillItemTenant> ms_billitemtenant { get; set; }
         public DbSet<BillPayment> pms_billpayment { get; set; }
-
         public DbSet<Billledger> pms_billledger { get; set; }
+
 
 
     }

@@ -87,7 +87,7 @@ namespace BuildingManagement.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ResidentTypes"] = new SelectList(_context.ms_residenttype.ToList(), "ResitypId", "RestypDesc");
+          
             return View(propertyInfo);
         }
 
@@ -143,7 +143,7 @@ namespace BuildingManagement.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ResidentTypes"] = new SelectList(_context.ms_residenttype.ToList(), "ResitypId", "RestypDesc");
+           
             return View(propertyInfo);
         }
 
@@ -161,7 +161,9 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
-
+            propertyInfo.Billitem = _context.ms_residenttype.Where(rt => rt.ResitypId == propertyInfo.ResitypId).Select(rt => rt.RestypDesc).FirstOrDefault() ?? "";
+            propertyInfo.Company = _context.ms_company.Where(c => c.CmpyId == propertyInfo.CmpyId).Select(c => c.CmpyNme).FirstOrDefault() ?? "";
+            propertyInfo.User = _context.ms_user.Where(u => u.UserId == propertyInfo.UserId).Select(u => u.UserNme).FirstOrDefault() ?? "";
             return View(propertyInfo);
         }
 
