@@ -33,7 +33,9 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-group">
                                 <label asp-for="BillNo" class="control-label"></label>
-                                <input asp-for="BillNo" class="form-control" />
+                                <select asp-for="BillNo" class="form-control form-select" asp-items="@ViewBag.BillList">
+                                    <option value=""> - Select One - </option>
+                                </select>
                                 <span asp-validation-for="BillNo" class="text-danger"></span>
                             </div>
                             <div class="form-group">

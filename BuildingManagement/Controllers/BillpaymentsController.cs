@@ -18,6 +18,7 @@ namespace BuildingManagement.Controllers
         {
             _context = context;
         }
+        #region // Main Methods //
         protected short GetUserId()
         {
             var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
@@ -41,12 +42,18 @@ namespace BuildingManagement.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.pms_billpayment.ToListAsync());
+            SetLayOutData();
+            var list = await _context.pms_billpayment.ToListAsync();
+
+          
+            return View(list);
         }
 
-        
+
+
         public async Task<IActionResult> Details(int? id)
         {
+            SetLayOutData();
             if (id == null)
             {
                 return NotFound();
@@ -65,6 +72,7 @@ namespace BuildingManagement.Controllers
         
         public IActionResult Create()
         {
+            SetLayOutData();
             return View();
         }
 
@@ -73,6 +81,7 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("BillNo,BillOffsetDesc,PayAmt,CurrCde,CurrRate")] BillPayment billpayment)
         {
+            SetLayOutData();
             if (ModelState.IsValid)
             {
                 _context.Add(billpayment);
@@ -85,6 +94,7 @@ namespace BuildingManagement.Controllers
        
         public async Task<IActionResult> Edit(int? id)
         {
+            SetLayOutData();
             if (id == null)
             {
                 return NotFound();
@@ -103,6 +113,7 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("BillPId,BillNo,BillOffsetDesc,PayAmt,CurrCde,CurrRate")] BillPayment billpayment)
         {
+            SetLayOutData();
             if (id != billpayment.BillPId)
             {
                 return NotFound();
@@ -134,6 +145,7 @@ namespace BuildingManagement.Controllers
        
         public async Task<IActionResult> Delete(int? id)
         {
+            SetLayOutData();
             if (id == null)
             {
                 return NotFound();
@@ -154,6 +166,7 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            SetLayOutData();
             var billpayment = await _context.pms_billpayment.FindAsync(id);
             if (billpayment != null)
             {
@@ -162,10 +175,21 @@ namespace BuildingManagement.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        #endregion
         private bool BillpaymentExists(int id)
         {
             return _context.pms_billpayment.Any(e => e.BillPId == id);
         }
+        #region //Common Methods //
+        protected void SetLayOutData()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value; // format for to claim usercde
+
+            var userName = _context.ms_user.Where(u => u.UserCde == userCde).Select(u => u.UserNme).FirstOrDefault();
+
+            ViewBag.UserName = userName;
+
+        }
+        #endregion
     }
 }
