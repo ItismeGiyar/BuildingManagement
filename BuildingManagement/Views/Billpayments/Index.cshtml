@@ -1,6 +1,7 @@
-﻿@model IEnumerable<BuildingManagement.Models.PropertyRoom>
+﻿@model IEnumerable<BuildingManagement.Models.BillPayment>
+
 @{
-    ViewData["Title"] = "Property Room";
+    ViewData["Title"] = "Bill Payment";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -35,7 +36,7 @@
                 "buttons": [{
                     extend: 'copy',
                     text: window.csvButtonTrans,
-                    title: "Property Room",
+                    title: "Bill Payment List",
                     exportOptions: {
                         columns: ':not(:nth-last-child(-n + 3))'
                     }
@@ -43,7 +44,7 @@
                 {
                     extend: 'excel',
                     text: window.csvButtonTrans,
-                    title: "Property Room",
+                    title: "Bill Payment List",
                     exportOptions: {
                         columns: ':not(:nth-last-child(-n + 3))'
                     }
@@ -51,7 +52,7 @@
                 {
                     extend: 'pdf',
                     text: window.csvButtonTrans,
-                    title: "Property Room",
+                    title: "Bill Payment List",
                     exportOptions: {
                         columns: ':not(:nth-last-child(-n + 3))'
                     }
@@ -59,7 +60,7 @@
                 {
                     extend: 'print',
                     text: window.csvButtonTrans,
-                    title: "Property Room",
+                    title: "Bill Payment List",
                     exportOptions: {
                         columns: ':not(:nth-last-child(-n + 3))'
                     }
@@ -101,75 +102,67 @@
                                     <th>No</th>
 
                                     <th>
-                                        @Html.DisplayNameFor(model => model.RoomNo)
+                                        @Html.DisplayNameFor(model => model.BillNo)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.PropertyInfo)
+                                        @Html.DisplayNameFor(model => model.BillOffsetDesc)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.Tenant)
+                                        @Html.DisplayNameFor(model => model.PayAmt)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.BuildingType)
+                                        @Html.DisplayNameFor(model => model.CurrCde)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.Location)
+                                        @Html.DisplayNameFor(model => model.CurrRate)
                                     </th>
-
-
-                                   
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
                                     
+
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @{
                                     var counter = 1;
                                 }
-
                                 @foreach (var item in Model)
                                 {
                                     <tr>
                                         <td>@counter</td>
 
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.RoomNo)
+                                            @Html.DisplayFor(modelItem => item.BillNo)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.PropertyInfo)
+                                            @Html.DisplayFor(modelItem => item.BillOffsetDesc)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Tenant)
+                                            @Html.DisplayFor(modelItem => item.PayAmt)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.BuildingType)
+                                            @Html.DisplayFor(modelItem => item.CurrCde)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Location)
-                                        </td>
-                                        <td style="text-align: center">
-                                            <a asp-action="Details" asp-route-id="@item.RoomId"><i class="fas fa-info-circle"></i></a>
-                                        </td>
-
+                                            @Html.DisplayFor(modelItem => item.CurrRate)
+                                        </td
 
 
                                         <td style="text-align: center">
-                                            <a asp-action="Edit" asp-route-id="@item.RoomId"><i class="fas fa-edit"></i></a>
+                                            <a asp-action="Details" asp-route-id="@item.BillPId"><i class="fas fa-info-circle"></i></a>
                                         </td>
-
-
                                         <td style="text-align: center">
-                                            <a asp-action="Delete" asp-route-id="@item.RoomId"><i class="fas fa-trash"></i></a>
+                                            <a asp-action="Edit" asp-route-id="@item.BillPId"><i class="fas fa-edit"></i></a>
+                                        </td>
+                                        <td style="text-align: center">
+                                            <a asp-action="Delete" asp-route-id="@item.BillPId"><i class="fas fa-trash"></i></a>
 
                                         </td>
-
                                     </tr>
                                     counter++;
 
                                 }
-                            </tbody>
                         </table>
                     </div>
                 </div>
