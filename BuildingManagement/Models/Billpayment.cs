@@ -9,7 +9,7 @@ namespace BuildingManagement.Models
         [Key]
         [DisplayName("Bill Payment ID")]
         public int BillPId { get; set; }
-        [DisplayName("Bill Number")]
+        [DisplayName("Bill No")]
         public string BillNo { get; set; } = string.Empty;
         [StringLength(100)]
         [DisplayName("Bill Offset Description")]

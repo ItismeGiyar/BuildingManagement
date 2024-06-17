@@ -65,7 +65,18 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
+            billpayment.Company =
+             _context.ms_company
+             .Where(c => c.CmpyId == billpayment.CmpyId)
+             .Select(c => c.CmpyNme)
+             .FirstOrDefault() ?? "";
 
+            billpayment.User =
+                _context.ms_user
+                .Where(u => u.UserId == billpayment.UserId)
+                .Select(u => u.UserNme)
+                .FirstOrDefault() ?? "";
+          
             return View(billpayment);
         }
 
@@ -84,6 +95,9 @@ namespace BuildingManagement.Controllers
             SetLayOutData();
             if (ModelState.IsValid)
             {
+                billpayment.CmpyId = GetCmpyId();
+                billpayment.UserId = GetUserId();
+                billpayment.RevDteTime = DateTime.Now;
                 _context.Add(billpayment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -123,6 +137,11 @@ namespace BuildingManagement.Controllers
             {
                 try
                 {
+                    billpayment.CmpyId = GetCmpyId();
+                    billpayment.UserId = GetUserId();
+                    billpayment.RevDteTime = DateTime.Now;
+
+
                     _context.Update(billpayment);
                     await _context.SaveChangesAsync();
                 }
@@ -157,7 +176,17 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
+            billpayment.Company =
+             _context.ms_company
+             .Where(c => c.CmpyId == billpayment.CmpyId)
+             .Select(c => c.CmpyNme)
+             .FirstOrDefault() ?? "";
 
+            billpayment.User =
+                _context.ms_user
+                .Where(u => u.UserId == billpayment.UserId)
+                .Select(u => u.UserNme)
+                .FirstOrDefault() ?? "";
             return View(billpayment);
         }
 
