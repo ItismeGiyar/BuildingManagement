@@ -19,7 +19,7 @@ namespace BuildingManagement.Models
         [DisplayName("Occupancy")]
         public short Occupany { get; set; }
         [StringLength(50)]
-
+        [DisplayName("ID No")]
         public string IdNo { get; set; }=string.Empty;
         [StringLength(24)]
         public string Gender { get; set; }=string.Empty;
@@ -28,7 +28,7 @@ namespace BuildingManagement.Models
         [StringLength(50)]
         public string? Phone2 { get; set; }
         public Boolean LocalFlg { get; set; }
-        [DisplayName("Perment Address")]
+        [DisplayName("Permanent Address")]
         public string? PermentAddr { get; set; }
         [DisplayName("Company ID")]
         public short CmpyId { get; set; }
