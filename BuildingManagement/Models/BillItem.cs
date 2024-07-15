@@ -30,6 +30,8 @@ namespace BuildingManagement.Models
         [NotMapped]
         [DisplayName("User")]
         public string User { get; set; } = string.Empty;
-
+  
     }
+
 }
+

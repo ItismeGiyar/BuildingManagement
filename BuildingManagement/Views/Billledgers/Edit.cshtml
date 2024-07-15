@@ -1,107 +1,177 @@
 ﻿@model BuildingManagement.Models.Billledger
 
-
 @{
-    ViewData["Title"] = "Bill";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Bill";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-6">
-                <h4>@ViewData["Title"]</h4>
-            </div>
-            <div class="col-6">
-                <div class="breadcrumb float-right active">
-                    <a asp-action="Index" class="btn btn-primary">Back to List <i class="fas fa-back"></i></a>
 
-                </div>
-            </div>
-        </div>
-    </div>
+
+
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+
+			<div class="col-6">
+				<h4>@ViewData["Title"]</h4>
+			</div>
+			<div class="col-6">
+				<div class="breadcrumb float-right active">
+					<a asp-action="Index" class="btn btn-primary" style="background-color: #31849B;color: white">Back to List <i class="fas fa-back"></i></a>
+
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
 <section class="content">
-    <div class="container-fluid">
-        <div class="card card-gray">
-            <div class="card-header">
-                <h3 class="card-title">@ViewData["Title"] Edit</h3>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <form asp-action="Edit">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <input type="hidden" asp-for="BillId" />
-                            <div class="form-group">
-                                <label asp-for="BillNo" class="control-label"></label>
-                                <input asp-for="BillNo" class="form-control" />
-                                <span asp-validation-for="BillNo" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="TranDte" class="control-label"></label>
-                                <input type="date" asp-for="TranDte" class="form-control" />
-                                <span asp-validation-for="TranDte" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="TenantId" class="control-label"></label>
-                                <select asp-for="TenantId" class="form-control form-select" asp-items="@ViewBag.TenantList">
-                                    <option value=""> - Select One - </option>
-                                </select>
-                                <span asp-validation-for="TenantId" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="BItemID" class="control-label"></label>
-                                <select asp-for="BItemID" class="form-control form-select" asp-items="@ViewBag.BillitemList">
-                                    <option value=""> - Select One - </option>
-                                </select>
-                                <span asp-validation-for="BItemID" class="text-danger"></span>
-                            </div>
-                          
-                            <div class="form-group">
-                                <label asp-for="BillAmt" class="control-label"></label>
-                                <input asp-for="BillAmt" class="form-control" />
-                                <span asp-validation-for="BillAmt" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="PaidAmt" class="control-label"></label>
-                                <input asp-for="PaidAmt" class="form-control" />
-                                <span asp-validation-for="PaidAmt" class="text-danger"></span>
-                            </div>
-                           
-                            <div class="form-group">
-                                <label asp-for="GeneratedDte" class="control-label"></label>
-                                <input type="date" asp-for="GeneratedDte" class="form-control" />
-                                <span asp-validation-for="GeneratedDte" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Remark" class="control-label"></label>
-                                <input asp-for="Remark" class="form-control" />
-                                <span asp-validation-for="Remark" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="DueDate" class="control-label"></label>
-                                <input type="date" asp-for="DueDate" class="form-control" />
-                                <span asp-validation-for="DueDate" class="text-danger"></span>
-                            </div>
-                            
+	<div class="container-fluid">
+		<div class="card card-gray">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-12">
+						<form asp-action="Edit" asp-controller="Billledgers">
+							<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                            <div class="form-group">
-                                <input type="submit" value="Save" class="btn btn-primary" />
-                            </div>
-                        </form>
 
-                    </div>
-                </div>
-            </div>
-        </div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="container-fluid">
+										<div class="form-group row col-12">
+											<label asp-for="BillNo" class="col-form-label col-6">Bill No</label>
+
+											<div class="col-6">
+												<input asp-for="BillNo" class="form-control" />
+												<span asp-validation-for="BillNo" class="text-danger"></span>
+
+											</div>
+										</div>
+
+
+
+										<div class="form-group row col-12">
+											<label asp-for="TenantId" class="col-form-label col-6">Tenant</label>
+
+											<div class="col-6">
+												<select asp-for="TenantId" class="form-control form-select" asp-items="@ViewBag.TenantList">
+													<option value=""> - Select One - </option>
+												</select>
+												<span asp-validation-for="TenantId" class="text-danger"></span>
+
+
+											</div>
+										</div>
+										<div class="form-group row col-12">
+											<label asp-for="BItemID" class="col-form-label col-6">Bill Item</label>
+
+
+											<div class="col-6">
+												<select asp-for="BItemID" class="form-control form-select" asp-items="@ViewBag.BillitemList" onchange="showBillAmt(this.value)">
+													<option value=""> - Select One - </option>
+												</select>
+												<span asp-validation-for="BItemID" class="text-danger"></span>
+
+
+											</div>
+										</div>
+										<div class="form-group row col-12">
+											<label asp-for="TranDte" class="col-form-label col-6">Tran Date</label>
+											<div class="col-6">
+												<input type="date" asp-for="TranDte" class="form-control" />
+												<span asp-validation-for="TranDte" class="text-danger"></span>
+
+
+											</div>
+										</div>
+
+
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="container-fluid">
+										<div class="form-group row col-12">
+											<label asp-for="BillAmt" class="col-form-label col-6">Bill Amount</label>
+											<div class="col-6">
+												<input id="inputBillAmt" asp-for="BillAmt" class="form-control" />
+												<span asp-validation-for="BillAmt" class="text-danger"></span>
+											</div>
+
+										</div>
+										<div class="form-group row col-12">
+											<label asp-for="PaidAmt" class="col-form-label col-6">Paid Amount</label>
+											<div class="col-6">
+												<input type="number" asp-for="PaidAmt" class="form-control" id="PaidAmount" onchange="setPayDate()" />
+												<span asp-validation-for="PaidAmt" class="text-danger"></span>
+											</div>
+
+
+										</div>
+										<div class="form-group row col-12">
+											<label asp-for="DueDate" class="col-form-label col-6">Due Date</label>
+											<div class="col-6">
+												<input type="date" asp-for="DueDate" class="form-control" />
+												<span asp-validation-for="DueDate" class="text-danger"></span>
+											</div>
+
+
+										</div>
+										<div class="form-group row col-12">
+											<label asp-for="Remark" class="col-form-label col-6">Remark</label>
+											<div class="col-6">
+												<textarea asp-for="Remark" class="form-control"></textarea>
+												<span asp-validation-for="Remark" class="text-danger"></span>
+											</div>
+
+
+										</div>
+
+
+
+
+
+
+									</div>
+								</div>
+								<div class="form-group">
+									<input type="submit" value="Save" class="btn btn-default" style="background-color: #31849B;color: white" />
+								</div>
+							</div>
+
+
+						</form>
+					</div>
+				</div>
+			</div>
 </section>
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
 
+
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+	<script>
+
+
+		function showBillAmt(billItemId) {
+
+
+			$.ajax({
+				url: "/Billledgers/ShowBillAmount",
+				data: {
+					: billItemId
+				},
+				type: "GET",
+				success: function (billAmt) {
+					$('#inputBillAmt').val(billAmt);
+				},
+				error: function (data) {
+					alert('error');
+				}
+			});
+		}
+
+	</script>
 
 }
-
-

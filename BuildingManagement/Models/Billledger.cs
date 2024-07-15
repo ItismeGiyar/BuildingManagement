@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace BuildingManagement.Models
 {
     public class Billledger
+        
     {
         [Key]
         [DisplayName("Bill ID")]
@@ -25,7 +26,8 @@ namespace BuildingManagement.Models
         [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative number.")]
         [DisplayName("Bill Amount")]
         public decimal BillAmt { get; set; }
-        [Required(ErrorMessage = "Please enter a number.")]
+       
+            [Required(ErrorMessage = "Please enter a number.")]
         [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative number.")]
         [DisplayName("Paid Amount")]
         public decimal? PaidAmt { get; set; }
@@ -56,6 +58,6 @@ namespace BuildingManagement.Models
         [DisplayName("User")]
         public string User { get; set; } = string.Empty;
 
-
+    
     }
 }

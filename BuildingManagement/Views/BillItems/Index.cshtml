@@ -5,16 +5,36 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section links {
-    <!-- DataTables -->
-    <link rel="stylesheet" href="~/lib/AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="~/lib/AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="~/lib/AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<!-- Select2 -->
+<link rel="stylesheet" href="~/lib/AdminLTE/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="~/lib/AdminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+<!-- iCheck for checkboxes and radio inputs -->
+<link rel="stylesheet" href="~/lib/AdminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+<style type="text/css">
+    .form-check-input {
+        width: 23px;
+        height: 23px;
+        margin-left: -2rem;
+        margin-top: 0.08rem;
+    }
+
+    .form-check {
+        margin-left: 30px;
+    }
+
+    .time {
+        margin-left: 8px;
+    }
+</style>
 
 }
 
 @section scripts
 {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <!-- DataTables  & Plugins -->
     <script src="~/lib/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="~/lib/AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -28,76 +48,119 @@
     <script src="~/lib/AdminLTE/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="~/lib/AdminLTE/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="~/lib/AdminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-
+    <!-- Select2 -->
+    <script src="~/lib/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/lib/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
+
         $(function () {
-            $("#example1").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false, "pageLength": 20,
-                "buttons": [{
-                    extend: 'copy',
-                    text: window.csvButtonTrans,
-                    title: "Bill Item",
-                    exportOptions: {
-                        columns: ':not(:nth-last-child(-n + 3))'
-                    }
-                },
-                {
-                    extend: 'excel',
-                    text: window.csvButtonTrans,
-                    title: "Bill Item",
-                    exportOptions: {
-                        columns: ':not(:nth-last-child(-n + 3))'
-                    }
-                },
-                {
-                    extend: 'pdf',
-                    text: window.csvButtonTrans,
-                    title: "Bill Item",
-                    exportOptions: {
-                        columns: ':not(:nth-last-child(-n + 3))'
-                    }
-                },
-                {
-                    extend: 'print',
-                    text: window.csvButtonTrans,
-                    title: "Bill Item",
-                    exportOptions: {
-                        columns: ':not(:nth-last-child(-n + 3))'
-                    }
-                }],
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('.select2').select2()
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
         });
+        $(document).ready(function () {
+            function updateLinkState() {
+                var returnChecked = $('#returnCheckbox').is(':checked');
+                $('.edit-link, .delete-link').each(function () {
+                    $(this).attr('disabled', returnChecked);
+                    if (returnChecked) {
+                        $(this).addClass('disabled-link');
+                    } else {
+                        $(this).removeClass('disabled-link');
+                    }
+                });
+            }
+            updateLinkState();
+
+            $('#returnCheckbox').change(function () {
+                updateLinkState();
+            });
+        });
+
+        $("#example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false, "pageLength": 20, "searching": false, "info": false
+        });
+
     </script>
-
 }
-
 
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-6">
-                <h4>@ViewData["Title"]</h4>
+                <h4>@ViewData["Title"] Index</h4>
             </div>
             <div class="col-6">
                 <div class="breadcrumb float-right active">
-                    <a asp-action="Create" class="btn btn-primary">Create New  <i class="fas fa-plus"></i></a>
+                    <a asp-action="Create" class="btn btn-default" style="background-color: #31849B;color: white">Create New <i class="fas fa-plus"></i></a>
                 </div>
             </div>
         </div>
-
     </div>
 </section>
 <section class="content">
     <div class="container-fluid">
         <div class="card card-gray">
-            <div class="card-header">
-                <h3 class="card-title">@ViewData["Title"] List</h3>
-            </div>
+            <form method="get" action="@Url.Action("Index")">
+                <div class="container-fluid mt-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row col-12">
+                                <label for="BillId" class="col-form-label col-4">Bill:</label>
+                                <div class="col-8">
+                                    <select id="BillId" name="BillId" class="form-control form-select">
+                                        <option value="">Select Bill</option>
+                                        @foreach (var bill in ViewData["Bills"] as SelectList)
+                                        {
+                                            <option value="@bill.Value">@bill.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row col-12">
+                                <label for="TranDte" class="col-form-label col-4">TranDte:</label>
+                                <div class="col-8">
+                                    <select id="TranDte" name="TranDte" class="form-control form-select">
+                                        <option value="">Select TranDte</option>
+                                        @foreach (var TranDte in ViewData["TranDte"] as SelectList)
+                                        {
+                                            <option value="@TranDte.Value">@TranDte.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row col-12">
+                                <label for="TenantId" class="col-form-label col-4">TenantId:</label>
+                                <div class="col-8">
+                                    <input type="TenantId" id="TenantId" name="TenantId" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group row col-12">
+                                <label for="PaidAmt" class="col-form-label col-4">PaidAmt:</label>
+                                <div class="col-8">
+                                    <input type="PaidAmt" id="PaidAmt" name="PaidAmt" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12 text-left">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
-                            <thead>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="example1" class="table table-bordered dataTable dtr-inline" aria-describedby="example1_info">
+                                <thead>
                                 <tr>
                                     <th>No</th>
 
@@ -119,6 +182,8 @@
                                 </tr>
                             </thead>
                             <tbody>
+
+
                                 @{
                                     var counter = 1;
                                 }
