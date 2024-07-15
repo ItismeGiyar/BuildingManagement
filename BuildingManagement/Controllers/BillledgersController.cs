@@ -10,7 +10,6 @@ using BuildingManagement.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Build.Framework;
 using Microsoft.VisualBasic;
-using System.Net;
 
 namespace BuildingManagement.Controllers
 {
@@ -48,17 +47,29 @@ namespace BuildingManagement.Controllers
             return cmpyId;
         }
         private List<Billledger> bills = new List<Billledger>
-        {
-            new Billledger { DueDate = DateTime.Today.AddDays(-1), BillAmt = 100, PaidAmt= 100 },
-            new Billledger { DueDate = DateTime.Today.AddDays(1), BillAmt = 200, PaidAmt = 200 },
-            new Billledger { DueDate = DateTime.Today, BillAmt = 300, PaidAmt = 300 },
-        };
+		{
+			new Billledger { DueDate = DateTime.Today.AddDays(-1), BillAmt = 100, PaidAmt= 100 },
+	        new Billledger { DueDate = DateTime.Today.AddDays(1), BillAmt = 200, PaidAmt = 200 },
+	        new Billledger { DueDate = DateTime.Today, BillAmt = 300, PaidAmt = 300 },
 
-        public async Task<IActionResult> Index(int BillId, int TenantId, DateTime TranDte)
+
+
+        };
+		
+
+
+		public async Task<IActionResult> Index(int tenantId,int billitemId,DateTime trandate,decimal? paidAmt)
         {
             SetLayOutData();
-            ViewData["TranDte"] = new SelectList(_context.pms_billledger.ToList(), "TranDte"
-                );
+            ViewData["TenantList"] = new SelectList(_context.ms_tenant.ToList(), "TenantId", "TenantNme");
+            ViewData["BillitemList"] = new SelectList(_context.ms_billitem.ToList(), "BItemID", "BItemDesc");
+            ViewData["TranDate"] = trandate;
+            ViewData["PaidAmount"] = paidAmt;
+
+           
+
+
+              
 
 
             var list = await _context.pms_billledger.ToListAsync();
@@ -69,7 +80,7 @@ namespace BuildingManagement.Controllers
             }
             return View(list);
         }
-
+       
 
         public async Task<IActionResult> Details(int? id)
         {
@@ -85,8 +96,12 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
-            billledger.GeneratedDte = DateTime.Now;
+			
 
+
+
+			billledger.GeneratedDte = DateTime.Now;
+           
 
             billledger.Billitem =
               _context.ms_billitem
@@ -130,7 +145,7 @@ namespace BuildingManagement.Controllers
                 PaidAmt = 0
             };
 
-
+            
 
             return View(billLedger);
         }
@@ -143,7 +158,7 @@ namespace BuildingManagement.Controllers
             SetLayOutData();
             if (ModelState.IsValid)
             {
-                if (billledger.PaidAmt > 0)
+                if(billledger.PaidAmt > 0)
                 {
                     billledger.PayDte = DateTime.Now;
                 }
@@ -161,7 +176,7 @@ namespace BuildingManagement.Controllers
             }
             return View(billledger);
         }
-
+        
         public async Task<IActionResult> Edit(int? id)
         {
             SetLayOutData();
@@ -177,6 +192,13 @@ namespace BuildingManagement.Controllers
             }
             ViewData["TenantList"] = new SelectList(_context.ms_tenant.ToList(), "TenantId", "TenantNme");
             ViewData["BillitemList"] = new SelectList(_context.ms_billitem.ToList(), "BItemID", "BItemDesc");
+            var billLedger = new Billledger()
+            {
+
+
+                PaidAmt = 0
+            };
+
 
             return View(billledger);
         }
@@ -196,6 +218,14 @@ namespace BuildingManagement.Controllers
             {
                 try
                 {
+                    if (billledger.PaidAmt > 0)
+                    {
+                        billledger.PayDte = DateTime.Now;
+                    }
+                    else
+                    {
+                        billledger.PayDte = null;
+                    }
                     billledger.GeneratedDte = DateTime.Now;
                     billledger.CmpyId = GetCmpyId();
                     billledger.UserId = GetUserId();
@@ -282,26 +312,26 @@ namespace BuildingManagement.Controllers
         }
 
 
-        #endregion
+		#endregion
 
 
-        #region // Other methods //
+		#region // Other methods //
 
-        public async Task<decimal> ShowBillAmount(int abc)
+        public async Task<decimal> ShowBillAmount(int billItemId)
         {
             var billAmt = await _context.ms_billitem
-                .Where(b => b.BItemID == abc)
+                .Where(b => b.BItemID == billItemId)
                 .Select(b => b.FixChrgAmt)
                 .FirstOrDefaultAsync();
 
             return billAmt;
         }
 
-        #endregion
+		#endregion
 
 
-        #region //Common Methods //
-        protected void SetLayOutData()
+		#region //Common Methods //
+		protected void SetLayOutData()
         {
             var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value; // format for to claim usercde
 
@@ -310,47 +340,47 @@ namespace BuildingManagement.Controllers
             ViewBag.UserName = userName;
 
         }
-
+        
 
 
         #endregion
-        /* public string GenerateAutoBillNo()
-         {
-             var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
-             if (string.IsNullOrEmpty(userCde))
-                 return "";
+       /* public string GenerateAutoBillNo()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
+            if (string.IsNullOrEmpty(userCde))
+                return "";
 
-             var UPOS = _context.ms_user
-                 .Join(_context.ms_user,
-                     user => user.UserId,
-                     userPOS => userPOS.UserId,
-                     (user, userPOS) => new
-                     {
-                         user.UserCde,
-                         POSId = userPOS.UserId
-                     })
-                 .FirstOrDefault(u => u.UserCde == userCde);
+            var UPOS = _context.ms_user
+                .Join(_context.ms_user,
+                    user => user.UserId,
+                    userPOS => userPOS.UserId,
+                    (user, userPOS) => new
+                    {
+                        user.UserCde,
+                        POSId = userPOS.UserId
+                    })
+                .FirstOrDefault(u => u.UserCde == userCde);
 
-             if (UPOS == null)
-                 return "";
+            if (UPOS == null)
+                return "";
 
-             var autoNumber = _context.pms_autonumber.FirstOrDefault(pos => pos.AutoNoId == UPOS.POSId);
-             if (autoNumber == null)
-                 return "";
+            var autoNumber = _context.pms_autonumber.FirstOrDefault(pos => pos.AutoNoId == UPOS.POSId);
+            if (autoNumber == null)
+                return "";
 
-             // Main method of this function which generates number								
-             var generateNo = (autoNumber.LastUsedNo + 1).ToString();
-             if (autoNumber.ZeroLeading)
-             {
-                 var totalWidth = autoNumber.RunningNo - autoNumber.BillPrefix.Length - generateNo.Length;
-                 string paddedString = new string('0', totalWidth) + generateNo;
-                 return autoNumber.BillPrefix + paddedString;
-             }
-             else
-             {
-                 return autoNumber.BillPrefix + generateNo;
-             }
-         }*/
+            // Main method of this function which generates number								
+            var generateNo = (autoNumber.LastUsedNo + 1).ToString();
+            if (autoNumber.ZeroLeading)
+            {
+                var totalWidth = autoNumber.RunningNo - autoNumber.BillPrefix.Length - generateNo.Length;
+                string paddedString = new string('0', totalWidth) + generateNo;
+                return autoNumber.BillPrefix + paddedString;
+            }
+            else
+            {
+                return autoNumber.BillPrefix + generateNo;
+            }
+        }*/
 
 
 

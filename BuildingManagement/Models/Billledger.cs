@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BuildingManagement.Models
 {
@@ -30,7 +31,7 @@ namespace BuildingManagement.Models
             [Required(ErrorMessage = "Please enter a number.")]
         [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative number.")]
         [DisplayName("Paid Amount")]
-        public decimal? PaidAmt { get; set; }
+        [AllowNull]public decimal? PaidAmt { get; set; }
         [DisplayName("Pay Date")]
         public DateTime? PayDte { get; set; }
         [DisplayName("Generated Date")]
@@ -57,6 +58,11 @@ namespace BuildingManagement.Models
         [NotMapped]
         [DisplayName("User")]
         public string User { get; set; } = string.Empty;
+        [NotMapped]
+        [DisplayName("User")]
+        public string dueClass { get; set; } = string.Empty;
+
+
 
     
     }

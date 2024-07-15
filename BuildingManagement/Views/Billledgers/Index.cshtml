@@ -137,16 +137,16 @@
                             </div>
 
                             <div class="form-group row col-12">
-                                <label for="TenantId" class="col-form-label col-4">Tenant:</label>
+                                <label for="tenantId" class="col-form-label col-4">Tenant:</label>
                                 <div class="col-8">
-                                    @Html.DropDownList("TenantId", (SelectList)ViewData["TenantList"], new { @class = "form-control form-select", @id = "TenantId" })
+                                    @Html.DropDownList("tenantId", (SelectList)ViewData["TenantList"], new { @class = "form-control form-select", @id = "tenantId" })
                                 </div>
                             </div>
 
+                            
+                           
 
-
-
-
+                            
                         </div>
                         <div class="col-md-6">
                             <div class="form-group row col-12">
@@ -167,7 +167,7 @@
                     <div class="row mt-2">
                         <div class="col-md-12 d-flex justify-content-between">
                             <button type="submit" class="btn btn-primary" style="background-color: #31849B;color: white">Search</button>
-
+                            
                         </div>
                     </div>
 

@@ -40,7 +40,7 @@
 											<label asp-for="BillNo" class="col-form-label col-6">Bill No</label>
 
 											<div class="col-6">
-												<input id="inputBillAmt" asp-for="BillNo" class="form-control" />
+												<input asp-for="BillNo" class="form-control" />
 												<span asp-validation-for="BillNo" class="text-danger"></span>
 
 											</div>
@@ -153,6 +153,26 @@
 	}
 	<script>
 		
+
+		function showBillAmt(billItemId) {
+
+			
+			$.ajax({
+				url: "/Billledgers/ShowBillAmount",
+				data: {
+					billItemId: billItemId
+				},
+				type: "GET",
+				success: function (billAmt) {
+					$('#inputBillAmt').val(billAmt);
+				},
+				error: function (data) {
+					alert('error');
+				}
+			});
+		}
+
+	</script>
 
 		function showBillAmt(billItemId) {
 

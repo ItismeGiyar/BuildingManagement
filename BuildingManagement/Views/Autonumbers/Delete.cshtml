@@ -34,6 +34,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
+
                         <dl class="row">
                             <dt class="col-sm-2">
                                 @Html.DisplayNameFor(model => model.AutoNoId)
@@ -48,12 +49,12 @@
                             <dd class="col-sm-10">
                                 @Html.DisplayFor(model => model.BillPrefix)
                             </dd>
-                                <dt class="col-sm-2">
-                                    @Html.DisplayNameFor(model => model.BizDte)
-                                </dt>
-                                <dd class="col-sm-10">
-                                    @Convert.ToDateTime(Model.BizDte).ToString("dd-MM-yyyy")
-                                </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.BizDte)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Convert.ToDateTime(Model.BizDte).ToString("dd-MM-yyyy")
+                            </dd>
                             <dt class="col-sm-2">
                                 @Html.DisplayNameFor(model => model.ZeroLeading)
                             </dt>
@@ -72,16 +73,18 @@
                             <dd class="col-sm-10">
                                 @Html.DisplayFor(model => model.LastUsedNo)
                             </dd>
-                                <dt class="col-sm-2">
-                                    @Html.DisplayNameFor(model => model.LastGenerateDte)
-                                </dt>
-                                <dd class="col-sm-10">
-                                    @Convert.ToDateTime(Model.LastGenerateDte).ToString("dd-MM-yyyy")
-                                </dd>
-                          
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.LastGenerateDte)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Convert.ToDateTime(Model.LastGenerateDte).ToString("dd-MM-yyyy")
+                            </dd>
+                           
                         </dl>
 
 
+
+                        </dl>
                     </div>
                 </div>
             </div>

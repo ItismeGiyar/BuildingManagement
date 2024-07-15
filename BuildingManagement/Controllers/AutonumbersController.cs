@@ -20,8 +20,28 @@ namespace BuildingManagement.Controllers
         {
             _context = context;
         }
+        #region // Main Methods //
 
-        #region // Main methods //
+        protected short GetUserId()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
+            var userId = (short)_context.ms_user
+                .Where(u => u.UserCde == userCde)
+                .Select(u => u.UserId)
+                .FirstOrDefault();
+
+            return userId;
+        }
+
+        protected short GetCmpyId()
+        {
+            var cmpyId = _context.ms_user
+                .Where(u => u.UserId == GetUserId())
+                .Select(u => u.CmpyId)
+                .FirstOrDefault();
+
+            return cmpyId;
+        }
 
         public async Task<IActionResult> Index()
         {
@@ -29,7 +49,7 @@ namespace BuildingManagement.Controllers
             return View(await _context.pms_autonumber.ToListAsync());
         }
 
-
+        
         public async Task<IActionResult> Details(int? id)
         {
             SetLayOutData();
@@ -44,25 +64,25 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
-
-            autonumber.Company = _context.ms_company.Where(c => c.CmpyId == autonumber.CmpyId).Select(c => c.CmpyNme).FirstOrDefault() ?? "";
-           
+            autonumber.Company =_context.ms_company.Where(c => c.CmpyId == autonumber.CmpyId).Select(c => c.CmpyNme).FirstOrDefault() ?? "";
             return View(autonumber);
         }
 
+      
         public IActionResult Create()
         {
             SetLayOutData();
             return View();
         }
 
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BillPrefix,BizDte,ZeroLeading,RunningNo,LastUsedNo,LastGenerteDte")] Autonumber autonumber)
+        public async Task<IActionResult> Create([Bind("BillPrefix,BizDte,ZeroLeading,RunningNo,LastUsedNo,LastGenerateDte")] Autonumber autonumber)
         {
             if (ModelState.IsValid)
 
-                SetLayOutData();
+            SetLayOutData();
             if (ModelState.IsValid)
             {
                 autonumber.CmpyId = GetCmpyId();
@@ -74,6 +94,7 @@ namespace BuildingManagement.Controllers
             return View(autonumber);
         }
 
+        
         public async Task<IActionResult> Edit(int? id)
         {
             SetLayOutData();
@@ -90,9 +111,10 @@ namespace BuildingManagement.Controllers
             return View(autonumber);
         }
 
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AutoNoId,BillPrefix,BizDte,ZeroLeading,RunningNo,LastUsedNo,LastGenerteDte")] Autonumber autonumber)
+        public async Task<IActionResult> Edit(int id, [Bind("AutoNoId,BillPrefix,BizDte,ZeroLeading,RunningNo,LastUsedNo,LastGenerateDte")] Autonumber autonumber)
         {
 
             SetLayOutData();
@@ -126,6 +148,7 @@ namespace BuildingManagement.Controllers
             return View(autonumber);
         }
 
+        
         public async Task<IActionResult> Delete(int? id)
         {
             SetLayOutData();
@@ -140,11 +163,16 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
-            autonumber.Company = _context.ms_company.Where(c => c.CmpyId == autonumber.CmpyId).Select(c => c.CmpyNme).FirstOrDefault() ?? "";
+            autonumber.Company =
+                _context.ms_company
+                .Where(c => c.CmpyId == autonumber.CmpyId)
+                .Select(c => c.CmpyNme)
+                .FirstOrDefault() ?? "";
 
             return View(autonumber);
         }
 
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -166,30 +194,7 @@ namespace BuildingManagement.Controllers
         }
 
         #endregion
-
-
-        #region // Common methods //
-
-        protected short GetUserId()
-        {
-            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
-            var userId = (short)_context.ms_user
-                .Where(u => u.UserCde == userCde)
-                .Select(u => u.UserId)
-                .FirstOrDefault();
-
-            return userId;
-        }
-
-        protected short GetCmpyId()
-        {
-            var cmpyId = _context.ms_user
-                .Where(u => u.UserId == GetUserId())
-                .Select(u => u.CmpyId)
-                .FirstOrDefault();
-
-            return cmpyId;
-        }
+        #region // Common Methods //
         protected void SetLayOutData()
         {
             var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value; // format for to claim usercde
@@ -203,6 +208,8 @@ namespace BuildingManagement.Controllers
     }
 }
 
+       
 
 
-
+    }
+}

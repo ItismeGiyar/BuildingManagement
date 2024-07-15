@@ -1,6 +1,7 @@
 ﻿@model BuildingManagement.Models.Autonumber
 
 
+
 @{
     ViewData["Title"] = "Auto Number";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,6 +9,7 @@
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
+
             <div class="col-6">
                 <h4>@ViewData["Title"]</h4>
             </div>
@@ -61,26 +63,30 @@
                                 <input type="date" asp-for="LastGenerateDte" class="form-control" />
                                 <span asp-validation-for="LastGenerateDte" class="text-danger"></span>
                             </div>
+                            
+
 
                             <div class="form-group">
                                 <input type="submit" value="Create" class="btn btn-primary" />
                             </div>
                         </form>
+
                     </div>
                 </div>
+            </div>
+        </div>
+</section>
 
-                <div>
-                    <a asp-action="Index">Back to List</a>
-                </div>
-
-                @section Scripts {
-                    @{
-                        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-                    }
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
                 }
 
 
 
 }
+
+
 
 

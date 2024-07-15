@@ -9,15 +9,15 @@ namespace BuildingManagement.Models
     {
         [Key]
         [DisplayName("Auto No ID")]
-        public int AutoNoId {  get; set; }
+        public int AutoNoId { get; set; }
         [DisplayName("Bill Prefix")]
         public string BillPrefix { get; set; } = string.Empty;
         [DisplayName("Business Date")]
         public DateTime BizDte { get; set; }
         [DisplayName("Zero Leading")]
-        public Boolean ZeroLeading {  get; set; }
+        public Boolean ZeroLeading { get; set; }
         [DisplayName("Running No")]
-        public short RunningNo { get; set; }
+        public short RunningNo {  get; set; }
         [DisplayName("Last Used No")]
         public long LastUsedNo { get; set; }
         [DisplayName("Last Generate Date")]
@@ -27,8 +27,6 @@ namespace BuildingManagement.Models
         [NotMapped]
         [DisplayName("Company")]
         public string Company { get; set; } = string.Empty;
-        [NotMapped]
-        [DisplayName("User")]
-        public string User { get; set; } = string.Empty;
+
     }
 }

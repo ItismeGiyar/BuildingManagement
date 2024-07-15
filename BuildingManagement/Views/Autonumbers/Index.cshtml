@@ -1,5 +1,8 @@
 ﻿@model IEnumerable<BuildingManagement.Models.Autonumber>
 
+
+
+
 @{
     ViewData["Title"] = "Auto Number";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -36,7 +39,7 @@
                 "buttons": [{
                     extend: 'copy',
                     text: window.csvButtonTrans,
-                    title: "Auto Number",
+                    title: "Auto Number List",
                     exportOptions: {
                         columns: ':not(:nth-last-child(-n + 3))'
                     }
@@ -44,7 +47,7 @@
                 {
                     extend: 'excel',
                     text: window.csvButtonTrans,
-                    title: "Auto Number",
+                    title: "Auto Number List",
                     exportOptions: {
                         columns: ':not(:nth-last-child(-n + 3))'
                     }
@@ -52,7 +55,7 @@
                 {
                     extend: 'pdf',
                     text: window.csvButtonTrans,
-                    title: "Auto Number",
+                    title: "Auto Number List",
                     exportOptions: {
                         columns: ':not(:nth-last-child(-n + 3))'
                     }
@@ -60,7 +63,7 @@
                 {
                     extend: 'print',
                     text: window.csvButtonTrans,
-                    title: "Auto Number",
+                    title: "Auto Number List",
                     exportOptions: {
                         columns: ':not(:nth-last-child(-n + 3))'
                     }
@@ -118,9 +121,10 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.LastGenerateDte)
                                     </th>
-                                  
+
+
                                     <th></th>
-                                    <th></th>
+									<th></th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -153,6 +157,7 @@
                                             @Convert.ToDateTime(item.LastGenerateDte).ToString("dd-MM-yyyy")
                                         </td>
                                        
+
 
                                         <td style="text-align: center">
                                             <a asp-action="Details" asp-route-id="@item.AutoNoId"><i class="fas fa-info-circle"></i></a>
