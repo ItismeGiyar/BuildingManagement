@@ -97,10 +97,10 @@
     </script>
 }
 @{
-    DateTime today = DateTime.Today;
-    DateTime trandate = ViewData["TranDate"] != null ? (DateTime)ViewData["TranDate"] : today;
-
-
+    
+    var currentDate = DateTime.Now;
+    
+    var currentDateString = currentDate.ToString("yyyy-MM-dd");
 }
 
 
@@ -132,7 +132,7 @@
                             <div class="form-group row col-12">
                                 <label for="trandate" class="col-form-label col-4">Tran Date:</label>
                                 <div class="col-8">
-                                    <input type="date" id="trandate" name="trandate" class="form-control" value="@trandate.ToString("yyyy-MM-dd")" />
+                                    <input type="date" id="trandate" name="trandate" class="form-control" value="@currentDate.ToString("yyyy-MM-dd")" />
                                 </div>
                             </div>
 
@@ -158,7 +158,7 @@
                             <div class="form-group row col-12">
                                 <label for="paidAmt" class="col-form-label col-4">Paid Amount:</label>
                                 <div class="col-8">
-                                    <input type="number" id="paidAmt" name="paidAmt" class="form-control" />
+                                    <input type="number" id="paidAmt" name="paidAmt" class="form-control"/> 
                                 </div>
                             </div>
 
