@@ -66,18 +66,19 @@ namespace BuildingManagement.Controllers
             ViewData["TranDate"] = trandate;
             ViewData["PaidAmount"] = paidAmt;
 
-           
 
 
-              
 
 
+
+            
             var list = await _context.pms_billledger.ToListAsync();
             foreach (var data in list)
             {
                 data.Billitem = _context.ms_billitem.Where(rt => rt.BItemID == data.BItemID).Select(rt => rt.BItemDesc).FirstOrDefault() ?? "";
                 data.Tenant = _context.ms_tenant.Where(t => t.TenantId == data.TenantId).Select(t => t.TenantNme).FirstOrDefault() ?? "";
             }
+            
             return View(list);
         }
        
