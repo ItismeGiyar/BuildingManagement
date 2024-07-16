@@ -174,8 +174,24 @@
 
 	</script>
 
+		function showBillAmt(billItemId) {
+
+			
+			$.ajax({
+				url: "/Billledgers/ShowBillAmount",
+				data: {
+					abc: billItemId
+				},
+				type: "GET",
+				success: function (billAmt) {
+					$('#inputBillAmt').val(billAmt);
+				},
+				error: function (data) {
+					alert('error');
+				}
+			});
+		}
+
+	</script>
+
 }
-
-
-
-

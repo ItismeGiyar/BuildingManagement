@@ -1,9 +1,8 @@
 ﻿@model BuildingManagement.Models.Billledger
 
-
 @{
-    ViewData["Title"] = "Bill";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Bill";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <section class="content-header">
@@ -164,6 +163,21 @@
     </script>
 
 
+			$.ajax({
+				url: "/Billledgers/ShowBillAmount",
+				data: {
+					: billItemId
+				},
+				type: "GET",
+				success: function (billAmt) {
+					$('#inputBillAmt').val(billAmt);
+				},
+				error: function (data) {
+					alert('error');
+				}
+			});
+		}
+
+	</script>
+
 }
-
-

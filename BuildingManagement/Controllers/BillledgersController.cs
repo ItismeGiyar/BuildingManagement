@@ -151,7 +151,7 @@ namespace BuildingManagement.Controllers
             return View(billLedger);
         }
 
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("BillNo,TranDte,TenantId,BItemID,BItemDesc,BillAmt,PaidAmt,PayDte,GeneratedDte,Remark,DueDate")] Billledger billledger)
@@ -204,7 +204,7 @@ namespace BuildingManagement.Controllers
             return View(billledger);
         }
 
-       
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("BillId,BillNo,TranDte,TenantId,BItemID,BItemDesc,BillAmt,PaidAmt,PayDte,GeneratedDte,Remark,DueDate")] Billledger billledger)
@@ -250,7 +250,7 @@ namespace BuildingManagement.Controllers
             return View(billledger);
         }
 
-        
+
         public async Task<IActionResult> Delete(int? id)
         {
             SetLayOutData();
@@ -291,7 +291,7 @@ namespace BuildingManagement.Controllers
             return View(billledger);
         }
 
-       
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

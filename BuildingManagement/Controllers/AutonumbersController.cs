@@ -80,10 +80,13 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("BillPrefix,BizDte,ZeroLeading,RunningNo,LastUsedNo,LastGenerateDte")] Autonumber autonumber)
         {
+            if (ModelState.IsValid)
+
             SetLayOutData();
             if (ModelState.IsValid)
             {
                 autonumber.CmpyId = GetCmpyId();
+                
                 _context.Add(autonumber);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -113,6 +116,7 @@ namespace BuildingManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("AutoNoId,BillPrefix,BizDte,ZeroLeading,RunningNo,LastUsedNo,LastGenerateDte")] Autonumber autonumber)
         {
+
             SetLayOutData();
             if (id != autonumber.AutoNoId)
             {
@@ -124,6 +128,7 @@ namespace BuildingManagement.Controllers
                 try
                 {
                     autonumber.CmpyId = GetCmpyId();
+                   
                     _context.Update(autonumber);
                     await _context.SaveChangesAsync();
                 }
@@ -187,6 +192,7 @@ namespace BuildingManagement.Controllers
         {
             return _context.pms_autonumber.Any(e => e.AutoNoId == id);
         }
+
         #endregion
         #region // Common Methods //
         protected void SetLayOutData()
@@ -199,8 +205,10 @@ namespace BuildingManagement.Controllers
 
         }
         #endregion
+    }
+}
+
        
 
 
-    }
-}
+   

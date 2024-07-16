@@ -136,12 +136,14 @@
                                 {
                                     <tr>
                                         <td>@counter</td>
+
                                         <td>
                                             @Html.DisplayFor(modelItem => item.BillPrefix)
                                         </td>
                                         <td>
                                             @Convert.ToDateTime(item.BizDte).ToString("dd-MM-yyyy")
                                         </td>
+                                       
                                         <td>
                                             @Html.DisplayFor(modelItem => item.ZeroLeading)
                                         </td>
