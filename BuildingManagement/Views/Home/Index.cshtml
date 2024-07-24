@@ -1,74 +1,204 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@section links {
-    <!-- DataTables -->
-    <link rel="stylesheet" href="~/lib/AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="~/lib/AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="~/lib/AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<script>
 
-    <!-- Select2 -->
-    <link rel="stylesheet" href="~/lib/AdminLTE/plugins/select2/css/select2.min.css">
-    <link rel="stylesheet" href="~/lib/AdminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    const data = {
+        labels: ['Building A', 'Building B', 'Building C', 'Building D', 'Building E'],
+        datasets: [{
+            label: 'Electricity Bill',
+            data: [38, 24, 32, 34, 43],
+            backgroundColor: 'rgba(18, 73, 128, 0.76)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+        }, {
+            label: 'Water Bill',
+            data: [28, 48, 40, 19, 32],
+            backgroundColor: 'rgba(111, 56, 128, 0.77)',
+            borderColor: 'rgba(153, 102, 255, 1)',
+            borderWidth: 1
+        }]
+    };
 
-    <!-- iCheck for checkboxes and radio inputs -->
-    <link rel="stylesheet" href="~/lib/AdminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-    <style type="text/css">
-        .form-check-input {
-            width: 23px;
-            height: 23px;
-            margin-left: -2rem;
-            margin-top: 0.08rem;
+
+    const config = {
+        type: 'bar',
+        data: data,
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    beginAtZero: true
+                },
+                y: {
+                    beginAtZero: true
+                }
+            }
         }
+    };
 
-        .form-check {
-            margin-left: 30px;
-        }
 
-        .time {
-            margin-left: 8px;
-        }
-    </style>
+    window.onload = function () {
+        const ctx = document.getElementById('myBarChart').getContext('2d');
+        new Chart(ctx, config);
+    };
+</script>
 
-}
-@section scripts
-{
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    <!-- DataTables  & Plugins -->
-    <script src="~/lib/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="~/lib/AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/lib/AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="~/lib/AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-    <script src="~/lib/AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="~/lib/AdminLTE/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-    <script src="~/lib/AdminLTE/plugins/jszip/jszip.min.js"></script>
-    <script src="~/lib/AdminLTE/plugins/pdfmake/pdfmake.min.js"></script>
-    <script src="~/lib/AdminLTE/plugins/pdfmake/vfs_fonts.js"></script>
-    <script src="~/lib/AdminLTE/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-    <script src="~/lib/AdminLTE/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-    <script src="~/lib/AdminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    <!-- Select2 -->
-    <script src="~/lib/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="~/lib/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script>
+<h4 class="font-weight-bold py-3 mb-0">Dashboard</h4>
 
-        $(function () {
-            $('.select2').select2()
-            $('.select2bs4').select2({
-                theme: 'bootstrap4'
-            })
+<div class="container-fluid p-3">
 
-        });
-    </script>
-}
-<nav class="navbar navbar-expand-sm bg-secondary">
+    <div class="row flex-column flex-lg-row">
+        <div class="col">
+            <div class="small-box bg-info mb-3 p-3">
+                <div class="inner">
+                    <h4>5</h4>
 
-    <div class="container-fluid p-3">
-       
+                    <p>Buildings Managed</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="small-box bg-pink color-palette mb-3 p-3">
+                <div class="inner">
+                    <h4>2000($)</h4>
+
+                    <p>Maintenance Costs </p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="small-box bg-purple color-palette mb-3 p-3">
+                <div class="inner">
+                    <h4>85%</h4>
+
+                    <p>Occupancy Rate</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="small-box bg-teal color-palette mb-3 p-3">
+                <div class="inner">
+                    <h4>8</h4>
+
+                    <p>Complaint Requests</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-recycle"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
     </div>
+</div>
 
-</nav>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<div class="container-fluid">
+
+    <div class="row mt-4 flex-column flex-lg-row">
+        <div class="col">
+            <div class="card card-info mb-4">
+                <div class="card-header">
+                    <h3 class="card-title">Bar Chart</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="example">
+
+                        <div class="tab-content rounded-bottom">
+                            <div class="tab-pane p-3 active preview" role="tabpanel" id="preview-1001">
+                                <div class="c-chart-wrapper">
+                                    <canvas id="myBarChart" width="330" height="220" style="display: block; box-sizing: border-box; height: 88px; width: 176px;"></canvas>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+
+                    <div class="card-tools">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-default">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>Building Name</th>
+                                <th>Location</th>
+                                <th>Total Floors</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>M Tower</td>
+                                <td>Yangon</td>
+                                <td>26</td>
+
+
+                            </tr>
+                            <tr>
+                                <td>Time City</td>
+                                <td>Yangon</td>
+                                <td>26</td>
+
+
+                            </tr>
+                            <tr>
+                                <td>Junction City</td>
+                                <td>Yangon</td>
+                                <td>23</td>
+
+
+                            </tr>
+                            <tr>
+                                <td>Junction Square</td>
+                                <td>Yangon</td>
+                                <td>5</td>
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
