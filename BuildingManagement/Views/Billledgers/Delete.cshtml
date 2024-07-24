@@ -1,23 +1,22 @@
-﻿@model BuildingManagement.Models.PropertyRoom
-
+﻿@model BuildingManagement.Models.Billledger
 
 
 
 @{
-    ViewData["Title"] = "Property Room";
+    ViewData["Title"] = "Bill";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
+            <a href="d:\building management\buildingmanagement\views\billledgers\details.cshtml"></a>
             <div class="col-6">
                 <h4>@ViewData["Title"]</h4>
             </div>
             <div class="col-6">
                 <div class="breadcrumb float-right active">
-                    <a asp-action="Index" class="btn btn-primary">Back to List <i class="fas fa-back"></i></a>
-
+                    <a asp-action="Index" class="btn btn-default" style="background-color: #31849B;color: white">Back to List <i class="fas fa-back"></i></a>
                 </div>
             </div>
         </div>
@@ -37,23 +36,22 @@
 
                         <dl class="row">
                             <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.RoomId)
+                                @Html.DisplayNameFor(model => model.BillId)
                             </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.RoomId)
-                            </dd>
-                           
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.RoomNo)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.RoomNo)
+                                @Html.DisplayFor(model => model.BillId)
                             </dd>
                             <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.PropertyInfo)
+                                @Html.DisplayNameFor(model => model.BillNo)
                             </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.PropertyInfo)
+                                @Html.DisplayFor(model => model.BillNo)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.TranDte)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Convert.ToDateTime(Model.TranDte).ToString("dd-MM-yyyy")
                             </dd>
                             <dt class="col-sm-2">
                                 @Html.DisplayNameFor(model => model.Tenant)
@@ -62,64 +60,60 @@
                                 @Html.DisplayFor(model => model.Tenant)
                             </dd>
                             <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.BuildingType)
+                                @Html.DisplayNameFor(model => model.Billitem)
                             </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.BuildingType)
-                            </dd>
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.Location)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.Location)
+                                @Html.DisplayFor(model => model.Billitem)
                             </dd>
                             
                             <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.SqFullMeasure)
+                                @Html.DisplayNameFor(model => model.BillAmt)
                             </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.SqFullMeasure)
+                                @Html.DisplayFor(model => model.BillAmt)
                             </dd>
                             <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.SqRooMeasure)
+                                @Html.DisplayNameFor(model => model.PaidAmt)
                             </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.SqRooMeasure)
+                                @Html.DisplayFor(model => model.PaidAmt)
                             </dd>
                             <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.AmenityDesc)
+                                @Html.DisplayNameFor(model => model.PayDte)
                             </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.AmenityDesc)
+                                @Convert.ToDateTime(Model.PayDte).ToString("dd-MM-yyyy")
                             </dd>
                             <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.FeatureDesc)
+                                @Html.DisplayNameFor(model => model.GeneratedDte)
                             </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.FeatureDesc)
+                                @Convert.ToDateTime(Model.GeneratedDte).ToString("dd-MM-yyyy")
                             </dd>
                             <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.Addr)
+                                @Html.DisplayNameFor(model => model.Remark)
                             </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.Addr)
+                                @Html.DisplayFor(model => model.Remark)
                             </dd>
-                            
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.DueDate)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Convert.ToDateTime(Model.DueDate).ToString("dd-MM-yyyy")
+                            </dd>
+                           
                         </dl>
                     </div>
                 </div>
             </div>
             <div class="card-footer">
                 <form asp-action="Delete">
-                    <input type="hidden" asp-for="RoomId" />
-                    <input type="submit" value="Delete" class="btn btn-danger" />
-
+                    <input type="hidden" asp-for="BillId" />
+                    <input type="submit" value="Delete" class="btn btn-default" style="background-color: #31849B;color: white" />
                 </form>
 
             </div>
         </div>
     </div>
 </section>
-
-
-

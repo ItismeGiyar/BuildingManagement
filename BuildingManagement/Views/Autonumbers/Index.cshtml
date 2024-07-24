@@ -1,6 +1,10 @@
-﻿@model IEnumerable<BuildingManagement.Models.PropertyRoom>
+﻿@model IEnumerable<BuildingManagement.Models.Autonumber>
+
+
+
+
 @{
-    ViewData["Title"] = "Property Room";
+    ViewData["Title"] = "Auto Number";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -35,7 +39,7 @@
                 "buttons": [{
                     extend: 'copy',
                     text: window.csvButtonTrans,
-                    title: "Property Room",
+                    title: "Auto Number List",
                     exportOptions: {
                         columns: ':not(:nth-last-child(-n + 3))'
                     }
@@ -43,7 +47,7 @@
                 {
                     extend: 'excel',
                     text: window.csvButtonTrans,
-                    title: "Property Room",
+                    title: "Auto Number List",
                     exportOptions: {
                         columns: ':not(:nth-last-child(-n + 3))'
                     }
@@ -51,7 +55,7 @@
                 {
                     extend: 'pdf',
                     text: window.csvButtonTrans,
-                    title: "Property Room",
+                    title: "Auto Number List",
                     exportOptions: {
                         columns: ':not(:nth-last-child(-n + 3))'
                     }
@@ -59,7 +63,7 @@
                 {
                     extend: 'print',
                     text: window.csvButtonTrans,
-                    title: "Property Room",
+                    title: "Auto Number List",
                     exportOptions: {
                         columns: ':not(:nth-last-child(-n + 3))'
                     }
@@ -99,77 +103,76 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.BillPrefix)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.BizDte)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ZeroLeading)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.RunningNo)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.LastUsedNo)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.LastGenerateDte)
+                                    </th>
 
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.RoomNo)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.PropertyInfo)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Tenant)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.BuildingType)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Location)
-                                    </th>
 
-
-                                   
                                     <th></th>
+									<th></th>
                                     <th></th>
-                                    <th></th>
-                                    
                                 </tr>
                             </thead>
                             <tbody>
                                 @{
                                     var counter = 1;
                                 }
-
                                 @foreach (var item in Model)
                                 {
                                     <tr>
                                         <td>@counter</td>
 
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.RoomNo)
+                                            @Html.DisplayFor(modelItem => item.BillPrefix)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.PropertyInfo)
+                                            @Convert.ToDateTime(item.BizDte).ToString("dd-MM-yyyy")
+                                        </td>
+                                       
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ZeroLeading)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Tenant)
+                                            @Html.DisplayFor(modelItem => item.RunningNo)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.BuildingType)
+                                            @Html.DisplayFor(modelItem => item.LastUsedNo)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Location)
+                                            @Convert.ToDateTime(item.LastGenerateDte).ToString("dd-MM-yyyy")
                                         </td>
-                                        <td style="text-align: center">
-                                            <a asp-action="Details" asp-route-id="@item.RoomId"><i class="fas fa-info-circle"></i></a>
-                                        </td>
-
-
-
-                                        <td style="text-align: center">
-                                            <a asp-action="Edit" asp-route-id="@item.RoomId"><i class="fas fa-edit"></i></a>
-                                        </td>
+                                       
 
 
                                         <td style="text-align: center">
-                                            <a asp-action="Delete" asp-route-id="@item.RoomId"><i class="fas fa-trash"></i></a>
+                                            <a asp-action="Details" asp-route-id="@item.AutoNoId"><i class="fas fa-info-circle"></i></a>
+                                        </td>
+                                        <td style="text-align: center">
+                                            <a asp-action="Edit" asp-route-id="@item.AutoNoId"><i class="fas fa-edit"></i></a>
+                                        </td>
+                                        <td style="text-align: center">
+                                            <a asp-action="Delete" asp-route-id="@item.AutoNoId"><i class="fas fa-trash"></i></a>
 
                                         </td>
-
                                     </tr>
                                     counter++;
 
                                 }
-                            </tbody>
                         </table>
                     </div>
                 </div>

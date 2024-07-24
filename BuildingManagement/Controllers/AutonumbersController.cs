@@ -10,167 +10,17 @@ using BuildingManagement.Models;
 using Microsoft.AspNetCore.Authorization;
 
 namespace BuildingManagement.Controllers
-{ 
+{
     [Authorize]
-    public class BillItemsController : Controller
-
+    public class AutonumbersController : Controller
     {
         private readonly BuildingDbContext _context;
 
-        public BillItemsController(BuildingDbContext context)
+        public AutonumbersController(BuildingDbContext context)
         {
             _context = context;
         }
-
-
-        #region // Main methods //
-
-        public async Task<IActionResult> Index()
-        {
-
-            SetLayOutData();
-            return View(await _context.ms_billitem.ToListAsync());
-        }
-
-
-        public async Task<IActionResult> Details(int? id)
-        {
-            SetLayOutData();
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var billItem = await _context.ms_billitem
-                .FirstOrDefaultAsync(m => m.BItemID == id);
-            if (billItem == null)
-            {
-                return NotFound();
-            }
-
-            billItem.Company = _context.ms_company.Where(c => c.CmpyId == billItem.CmpyId).Select(c => c.CmpyNme).FirstOrDefault() ?? "";
-            billItem.User = _context.ms_user.Where(u => u.UserId == billItem.UserId).Select(u => u.UserNme).FirstOrDefault() ?? "";
-
-            return View(billItem);
-        }
-
-        public IActionResult Create()
-        {
-            SetLayOutData();
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BItemDesc,MonthPostFlg,FixChrgFlg,FixChrgAmt")] BillItem billItem)
-        {
-            SetLayOutData();
-            if (ModelState.IsValid)
-            {
-                billItem.CmpyId = GetCmpyId();
-                billItem.UserId = GetUserId();
-                billItem.RevDteTime = DateTime.Now;
-                _context.Add(billItem);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(billItem);
-        }
-
-        public async Task<IActionResult> Edit(int? id)
-        {
-            SetLayOutData();
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var billItem = await _context.ms_billitem.FindAsync(id);
-            if (billItem == null)
-            {
-                return NotFound();
-            }
-            return View(billItem);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BItemID,BItemDesc,MonthPostFlg,FixChrgFlg,FixChrgAmt")] BillItem billItem)
-        {
-            SetLayOutData();
-            if (id != billItem.BItemID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    billItem.CmpyId = GetCmpyId();
-                    billItem.UserId = GetUserId();
-                    billItem.RevDteTime = DateTime.Now;
-                    _context.Update(billItem);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!BillItemExists(billItem.BItemID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(billItem);
-        }
-
-        public async Task<IActionResult> Delete(int? id)
-        {
-            SetLayOutData();
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var billItem = await _context.ms_billitem
-                .FirstOrDefaultAsync(m => m.BItemID == id);
-            if (billItem == null)
-            {
-                return NotFound();
-            }
-
-            return View(billItem);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            SetLayOutData();
-            var billItem = await _context.ms_billitem.FindAsync(id);
-            if (billItem != null)
-            {
-                _context.ms_billitem.Remove(billItem);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool BillItemExists(int id)
-        {
-            return _context.ms_billitem.Any(e => e.BItemID == id);
-        }
-
-        #endregion
-
-
-        #region // Common methods //
+        #region // Main Methods //
 
         protected short GetUserId()
         {
@@ -192,6 +42,159 @@ namespace BuildingManagement.Controllers
 
             return cmpyId;
         }
+
+        public async Task<IActionResult> Index()
+        {
+            SetLayOutData();
+            return View(await _context.pms_autonumber.ToListAsync());
+        }
+
+        
+        public async Task<IActionResult> Details(int? id)
+        {
+            SetLayOutData();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var autonumber = await _context.pms_autonumber
+                .FirstOrDefaultAsync(m => m.AutoNoId == id);
+            if (autonumber == null)
+            {
+                return NotFound();
+            }
+            autonumber.Company =_context.ms_company.Where(c => c.CmpyId == autonumber.CmpyId).Select(c => c.CmpyNme).FirstOrDefault() ?? "";
+            return View(autonumber);
+        }
+
+      
+        public IActionResult Create()
+        {
+            SetLayOutData();
+            return View();
+        }
+
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("BillPrefix,BizDte,ZeroLeading,RunningNo,LastUsedNo,LastGenerateDte")] Autonumber autonumber)
+        {
+            if (ModelState.IsValid)
+
+            SetLayOutData();
+            if (ModelState.IsValid)
+            {
+                autonumber.CmpyId = GetCmpyId();
+                
+                _context.Add(autonumber);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(autonumber);
+        }
+
+        
+        public async Task<IActionResult> Edit(int? id)
+        {
+            SetLayOutData();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var autonumber = await _context.pms_autonumber.FindAsync(id);
+            if (autonumber == null)
+            {
+                return NotFound();
+            }
+            return View(autonumber);
+        }
+
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("AutoNoId,BillPrefix,BizDte,ZeroLeading,RunningNo,LastUsedNo,LastGenerateDte")] Autonumber autonumber)
+        {
+
+            SetLayOutData();
+            if (id != autonumber.AutoNoId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    autonumber.CmpyId = GetCmpyId();
+                   
+                    _context.Update(autonumber);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AutonumberExists(autonumber.AutoNoId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(autonumber);
+        }
+
+        
+        public async Task<IActionResult> Delete(int? id)
+        {
+            SetLayOutData();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var autonumber = await _context.pms_autonumber
+                .FirstOrDefaultAsync(m => m.AutoNoId == id);
+            if (autonumber == null)
+            {
+                return NotFound();
+            }
+            autonumber.Company =
+                _context.ms_company
+                .Where(c => c.CmpyId == autonumber.CmpyId)
+                .Select(c => c.CmpyNme)
+                .FirstOrDefault() ?? "";
+
+            return View(autonumber);
+        }
+
+        
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            SetLayOutData();
+            var autonumber = await _context.pms_autonumber.FindAsync(id);
+            if (autonumber != null)
+            {
+                _context.pms_autonumber.Remove(autonumber);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool AutonumberExists(int id)
+        {
+            return _context.pms_autonumber.Any(e => e.AutoNoId == id);
+        }
+
+        #endregion
+        #region // Common Methods //
         protected void SetLayOutData()
         {
             var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value; // format for to claim usercde
@@ -205,7 +208,7 @@ namespace BuildingManagement.Controllers
     }
 }
 
+       
 
 
-
-
+   

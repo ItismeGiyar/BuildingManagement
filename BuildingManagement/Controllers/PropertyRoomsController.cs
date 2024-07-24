@@ -91,7 +91,7 @@ namespace BuildingManagement.Controllers
                 .Where(u => u.TenantId == propertyRoom.TenantId)
                 .Select(u => u.TenantNme)
                 .FirstOrDefault() ?? "";
-            return View(propertyRoom);//update
+            return View(propertyRoom);
         }
 
         
@@ -204,6 +204,39 @@ namespace BuildingManagement.Controllers
             {
                 return NotFound();
             }
+            propertyRoom.Company =
+               _context.ms_company
+               .Where(c => c.CmpyId == propertyRoom.CmpyId)
+               .Select(c => c.CmpyNme)
+               .FirstOrDefault() ?? "";
+
+            propertyRoom.User =
+                _context.ms_user
+                .Where(u => u.UserId == propertyRoom.UserId)
+                .Select(u => u.UserNme)
+                .FirstOrDefault() ?? "";
+            propertyRoom.PropertyInfo =
+             _context.ms_propertyinfo
+             .Where(c => c.PropId == propertyRoom.PropId)
+             .Select(c => c.PropNme)
+             .FirstOrDefault() ?? "";
+
+            propertyRoom.BuildingType =
+                _context.ms_buildingtype
+                .Where(u => u.BdtypId == propertyRoom.BdtypId)
+                .Select(u => u.BdtypDesc)
+                .FirstOrDefault() ?? "";
+            propertyRoom.Location =
+                _context.ms_location
+                .Where(u => u.LocId == propertyRoom.LocId)
+                .Select(u => u.LocDesc)
+                .FirstOrDefault() ?? "";
+
+            propertyRoom.Tenant =
+                _context.ms_tenant
+                .Where(u => u.TenantId == propertyRoom.TenantId)
+                .Select(u => u.TenantNme)
+                .FirstOrDefault() ?? "";
 
             return View(propertyRoom);
         }

@@ -13,6 +13,7 @@ namespace BuildingManagement.Controllers
 { 
     [Authorize]
     public class BillItemsController : Controller
+
     {
         private readonly BuildingDbContext _context;
 
@@ -21,10 +22,12 @@ namespace BuildingManagement.Controllers
             _context = context;
         }
 
+
         #region // Main methods //
 
         public async Task<IActionResult> Index()
         {
+
             SetLayOutData();
             return View(await _context.ms_billitem.ToListAsync());
         }
@@ -203,5 +206,6 @@ namespace BuildingManagement.Controllers
 }
 
 
-       
+
+
 
