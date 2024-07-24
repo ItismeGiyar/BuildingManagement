@@ -1,0 +1,147 @@
+﻿@model BuildingManagement.Models.Complainlog
+<!-- #region name -->
+<!-- #endregion -->
+@{
+    ViewData["Title"] = "Complaint Log";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-6">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="col-6">
+                <div class="breadcrumb float-right active">
+                    <a asp-action="Index" class="btn btn-primary">Back to List <i class="fas fa-back"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-gray">
+            <div class="card-header">
+                <h3 class="card-title">@ViewData["Title"] Resolving</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form asp-action="Resolve" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="CmpId" />
+                            <input type="hidden" asp-for="CmpImg"/>
+                            <div class="form-group">
+                                <label asp-for="CmpCatgId" class="control-label">Complaint Category</label>
+                                <input asp-for="CmpCatgId" class="form-control" readonly />
+                                <span asp-validation-for="CmpCatgId" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group text-danger">@ViewData["Msg"]</div>
+                            <div class="form-group">
+                                <label asp-for="TenantId" class="control-label">Tenant</label>
+                                <input asp-for="TenantId" class="form-control" readonly />
+
+                                <span asp-validation-for="TenantId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group text-danger">@ViewData["Msg"]</div>
+                            <div class="form-group">
+                                <label asp-for="CmpDesc" class="control-label">Complaint Log Description</label>
+                                <input asp-for="CmpDesc" class="form-control" readonly />
+                                <span asp-validation-for="CmpDesc" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Priority" class="control-label"></label>
+                                <input asp-for="Priority" class="form-control" readonly />
+                                <span asp-validation-for="Priority" class="text-danger"></span>
+
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ResolveDesc" class="control-label">Resolved Description</label>
+                                <input asp-for="ResolveDesc" class="form-control" />
+                                <span asp-validation-for="ResolveDesc" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ResolveBy" class="control-label">Resolved By</label>
+                                <input asp-for="ResolveBy" class="form-control" />
+                                <span asp-validation-for="ResolveBy" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ResolveImgFile" class="control-label">Resolved Images</label>
+                                <div>
+                                    <img id="selectedResolveImg" src="#" width="120" height="100" style="margin-bottom: 10px;display: none">
+                                    <input id="inputResolveImg" type="file" asp-for="ResolveImgFile" id="image-container" onchange="displayImage()" />
+                                    <span asp-validation-for="ResolveImgFile" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="form-group ml-2">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" asp-for="ResolveFlg" id="returnCheckbox">
+                                    <label class="form-check-label ml-5 custom-label" for="resolveCheckbox">@Html.DisplayNameFor(model => model.ResolveFlg)</label>
+                                </div>
+                                <span asp-validation-for="ResolveFlg" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        function displayImage() {
+            var input = document.getElementById('inputResolveImg');
+            var imgFrame = document.getElementById('selectedResolveImg');
+            if (input.files && input.files[0]) {
+                imgFrame.style.display = "flex";
+                var file = input.files[0];
+
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    imgFrame.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+            else {
+                imgFrame.style.display = "none";
+            }
+        }
+        function displayImages(input) {
+            const imageContainer = document.getElementById('image-container');
+            imageContainer.innerHTML = '';
+
+            const files = input.files;
+            for (let i = 0; i < files.length; i++) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.width = 120;
+                    img.height = 100;
+                    img.style.marginRight = 10 + 'px';
+                    img.style.marginBottom = 10 + 'px';
+                    img.src = e.target.result;
+                    imageContainer.appendChild(img);
+                };
+                reader.readAsDataURL(files[i]);
+            }
+        }
+    </script>
+
+}
+
+
+
+
+

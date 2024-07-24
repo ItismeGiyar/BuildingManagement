@@ -23,6 +23,7 @@ namespace BuildingManagement.Data
         public DbSet<TenantVehical> ms_tenantvehical { get; set; }
         public DbSet<ComplaintCatg> ms_complaintcatg { get; set; }
         public DbSet<BillItemTenant> ms_billitemtenant { get; set; }
+        public DbSet<Complainlog> pms_complainlog { get; set; }
 
     }
 }
