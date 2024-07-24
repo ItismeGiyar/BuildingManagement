@@ -58,7 +58,7 @@ namespace BuildingManagement.Controllers
             }
 
             var complaintCatg = await _context.ms_complaintcatg
-                .FirstOrDefaultAsync(m => m.CplCatgId == id);
+                .FirstOrDefaultAsync(m => m.CmpCatgId == id);
 
             if (complaintCatg == null)
             {
@@ -123,10 +123,10 @@ namespace BuildingManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CplCatgId,CplCatCde")] ComplaintCatg complaintCatg)
+        public async Task<IActionResult> Edit(int id, [Bind("CmpCatgId,CplCatCde")] ComplaintCatg complaintCatg)
         {
             SetLayOutData();
-            if (id != complaintCatg.CplCatgId)
+            if (id != complaintCatg.CmpCatgId)
             {
                 return NotFound();
             }
@@ -143,7 +143,7 @@ namespace BuildingManagement.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ComplaintCatgExists(complaintCatg.CplCatgId))
+                    if (!ComplaintCatgExists(complaintCatg.CmpCatgId))
                     {
                         return NotFound();
                     }
@@ -166,7 +166,7 @@ namespace BuildingManagement.Controllers
             }
 
             var complaintCatg = await _context.ms_complaintcatg
-                .FirstOrDefaultAsync(m => m.CplCatgId == id);
+                .FirstOrDefaultAsync(m => m.CmpCatgId == id);
             if (complaintCatg == null)
             {
                 return NotFound();
@@ -192,7 +192,7 @@ namespace BuildingManagement.Controllers
 
         private bool ComplaintCatgExists(int id)
         {
-            return _context.ms_complaintcatg.Any(e => e.CplCatgId == id);
+            return _context.ms_complaintcatg.Any(e => e.CmpCatgId == id);
         }
         #endregion
 

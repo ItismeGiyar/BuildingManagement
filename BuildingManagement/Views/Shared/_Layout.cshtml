@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SiteOverseer</title>
+
+  
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SiteOverseer.styles.css" asp-append-version="true" />
@@ -15,6 +17,7 @@
     <link rel="stylesheet" href="~/lib/AdminLTE/dist/css/adminlte.min.css">
     @await RenderSectionAsync("Links", required: false)
 
+ 
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
     <div class="wrapper">
@@ -52,7 +55,7 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                              with font-awesome or any other icon font library -->
-
+                       
                         <li class="nav-item">
                             <a href="../../Billledgers/Index" class="nav-link">
                                 <i class="fas fa-money-bill-wave nav-icon"></i>
@@ -60,7 +63,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../../Home/Index" class="nav-link">
+                            <a href="../../Complainlogs/Index" class="nav-link">
                                 <i class="fas fa-user nav-icon"></i>
                                 <p>Complaint Log</p>
                             </a>

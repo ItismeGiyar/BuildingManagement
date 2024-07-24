@@ -28,5 +28,7 @@ namespace BuildingManagement.Data
         public DbSet<BillPayment> pms_billpayment { get; set; }
         public DbSet<Billledger> pms_billledger { get; set; }
         public DbSet<Autonumber> pms_autonumber { get; set; }
+        public DbSet<Complainlog> pms_complainlog { get; set; }
+
     }
 }
