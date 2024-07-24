@@ -1,0 +1,138 @@
+﻿@model BuildingManagement.Models.Complainlog
+<!-- #region name -->
+<!-- #region name -->
+<!-- #endregion -->
+<!-- #endregion -->
+@{
+    ViewData["Title"] = "Complaint Log";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-6">
+                <h4>@ViewData["Title"]</h4>
+            </div>
+            <div class="col-6">
+                <div class="breadcrumb float-right active">
+                    <a asp-action="Index" class="btn btn-primary">Back to List <i class="fas fa-back"></i></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-gray">
+            <div class="card-header">
+                <h3 class="card-title">@ViewData["Title"] Details</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <dl class="row">
+              
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.ComplaintCatg)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.ComplaintCatg)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Tenant)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Tenant)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.CmpDteTime)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.CmpDteTime)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.CmpDesc)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.CmpDesc)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.CmpImg)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @if (Model.GetBase64Image() != null)
+                                {
+                                    <img src="data:image/jpeg;base64,@Model.GetBase64Image()" alt="Complain Image" style="max-width: 100%; height: auto;" />
+                                }
+                                else
+                                {
+                                    <span>No image available</span>
+                                }
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Priority)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Priority)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.ResolveDesc)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.ResolveDesc)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.ResolveFlg)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.ResolveFlg)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.ResolveBy)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.ResolveBy)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.ResolveImg)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @if (Model.GetBase64Image() != null)
+                                {
+                                    <img src="data:image/jpeg;base64,@Model.GetBase64ResolveImage()" alt="Resolved Image" style="max-width: 100%; height: auto;" />
+                                }
+                                else
+                                {
+                                    <span>No image available</span>
+                                }
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Company)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Company)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.User)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.User)
+                            </dd>
+
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.RevDteTime)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.RevDteTime)
+                            </dd>
+                        </dl>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+

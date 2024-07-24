@@ -9,7 +9,7 @@ namespace BuildingManagement.Models
     {
         [Key]
         [DisplayName("Complaint Category ID")]
-        public int CplCatgId { get; set; }
+        public int CmpCatgId { get; set; }
         [DisplayName("Complaint Category Code")]
         [StringLength(50)]
         public string CplCatCde { get; set; } = string.Empty;

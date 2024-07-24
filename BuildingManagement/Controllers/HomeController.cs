@@ -36,12 +36,6 @@ namespace BuildingManagement.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            SetLayOutData();
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
         protected void SetLayOutData()
         {
             var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value; // format for to claim usercde
@@ -50,6 +44,13 @@ namespace BuildingManagement.Controllers
 
             ViewBag.UserName = userName;
 
+        }
+
+
+        public IActionResult Error()
+        {
+            SetLayOutData();
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
