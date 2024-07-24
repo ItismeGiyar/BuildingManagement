@@ -26,11 +26,13 @@ namespace BuildingManagement.Models
         [Required(ErrorMessage = "Please enter a number.")]
         [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative number.")]
         [DisplayName("Bill Amount")]
+        [DisplayFormat(DataFormatString = "{0:N0}")]
         public decimal BillAmt { get; set; }
        
             [Required(ErrorMessage = "Please enter a number.")]
         [Range(0, int.MaxValue, ErrorMessage = "Please enter a non-negative number.")]
         [DisplayName("Paid Amount")]
+        [DisplayFormat(DataFormatString = "{0:N0}")]
         [AllowNull]public decimal? PaidAmt { get; set; }
         [DisplayName("Pay Date")]
         public DateTime? PayDte { get; set; }
