@@ -28,25 +28,7 @@ namespace BuildingManagement.Controllers
         }
         #region // Main methods //
 
-        protected short GetUserId()
-        {
-            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
-            var userId = (short)_context.ms_user
-                .Where(u => u.UserCde == userCde)
-                .Select(u => u.UserId)
-                .FirstOrDefault();
-
-            return userId;
-        }
-        protected short GetCmpyId()
-        {
-            var cmpyId = _context.ms_user
-                .Where(u => u.UserId == GetUserId())
-                .Select(u => u.CmpyId)
-                .FirstOrDefault();
-
-            return cmpyId;
-        }
+       
 
        
         public async Task<IActionResult> Index()
@@ -312,7 +294,7 @@ namespace BuildingManagement.Controllers
             return View(user);
         }
 
-
+      
     
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -336,7 +318,25 @@ namespace BuildingManagement.Controllers
         #endregion
 
         #region // Common methods //
+        protected short GetUserId()
+        {
+            var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
+            var userId = (short)_context.ms_user
+                .Where(u => u.UserCde == userCde)
+                .Select(u => u.UserId)
+                .FirstOrDefault();
 
+            return userId;
+        }
+        protected short GetCmpyId()
+        {
+            var cmpyId = _context.ms_user
+                .Where(u => u.UserId == GetUserId())
+                .Select(u => u.CmpyId)
+                .FirstOrDefault();
+
+            return cmpyId;
+        }
         protected void SetLayOutData()
         {
             var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value; // format for to claim usercde
@@ -344,7 +344,7 @@ namespace BuildingManagement.Controllers
             var userName = _context.ms_user.Where(u => u.UserCde == userCde).Select(u => u.UserNme).FirstOrDefault();
 
             ViewBag.UserName = userName;
-
+        
         }
         #endregion
     }

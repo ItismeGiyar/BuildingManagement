@@ -1,9 +1,15 @@
-﻿@model IEnumerable<BuildingManagement.Models.ComplaintCatg>
-
+﻿  @model IEnumerable<BuildingManagement.Models.Complainlog>
+<!-- #region name -->
+<!-- #endregion -->
 @{
-    ViewData["Title"] = "Complaint Category";
+    ViewData["Title"] = "Complaint Log";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
+    ViewBag.Title = "Complaint Log";
+}
+
+
 
 @section links {
     <!-- DataTables -->
@@ -24,7 +30,7 @@
     <script src="~/lib/AdminLTE/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
     <script src="~/lib/AdminLTE/plugins/jszip/jszip.min.js"></script>
     <script src="~/lib/AdminLTE/plugins/pdfmake/pdfmake.min.js"></script>
-    <script src="~/lib/AdminLTE/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/lib/AdminLTEplugins/pdfmake/vfs_fonts.js"></script>
     <script src="~/lib/AdminLTE/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="~/lib/AdminLTE/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="~/lib/AdminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
@@ -36,7 +42,7 @@
                 "buttons": [{
                     extend: 'copy',
                     text: window.csvButtonTrans,
-                    title: "Complaint Category List",
+                    title: "User",
                     exportOptions: {
                         columns: ':not(:nth-last-child(-n + 3))'
                     }
@@ -44,7 +50,7 @@
                 {
                     extend: 'excel',
                     text: window.csvButtonTrans,
-                    title: "Complaint Category List",
+                    title: "User",
                     exportOptions: {
                         columns: ':not(:nth-last-child(-n + 3))'
                     }
@@ -52,7 +58,7 @@
                 {
                     extend: 'pdf',
                     text: window.csvButtonTrans,
-                    title: "Complaint Category List",
+                    title: "User",
                     exportOptions: {
                         columns: ':not(:nth-last-child(-n + 3))'
                     }
@@ -60,7 +66,7 @@
                 {
                     extend: 'print',
                     text: window.csvButtonTrans,
-                    title: "Complaint Category List",
+                    title: "User",
                     exportOptions: {
                         columns: ':not(:nth-last-child(-n + 3))'
                     }
@@ -80,7 +86,7 @@
             </div>
             <div class="col-6">
                 <div class="breadcrumb float-right active">
-                    <a asp-action="Create" class="btn btn-primary">Create New  <i class="fas fa-plus"></i></a>
+                    <a asp-action="Create" class="btn btn-primary">Create New<i class="fas fa-plus"></i></a>
                 </div>
             </div>
         </div>
@@ -100,11 +106,28 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-
                                     <th>
-                                        @Html.DisplayNameFor(model => model.CplCatCde)
+                                        @Html.DisplayNameFor(model => model.CmpCatgId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.TenantId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.CmpDteTime)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.CmpDesc)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Priority)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ResolveFlg)
                                     </th>
                                    
+                                   
+
+                                    <th></th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -118,30 +141,44 @@
                                 @foreach (var item in Model)
                                 {
                                     <tr>
+
                                         <td>@counter</td>
-
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.CplCatCde)
+                                            @Html.DisplayFor(modelItem => item.ComplaintCatg)
                                         </td>
-                                        <td style="text-align: center">
-                                            <a asp-action="Details" asp-route-id="@item.CmpCatgId"><i class="fas fa-info-circle"></i></a>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Tenant)
                                         </td>
-
-
-
-                                        <td style="text-align: center">
-                                            <a asp-action="Edit" asp-route-id="@item.CmpCatgId"><i class="fas fa-edit"></i></a>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CmpDteTime)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CmpDesc)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Priority)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ResolveFlg)
                                         </td>
                                        
-                                        
-                                        <td style="text-align: center">
-                                            <a asp-action="Delete" asp-route-id="@item.CmpCatgId"><i class="fas fa-trash"></i></a>
-                                            
-                                        </td>
+                                       
 
+
+                                       
+                                        <td style="text-align: center">
+                                            <a asp-action="Details" asp-route-id="@item.CmpId"><i class="fas fa-info-circle"></i></a>
+                                        </td>
+                                        <td style="text-align: center">
+                                            <a asp-action="Edit" asp-route-id="@item.CmpId"><i class="fas fa-edit"></i></a>
+                                        <td style="text-align: center">
+                                            <a asp-action="Resolve" asp-route-id="@item.CmpId"><i class="fab fa-resolving"></i></a>
+                                        </td>
+                                        <td style="text-align: center">
+                                            <a asp-action="Delete" asp-route-id="@item.CmpId"><i class="fas fa-trash"></i></a>
+                                        </td>
                                     </tr>
                                     counter++;
-
                                 }
                             </tbody>
                         </table>
