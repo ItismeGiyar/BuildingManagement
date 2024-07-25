@@ -97,9 +97,9 @@
     </script>
 }
 @{
-    
+
     var currentDate = DateTime.Now;
-    
+
     var currentDateString = currentDate.ToString("yyyy-MM-dd");
 }
 
@@ -155,126 +155,126 @@
                                 <div class="col-8">
                                     <input type="number" id="paidAmt" name="paidAmt" class="form-control" />
                                 </div>
-                        
+
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12 d-flex justify-content-between">
+                                <button type="submit" class="btn btn-primary" style="background-color: #31849B; color: white">Search</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="row mt-2">
-                        <div class="col-md-12 d-flex justify-content-between">
-                            <button type="submit" class="btn btn-primary" style="background-color: #31849B; color: white">Search</button>
-                        </div>
-                    </div>
-                </div>
             </form>
         </div>
     </div>
 </section>
 
-         
-            <div class="card-body">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <table id="example1" class="table table-bordered dataTable dtr-inline" aria-describedby="example1_info">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
+
+<div class="card-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <table id="example1" class="table table-bordered dataTable dtr-inline" aria-describedby="example1_info">
+                    <thead>
+                        <tr>
+                            <th>No</th>
 
 
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.BillNo)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.TranDte)
-                                        </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.BillNo)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TranDte)
+                            </th>
 
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.Tenant)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.Billitem)
-                                        </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Tenant)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Billitem)
+                            </th>
 
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.BillAmt)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.PaidAmt)
-                                        </th>
-
-
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.DueDate)
-                                        </th>
-
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        var counter = 1;
-                                        foreach (var item in Model)
-                                        {
-                                            var color = "black";
-                                            if (item.PaidAmt <= item.BillAmt)
-                                            {
-                                                color = "green";
-                                            }
-                                            else if (item.DueDate != DateTime.Today)
-                                            {
-                                                color = "red";
-                                            }
+                            <th>
+                                @Html.DisplayNameFor(model => model.BillAmt)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PaidAmt)
+                            </th>
 
 
-                                            <tr style="color: @color;">
+                            <th>
+                                @Html.DisplayNameFor(model => model.DueDate)
+                            </th>
 
-                                                <td>@counter</td>
+                            <th></th>
+                            <th></th>
+                            <th></th>
 
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.BillNo)
-                                                </td>
-                                                <td>
-                                                    @Convert.ToDateTime(item.TranDte).ToString("dd-MM-yyyy")
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Tenant)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Billitem)
-                                                </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var counter = 1;
+                            foreach (var item in Model)
+                            {
+                                var color = "black";
+                                if (item.PaidAmt <= item.BillAmt)
+                                {
+                                    color = "green";
+                                }
+                                else if (item.DueDate != DateTime.Today)
+                                {
+                                    color = "red";
+                                }
 
-                                                <td class="text-right">
-                                                    @Html.DisplayFor(modelItem => item.BillAmt)
-                                                </td>
-                                                <td class="text-right">
-                                                    @Html.DisplayFor(modelItem => item.PaidAmt)
-                                                </td>
-                                                <td>
-                                                    @Convert.ToDateTime(item.DueDate).ToString("dd-MM-yyyy")
-                                                </td>
-                                                <td style="text-align: center">
-                                                    <a asp-action="Details" asp-route-id="@item.BillId"><i class="fas fa-info-circle"></i></a>
-                                                </td>
-                                                <td style="text-align: center">
-                                                    <a asp-action="Edit" asp-route-id="@item.BillId"><i class="fas fa-edit"></i></a>
-                                                </td>
-                                                <td style="text-align: center">
-                                                    <a asp-action="Delete" asp-route-id="@item.BillId"><i class="fas fa-trash"></i></a>
 
-                                                </td>
-                                            </tr>
+                                <tr style="color: @color;">
 
-                                            counter++;
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                                    <td>@counter</td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BillNo)
+                                    </td>
+                                    <td>
+                                        @Convert.ToDateTime(item.TranDte).ToString("dd-MM-yyyy")
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Tenant)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Billitem)
+                                    </td>
+
+                                    <td class="text-right">
+                                        @Html.DisplayFor(modelItem => item.BillAmt)
+                                    </td>
+                                    <td class="text-right">
+                                        @Html.DisplayFor(modelItem => item.PaidAmt)
+                                    </td>
+                                    <td>
+                                        @Convert.ToDateTime(item.DueDate).ToString("dd-MM-yyyy")
+                                    </td>
+                                    <td style="text-align: center">
+                                        <a asp-action="Details" asp-route-id="@item.BillId"><i class="fas fa-info-circle"></i></a>
+                                    </td>
+                                    <td style="text-align: center">
+                                        <a asp-action="Edit" asp-route-id="@item.BillId"><i class="fas fa-edit"></i></a>
+                                    </td>
+                                    <td style="text-align: center">
+                                        <a asp-action="Delete" asp-route-id="@item.BillId"><i class="fas fa-trash"></i></a>
+
+                                    </td>
+                                </tr>
+
+                                counter++;
+                            }
+                        }
+                    </tbody>
+                </table>
             </div>
+        </div>
+    </div>
+</div>
         </div>
     </div>
 </section>
