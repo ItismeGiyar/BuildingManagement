@@ -4,13 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using BuildingManagement.Data;
 using BuildingManagement.Models;
 using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace BuildingManagement.Controllers
 {
+
     [Authorize]
     public class BillledgersController : Controller
     {
@@ -21,48 +18,27 @@ namespace BuildingManagement.Controllers
             _context = context;
         }
 
+
         #region // Main Methods //
 
-        public async Task<IActionResult> Index(int? tenantId, int? billitemId, DateTime? trandate, string searchTerm)
+
+        public async Task<IActionResult> Index(int tenantId, int billitemId, DateTime trandate, decimal? paidAmt)
         {
             SetLayOutData();
 
-            var query = _context.pms_billledger.AsQueryable();
-
-            if (tenantId.HasValue)
-            {
-                query = query.Where(b => b.TenantId == tenantId.Value);
-            }
-
-            if (billitemId.HasValue)
-            {
-                query = query.Where(b => b.BItemID == billitemId.Value);
-            }
-
-            if (trandate.HasValue)
-            {
-                query = query.Where(b => b.TranDte.Date == trandate.Value.Date);
-            }
-
-            if (!string.IsNullOrEmpty(searchTerm))
-            {
-                query = query.Where(b => b.Remark.Contains(searchTerm) ||
-                                         b.Tenant.Contains(searchTerm) ||
-                                         b.Billitem.Contains(searchTerm));
-            }
-
-            var list = await query.ToListAsync();
+            var list = await _context.pms_billledger.ToListAsync();
             foreach (var data in list)
             {
                 data.Billitem = _context.ms_billitem.Where(rt => rt.BItemID == data.BItemID).Select(rt => rt.BItemDesc).FirstOrDefault() ?? "";
                 data.Tenant = _context.ms_tenant.Where(t => t.TenantId == data.TenantId).Select(t => t.TenantNme).FirstOrDefault() ?? "";
             }
-
             ViewData["TenantList"] = new SelectList(_context.ms_tenant.ToList(), "TenantId", "TenantNme");
             ViewData["BillitemList"] = new SelectList(_context.ms_billitem.ToList(), "BItemID", "BItemDesc");
-
+            ViewData["TranDate"] = trandate;
+            ViewData["PaidAmount"] = paidAmt;
             return View(list);
         }
+
 
         public async Task<IActionResult> Details(int? id)
         {
@@ -108,6 +84,7 @@ namespace BuildingManagement.Controllers
             return View(billledger);
         }
 
+
         public IActionResult Create()
         {
             SetLayOutData();
@@ -123,6 +100,7 @@ namespace BuildingManagement.Controllers
 
             return View(billLedger);
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -167,11 +145,15 @@ namespace BuildingManagement.Controllers
             ViewData["BillitemList"] = new SelectList(_context.ms_billitem.ToList(), "BItemID", "BItemDesc");
             var billLedger = new Billledger()
             {
+
+
                 PaidAmt = 0
             };
 
+
             return View(billledger);
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -218,6 +200,7 @@ namespace BuildingManagement.Controllers
             return View(billledger);
         }
 
+
         public async Task<IActionResult> Delete(int? id)
         {
             SetLayOutData();
@@ -258,6 +241,7 @@ namespace BuildingManagement.Controllers
             return View(billledger);
         }
 
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -278,7 +262,9 @@ namespace BuildingManagement.Controllers
             return _context.pms_billledger.Any(e => e.BillId == id);
         }
 
+
         #endregion
+
 
         #region // Other methods //
 
@@ -292,7 +278,46 @@ namespace BuildingManagement.Controllers
             return billAmt;
         }
 
+        /* public string GenerateAutoBillNo()
+         {
+             var userCde = HttpContext.User.Claims.FirstOrDefault()?.Value;
+             if (string.IsNullOrEmpty(userCde))
+                 return "";
+
+             var UPOS = _context.ms_user
+                 .Join(_context.ms_user,
+                     user => user.UserId,
+                     userPOS => userPOS.UserId,
+                     (user, userPOS) => new
+                     {
+                         user.UserCde,
+                         POSId = userPOS.UserId
+                     })
+                 .FirstOrDefault(u => u.UserCde == userCde);
+
+             if (UPOS == null)
+                 return "";
+
+             var autoNumber = _context.pms_autonumber.FirstOrDefault(pos => pos.AutoNoId == UPOS.POSId);
+             if (autoNumber == null)
+                 return "";
+
+             // Main method of this function which generates number								
+             var generateNo = (autoNumber.LastUsedNo + 1).ToString();
+             if (autoNumber.ZeroLeading)
+             {
+                 var totalWidth = autoNumber.RunningNo - autoNumber.BillPrefix.Length - generateNo.Length;
+                 string paddedString = new string('0', totalWidth) + generateNo;
+                 return autoNumber.BillPrefix + paddedString;
+             }
+             else
+             {
+                 return autoNumber.BillPrefix + generateNo;
+             }
+         }*/
+
         #endregion
+
 
         #region //Common Methods //
 
@@ -323,8 +348,17 @@ namespace BuildingManagement.Controllers
             var userName = _context.ms_user.Where(u => u.UserCde == userCde).Select(u => u.UserNme).FirstOrDefault();
 
             ViewBag.UserName = userName;
+
         }
 
+
+
         #endregion
+
+
+
+
+
+
     }
 }
