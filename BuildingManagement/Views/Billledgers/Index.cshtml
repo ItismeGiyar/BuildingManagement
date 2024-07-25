@@ -121,7 +121,6 @@
 
     </div>
 </section>
-
 <section class="content">
     <div class="container-fluid">
         <div class="card card-gray">
@@ -150,18 +149,25 @@
                                     @Html.DropDownList("billitemId", (SelectList)ViewData["BillitemList"], new { @class = "form-control form-select", @id = "billitemId" })
                                 </div>
                             </div>
+
+                            <div class="form-group row col-12">
+                                <label for="paidAmt" class="col-form-label col-4">Paid Amount:</label>
+                                <div class="col-8">
+                                    <input type="number" id="paidAmt" name="paidAmt" class="form-control" />
+                                </div>
+                        
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-12 d-flex justify-content-between">
-                            <button type="submit" class="btn btn-primary" style="background-color: #31849B;color: white">Search</button>
-                            
+                            <button type="submit" class="btn btn-primary" style="background-color: #31849B; color: white">Search</button>
                         </div>
                     </div>
-
                 </div>
             </form>
-
+        </div>
+    </div>
+</section>
 
          
             <div class="card-body">
