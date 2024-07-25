@@ -134,19 +134,12 @@
     </div>
 </section>
 
-
-
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
-
-
         function showBillAmt(billItemId) {
-
-
             $.ajax({
                 url: "/Billledgers/ShowBillAmount",
                 data: {
@@ -163,4 +156,5 @@
         }
 
     </script>
+    }
 
